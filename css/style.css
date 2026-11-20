@@ -1036,3 +1036,6 @@ a.menu-item:hover, a.menu-item:focus-visible { background: #faf3fb; }
   .hp-dark::before, .hp-deep::before, .hp-mid::before, .hp-cta::before, .site-footer.hp-footer::before,
   .hp-dark::after, .hp-deep::after, .hp-mid::after, .hp-cta::after { animation: none; }
 }
+
+/* keep the header (and its Card Decks menu) above the starry bands below it */
+.site-header { position: relative; z-index: 50; }
