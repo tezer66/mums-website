@@ -1,0 +1,14 @@
+{
+  "name": "HarperHolistic",
+  "short_name": "HarperHolistic",
+  "description": "Healing Inspiration Cards by Gillian Harper. Draw your daily card.",
+  "start_url": "./#dashboard",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#241332",
+  "theme_color": "#241332",
+  "icons": [
+    { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
+  ]
+}
