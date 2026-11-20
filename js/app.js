@@ -156,6 +156,17 @@
       row.appendChild(b);
     });
     $('#about').innerHTML = paras(SITE.about);
+    // Homepage video: plays silently on a loop; the button turns sound on and off.
+    var vid = $('#hpVideo'), snd = $('#hpSound');
+    if (vid && snd) {
+      if (reduceMotion) { vid.removeAttribute('autoplay'); vid.pause(); vid.controls = true; }
+      snd.addEventListener('click', function () {
+        vid.muted = !vid.muted;
+        if (!vid.muted) { vid.currentTime = 0; var pr = vid.play(); if (pr && pr.catch) pr.catch(function () {}); }
+        snd.setAttribute('aria-pressed', String(!vid.muted));
+        snd.setAttribute('aria-label', vid.muted ? 'Turn sound on' : 'Turn sound off');
+      });
+    }
     // Quotes band: Gillian's own words, one at a time.
     var quotes = [SITE.tagline, 'Boundaries are the clearest expression of Love you hold for yourself.',
       'Please take what resonates and leave what does not.', 'It’s never one incident that makes you say “No more!”, it happens after years of “keeping the peace”.',
@@ -595,7 +606,7 @@
     var fanCards = cards.slice(-FAN);
     var rest = cards.slice(0, cards.length - FAN);
     var w = fanCards[0].offsetWidth;
-    var avail = stage.clientWidth - w * 0.82 - 12;
+    var avail = stage.clientWidth - w * 1.12 - 16;   // room for the rotated outer cards
     var step = Math.min(w * 0.46, avail / (FAN - 1));
     rest.forEach(function (el) {
       animate(el, [{ opacity: 1 }, { opacity: 0 }], { duration: 300, fill: 'forwards' }).then(function () { el.style.visibility = 'hidden'; });
