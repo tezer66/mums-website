@@ -1180,3 +1180,5 @@ body { font-family: var(--ui); font-size: 1rem; }
   .auth-split .auth-card { order: -1; }
   .auth-deck { width: min(180px, 46vw); }
 }
+
+.booklet-entry .journal-cta { justify-self: start; margin-top: .2rem; }

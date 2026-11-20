@@ -425,7 +425,10 @@
     holder.onclick = function () { openViewer(card); };
 
     renderBookletEntry(card);
-    $('#journalThisCard').onclick = function () { journalForCard(card, date); };
+    // The journal button sits at the end of the guidebook message, below the affirmation.
+    var jBtn = JOURNAL_BTN;
+    $('#bookletEntry').appendChild(jBtn);
+    jBtn.onclick = function () { journalForCard(card, date); };
     // The card they drew today is added to the journal automatically.
     if (isToday && !jEditing && typeof setJCard === 'function') { setJCard(card); $('#jfPrompt').textContent = JPROMPTS[0]; }
 
@@ -729,6 +732,7 @@
   }
 
   /* ---------------- the deck: shuffle, fan, choose, flip ---------------- */
+  var JOURNAL_BTN = $('#journalThisCard');   // moved under the guidebook message on each reading
   var DECK_SIZE = 12, FAN = 7;
   var stage = $('#stage');
 
