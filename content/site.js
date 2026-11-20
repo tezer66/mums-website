@@ -20,7 +20,7 @@ window.HH_SITE = {
     "For 15 years I worked in Wellness in Dubai & Koh Samui - teaching Yoga, Reiki, Sound healing, Hosting Retreats and Full Moon ceremonies. Cancer doesn't care how healthy your lifestyle is - your body will turn a boundary you won't say into a symptom you can't ignore!",
     "Boundaries are the clearest expression of Love you hold for yourself. May this deck encourage you to Speak your truth, Protect what matters to you and finally come home to yourself."
   ],
-  "aboutSignoff": "With Love and Respect — Gillian Harper",
+  "aboutSignoff": "With Love and Respect — Gill",
   "connect": {
     "instagram": "harper.holistic",
     "email": "reikihealinggh@gmail.com",
