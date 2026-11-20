@@ -563,7 +563,6 @@
     'What are you ready to let go of?',
     'What did your body tell you today?',
     'What truth have you been holding back?',
-    'What are you grateful for today?',
     'What would you say to your younger self today?',
     'Who drains your energy, and who restores it?',
     'What does peace look like for you right now?'
