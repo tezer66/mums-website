@@ -1186,3 +1186,8 @@ body { font-family: var(--ui); font-size: 1rem; }
 /* the face-down deck can be tapped to shuffle */
 .stage.deck-ready .dcard { cursor: pointer; }
 .stage.deck-ready:hover .dcard:last-child { translate: 0 -6px; filter: drop-shadow(0 0 14px rgba(201,169,224,.55)); }
+
+/* share the homepage video */
+.hp-share { display: grid; gap: .5rem; justify-items: start; margin-top: .9rem; }
+.hp-share .ico { width: 18px; height: 18px; }
+.hp-share-note { font-size: .92rem !important; color: var(--hp-lilac) !important; min-height: 1.4em; max-width: 34rem; }

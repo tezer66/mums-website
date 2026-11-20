@@ -167,6 +167,36 @@
         snd.setAttribute('aria-label', vid.muted ? 'Turn sound on' : 'Turn sound off');
       });
     }
+    // Share the card video to Instagram, Facebook, TikTok, WhatsApp... through the phone's share menu.
+    var shareBtn = $('#shareVideo'), shareNote = $('#shareNote');
+    if (shareBtn) shareBtn.addEventListener('click', function () {
+      var url = 'media/harperholistic-share.mp4', name = 'HarperHolistic-cards.mp4';
+      var text = 'Which card resonates with you today? Healing Inspiration Cards by Gillian Harper @harper.holistic www.harperholistic.com';
+      var note = function (t) { shareNote.textContent = t; };
+      var saveFile = function (blob) {
+        try {
+          var href = blob ? URL.createObjectURL(blob) : url;
+          var a = document.createElement('a'); a.href = href; a.download = name;
+          document.body.appendChild(a); a.click(); a.remove();
+          if (blob) setTimeout(function () { URL.revokeObjectURL(href); }, 4000);
+          note('Video saved. Open Instagram, Facebook or TikTok and choose it from your photos or files. Tag @harper.holistic.');
+        } catch (err) { note('Your browser blocked the download. Press and hold the video to save it instead.'); }
+      };
+      shareBtn.disabled = true; note('Getting the video ready…');
+      fetch(url).then(function (r) { if (!r.ok) throw new Error(); return r.blob(); }).then(function (blob) {
+        shareBtn.disabled = false;
+        var file = null;
+        try { file = new File([blob], name, { type: 'video/mp4' }); } catch (e) {}
+        if (file && navigator.canShare && navigator.canShare({ files: [file] })) {
+          note('');
+          return navigator.share({ files: [file], title: 'HarperHolistic', text: text })
+            .then(function () { note('Thank you for sharing \u2661'); })
+            .catch(function (err) { if (!err || err.name !== 'AbortError') saveFile(blob); });
+        }
+        saveFile(blob);
+      }).catch(function () { shareBtn.disabled = false; saveFile(null); });
+    });
+
     // Quotes band: Gillian's own words, one at a time.
     var quotes = ['Your voice does not belong to those who told you to stay silent.', 'Boundaries are the clearest expression of Love you hold for yourself.',
       'Please take what resonates and leave what does not.', 'It’s never one incident that makes you say “No more!”, it happens after years of “keeping the peace”.',
