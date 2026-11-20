@@ -65,6 +65,7 @@ window.HH_CANCER_DECK = {
     { n: 40, section: "What to Say or Text", title: "Whenever You’re Ready", message: "No pressure, whenever your body feels up to it.", image: "images/cancer-care/card-40.webp", words: [] },
     { n: 41, section: "What to Say or Text", title: "You Don’t Deserve This", message: "You don’t deserve this.", image: "images/cancer-care/card-41.webp", words: [] },
     { n: 42, section: "What to Say or Text", title: "I’ll Walk the Dog", message: "I will walk the dog, you rest.", image: "images/cancer-care/card-42.webp", words: [] },
-    { n: 43, section: "What to Say or Text", title: "Your Body Comes First", message: "I told them we are not coming, your body comes first.", image: "images/cancer-care/card-43.webp", words: [] }
+    { n: 43, section: "What to Say or Text", title: "Your Body Comes First", message: "I told them we are not coming, your body comes first.", image: "images/cancer-care/card-43.webp", words: [] },
+    { n: 44, section: "What to Say or Text", title: "Thank You for Letting Me Be Here (Tea Together)", message: "Thank you for letting me be here.", image: "images/cancer-care/card-44.webp", words: [] }
   ]
 };
