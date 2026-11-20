@@ -1039,3 +1039,7 @@ a.menu-item:hover, a.menu-item:focus-visible { background: #faf3fb; }
 
 /* keep the header (and its Card Decks menu) above the starry bands below it */
 .site-header { position: relative; z-index: 50; }
+
+.preview-reset { display: grid; justify-items: center; gap: .3rem; margin-top: .8rem; padding-top: .9rem; border-top: 1px dashed var(--line); }
+.preview-reset .fine { font-size: .85rem; }
+.hp-announce [data-member] a, .hp-announce [data-guest] a { margin-left: .4rem; }

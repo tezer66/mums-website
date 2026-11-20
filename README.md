@@ -59,6 +59,10 @@ Cards without artwork yet are drawn in the deck's purple-and-gold frame from the
 
 ## Before going live: memberships, payments and profiles
 
+First, set `"previewTools": false` in `content/site.js` to remove the
+"Reset today's card" test button.
+
+
 `js/auth.js` is a **preview**: accounts, plans, "about you" answers and card history
 are saved in the visitor's own browser. Nothing is charged, Gillian can't see the
 answers yet, and the content isn't locked.

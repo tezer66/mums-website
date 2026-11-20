@@ -2,8 +2,11 @@
   Site text and settings for HarperHolistic (from the Companion Booklet).
   Accounts are saved in the visitor's browser only until a real membership
   service is connected (see README.md).
+  previewTools: true shows the "Reset today's card" test button. Set it to false
+  (or delete the line) before the site goes live.
 */
 window.HH_SITE = {
+  "previewTools": true,
   "brand": "HarperHolistic",
   "owner": "Gillian Harper",
   "tagline": "Your voice does not belong to those who told you to stay silent.",

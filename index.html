@@ -15,7 +15,7 @@
 </head>
 <body>
 
-<div class="hp-announce"><div class="wrap">New: Cancer Care Cards, 43 gentle things to say or text someone you love. <a href="#join" data-tab="join">Join to read them</a></div></div>
+<div class="hp-announce"><div class="wrap"><span data-guest>New: Cancer Care Cards, 43 gentle things to say or text someone you love. <a href="#join" data-tab="join">Join to read them</a></span><span data-member>New: Cancer Care Cards are here, 43 gentle things to say or text someone you love. <a href="#cancer-care">Open the deck</a></span></div></div>
 <header class="site-header">
   <div class="wrap header-row">
     <a class="brand" href="#home" aria-label="Harper Holistic home">
@@ -32,7 +32,7 @@
         </ul>
       </details>
       <a class="hp-round hp-ig" href="https://www.instagram.com/harper.holistic/" target="_blank" rel="noopener" aria-label="Instagram @harper.holistic"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="12" r="4.2" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="17.4" cy="6.6" r="1.2" fill="currentColor"/></svg></a>
-      <button type="button" class="btn btn-ghost btn-sm" id="signOutBtn" data-member>Sign out</button>
+      <button type="button" class="hp-btn hp-btn-sm" id="signOutBtn" data-member>Sign out</button>
       <a href="#join" class="nav-link" data-guest data-tab="signin">Sign in</a>
       <a href="#join" class="hp-btn hp-btn-sm" data-guest data-tab="join">Join</a>
     </nav>
@@ -347,6 +347,10 @@
           <span class="again-moon" aria-hidden="true">☾</span>
           <p class="next-card" id="nextCardNote">Your next card will be ready at 5am.</p>
           <p class="muted">One card each day. Keep it with you and come back to it whenever you need.</p>
+          <div class="preview-reset" id="previewReset" hidden>
+            <button type="button" class="btn btn-ghost btn-sm" id="resetTodayBtn">Reset today’s card</button>
+            <p class="fine">Preview only: lets you shuffle this deck again for testing. Remove before going live.</p>
+          </div>
         </div>
       </div>
 
