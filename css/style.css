@@ -1043,3 +1043,140 @@ a.menu-item:hover, a.menu-item:focus-visible { background: #faf3fb; }
 .preview-reset { display: grid; justify-items: center; gap: .3rem; margin-top: .8rem; padding-top: .9rem; border-top: 1px dashed var(--line); }
 .preview-reset .fine { font-size: .85rem; }
 .hp-announce [data-member] a, .hp-announce [data-guest] a { margin-left: .4rem; }
+
+/* =====================================================================
+   Site-wide design pass (frontend-design review)
+   Colour: night #170d20 · plum #241332 · plum-2 #2e1a40 · lilac #c9a9e0
+           light #f4ecf9 · gold #d6b062 (kept for the card world only)
+   Type:   Cormorant Garamond for headings and reading text,
+           DM Sans for interface text, labels and buttons, sentence case.
+           Cinzel stays only in the Harper·Holistic wordmark; the hand
+           lettering stays only on the drawn cards themselves.
+   Principle: the cards on the night sky are the one memorable thing;
+           everything around them is quiet, plain and readable.
+   ===================================================================== */
+
+/* homepage: labels in sentence case, no italic accent words */
+.hp-eyebrow { text-transform: none !important; letter-spacing: .01em !important; font-size: .92rem !important; font-weight: 500 !important; }
+.hp-h2 em { display: inline; }
+.hp-paths h3 span { display: block; font-family: var(--hp-sans); font-size: .95rem; font-weight: 500; color: #8b5fae; margin-top: .35rem; letter-spacing: 0; }
+.hp-step-n { font-family: var(--hp-serif) !important; font-size: 2.6rem !important; font-weight: 500 !important; letter-spacing: 0 !important; line-height: 1; color: var(--hp-lilac); }
+.hp .hp-plans .plan-name { text-transform: none; letter-spacing: 0; font-size: .95rem; font-weight: 600; }
+.hp .hp-plans .plan-badge { text-transform: none; letter-spacing: 0; font-size: .78rem; }
+
+/* ---------- one type system for the whole site ---------- */
+:root { --ui: "DM Sans", system-ui, -apple-system, "Segoe UI", sans-serif; --read: "Cormorant Garamond", Georgia, serif; --label-c: #7b4f9e; --btn-line: #6a3e8c; --btn-line-b: #a882c4; }
+body { font-family: var(--ui); font-size: 1rem; }
+.section-title, .dash-title, .be-title, .deck-sec-title, .jl-title, .plan-group, .hp-h1, .hp-h2 {
+  font-family: var(--read) !important; text-transform: none !important; letter-spacing: 0 !important; font-weight: 500;
+}
+.section-title { font-size: clamp(1.9rem, 4.6vw, 2.6rem); line-height: 1.1; }
+.dash-title { font-size: clamp(2.2rem, 6vw, 3.4rem); font-weight: 500; line-height: 1.05; }
+.be-title { font-size: 1.6rem; font-weight: 600; }
+.deck-sec-title { font-size: 1.5rem; }
+.jl-title { font-size: 1.4rem; }
+.eyebrow, .tap-hint, .hist-day, .chip, .be-section h4, .next-card, .jf-prompt-label, .menu-item .deck-font, .menu-item small,
+.deck-switch a, .je-card, .jf-cardtext b, .fold summary, .tab, .form label, .plan-name, .plan-badge, .plan-group, .step b, .lb-hint {
+  font-family: var(--ui) !important; text-transform: none !important; letter-spacing: 0 !important;
+}
+.eyebrow { font-size: .92rem; font-weight: 500; color: var(--label-c); }
+.be-section h4 { font-size: .9rem; font-weight: 600; color: var(--label-c); }
+.tap-hint, .hist-day { font-size: .85rem; }
+.hist-day b { font-family: var(--ui); }
+.menu-item .deck-font { font-size: 1rem; font-weight: 600; color: #3a1a4f; }
+.menu-item small { font-size: .85rem; color: #7b4f9e; }
+.next-card { font-size: 1rem; font-weight: 500; }
+.fold summary { font-size: 1rem; font-weight: 600; }
+.form label { font-size: .92rem; font-weight: 600; }
+.chip { font-size: .8rem; }
+
+/* reading text stays in the serif */
+.booklet-entry p, .booklet-entry li, .prose, .je-text, .journal-form textarea, .jf-prompt, .note p, .be-prompt { font-family: var(--read); }
+.booklet-entry p, .booklet-entry li, .je-text, .note p { font-size: 1.15rem; }
+.prose p { font-size: 1.12rem; }
+
+/* buttons: quiet pills, sentence case */
+.btn { font-family: var(--ui) !important; text-transform: none !important; letter-spacing: 0 !important; font-weight: 600; font-size: .95rem; border-radius: 999px; }
+.btn-sm { font-size: .88rem; }
+.btn-gold { background: var(--hp-lilac) !important; border-color: var(--hp-lilac) !important; color: var(--hp-lilac-ink) !important; box-shadow: none !important; }
+.btn-gold:hover { background: #dcc4ee !important; transform: translateY(-1px); }
+.btn-ghost { color: var(--btn-line) !important; border-color: var(--btn-line-b) !important; }
+.btn-ghost:hover { background: rgba(168,130,196,.12) !important; }
+.btn[disabled] { opacity: .5; }
+
+/* ---------- dashboard: the draw sits on the night sky ---------- */
+.dashv { padding-bottom: 0; }
+.dashv .hp-band { padding-block: clamp(36px, 6vw, 72px); }
+.dashv .dash { padding-top: 0; gap: 1rem; }
+.dk {
+  --parchment: #f1e7f6; --text: #f1e7f6; --ink: #f1e7f6; --muted: #c4b2d0; --line: rgba(201,169,224,.24);
+  --plum: #2e1a40; --plum-2: #38214d; --gold: #e0bd76; --gold-deep: #c9a253; --label-c: #c9a9e0;
+  --btn-line: #c9a9e0; --btn-line-b: rgba(201,169,224,.6); --shadow: rgba(0,0,0,.6);
+  color: var(--text);
+}
+.dk .dash-title { color: #fff; }
+.dk .table { background: radial-gradient(70% 70% at 50% 45%, rgba(150,95,200,.28), transparent 72%); }
+.dk .deck-switch a { background: transparent; border-color: rgba(201,169,224,.35); color: #e3d6ec; font-size: .92rem; }
+.dk .deck-switch a:hover { border-color: var(--hp-lilac); color: #fff; }
+.dk .deck-switch a[aria-current="page"] { background: var(--hp-lilac); border-color: var(--hp-lilac); color: var(--hp-lilac-ink); }
+.dk #deckName { color: var(--hp-lilac); }
+.dk .again-moon { color: var(--gold); }
+.dk .preview-reset { border-top-color: rgba(201,169,224,.22); }
+/* the guidebook message is read on a light page, for comfort */
+.dk .booklet-entry {
+  --parchment: #3f1659; --text: #2f1c3b; --ink: #2f1c3b; --muted: #6f5a7c; --line: #e3d2ea; --plum: #fbf7fd; --plum-2: #f4ecf9;
+  --gold: #8a5a1c; --label-c: #7b4f9e;
+  background: #fbf7fd; color: #2f1c3b; border-color: transparent; box-shadow: 0 30px 60px -34px rgba(0,0,0,.8);
+}
+.dk .booklet-entry .be-aff { background: #f4ecf9; border-color: #e3d2ea; }
+.dk .booklet-entry .be-message, .dk .booklet-entry .be-affirm { color: #3f1659; }
+.dk .reading-card { box-shadow: 0 0 0 1px rgba(214,176,98,.35), 0 0 70px -10px rgba(170,110,230,.55), 0 30px 60px -25px rgba(0,0,0,.95); }
+
+/* light bands on the dashboard */
+.lt-band .section-title { color: #3a1a4f; }
+.lt-band .journal-form, .lt-band .jentry, .lt-band .note, .lt-band .note-empty { background: #fff; }
+.lt-band .note-empty { border-color: #d9c6e6; }
+.lt-band .hist-card.is-active { box-shadow: 0 0 0 2px var(--hp-lilac), 0 10px 22px -12px var(--shadow); }
+.lt-band .deck-switch { display: none; }
+
+/* ---------- join, sign in and "Tell Gillian about you" ---------- */
+.authv { padding-bottom: 0; }
+.auth-band { padding-block: clamp(40px, 7vw, 88px); }
+.auth-split { display: grid; gap: clamp(32px, 6vw, 72px); align-items: center; }
+.auth-aside { display: grid; gap: 1.2rem; justify-items: center; text-align: center; }
+.auth-deck { width: min(240px, 56vw); margin: 0 auto 1rem; }
+.auth-title { color: #fff; margin: 0 !important; max-width: 14ch; }
+.auth-list { list-style: none; margin: 0; padding: 0; display: grid; gap: .55rem; color: #e3d6ec; font-size: 1rem; text-align: left; }
+.auth-list li { display: flex; gap: .7rem; align-items: baseline; }
+.auth-list li::before { content: "✦"; color: var(--hp-lilac); font-size: .8rem; }
+.auth-quote { font-family: var(--read); font-style: italic; font-size: 1.3rem; color: var(--hp-lilac); margin: 0; }
+.authv .auth-card {
+  --parchment: #3f1659; --text: #2f1c3b; --ink: #2f1c3b; --muted: #6f5a7c; --line: #e3d2ea; --plum: #fff; --plum-2: #faf3fb;
+  --label-c: #7b4f9e; --btn-line: #6a3e8c; --btn-line-b: #a882c4;
+  background: #fff; color: #2f1c3b; border: 0; border-radius: 28px; box-shadow: 0 40px 80px -40px rgba(0,0,0,.85);
+  justify-self: center; width: 100%; max-width: 460px; padding: 1.6rem clamp(1.1rem, 4vw, 2rem) 2rem;
+}
+.authv .tabs { background: #f4ecf9; border-color: #e3d2ea; }
+.authv .tab { font-size: .95rem; font-weight: 600; color: #6f5a7c; }
+.authv .tab[aria-selected="true"] { background: var(--hp-plum); color: #fff; }
+.authv .form input, .authv .profile textarea { background: #fff; color: #2f1c3b; border-color: #ddcbe9; font-family: var(--ui); font-size: 1rem; }
+.authv .form-lede { font-size: 1rem; }
+.authv .plan-pick legend, .authv .choice legend { font-family: var(--ui); text-transform: none; letter-spacing: 0; font-size: .92rem; font-weight: 600; color: #3f1659; }
+.authv .plan-opt { font-family: var(--ui) !important; font-size: .95rem !important; border-color: #e3d2ea; }
+.authv .plan-opt:has(input:checked) { border-color: #a882c4; background: #f4ecf9; }
+.authv .plan-opt em { color: #7b4f9e; font-style: normal; font-weight: 600; }
+.authv .keep, .authv .consent { font-family: var(--ui) !important; font-size: .95rem !important; }
+.authv .chip-opt span { font-family: var(--ui); font-size: .92rem; border-color: #ddcbe9; color: #2f1c3b; }
+.authv .chip-opt input:checked + span { background: var(--hp-plum); border-color: var(--hp-plum); color: #fff; }
+.profile-wrap { padding-block: 0; }
+.profile-wrap .auth-card { max-width: 620px; }
+.profile-wrap .dash-title { color: #3a1a4f; }
+@media (min-width: 900px) {
+  .auth-split { grid-template-columns: 1fr 1fr; }
+  .auth-aside { justify-items: start; text-align: left; }
+  .auth-deck { margin: 0 0 1rem 1.5rem; }
+}
+@media (max-width: 899px) {
+  .auth-split .auth-card { order: -1; }
+  .auth-deck { width: min(180px, 46vw); }
+}

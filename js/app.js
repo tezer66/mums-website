@@ -285,6 +285,7 @@
     var holder = $('#notesList'), u = Auth.current();
     var profile = Auth.getProfile(u.email);
     $('#profileBtn').textContent = profile ? 'Edit your answers' : 'Tell Gillian about you';
+    $('#profileBtn').hidden = !profile;
     Auth.getNotes(u.email).then(function (notes) {
       if (notes && notes.length) {
         holder.innerHTML = notes.map(function (n) {
@@ -389,8 +390,8 @@
     selected = { card: card, date: date };
 
     $('#readingLabel').textContent = isToday
-      ? "Today's card · " + longDate(date)
-      : date ? 'Your card from ' + longDate(date) : 'From the deck · Card ' + card.n;
+      ? 'Today’s card, ' + longDate(date)
+      : date ? 'Your card from ' + longDate(date) : 'From the deck, card ' + card.n;
 
     var hasToday = !!todaysCard();
     var back = $('#backToday');
@@ -438,7 +439,7 @@
   function renderBookletEntry(card) {
     if (card.words) return renderWordsEntry(card);
     var b = card.booklet || {};
-    var html = '<div class="be-head"><p class="eyebrow">Card ' + pad2(card.n) + (card.section ? ' · ' + esc(card.section) : '') + '</p>';
+    var html = '<div class="be-head"><p class="eyebrow">' + (card.section ? esc(card.section) + ', card ' : 'Card ') + card.n + '</p>';
     if (card.title) html += '<h3 class="be-title">' + esc(card.title) + '</h3>';
     if (card.message) html += '<p class="be-message">' + esc(card.message) + '</p>';
     html += '</div>';
@@ -457,7 +458,7 @@
 
   // Mommas Earth Magick: the card's affirmation, then Gillian's fuller words.
   function renderWordsEntry(card) {
-    var html = '<div class="be-head"><p class="eyebrow">Card ' + pad2(card.n) + (card.section ? ' · ' + esc(card.section) : '') + '</p>' +
+    var html = '<div class="be-head"><p class="eyebrow">' + (card.section ? esc(card.section) + ', card ' : 'Card ') + card.n + '</p>' +
       '<h3 class="be-title">' + esc(card.title) + '</h3></div>' +
       '<section class="be-section be-aff"><h4>' + esc(card.deck.entryHeading || 'Affirmation') + '</h4>' +
       '<p class="be-prompt">' + esc(card.deck.entryPrompt || 'Say it out loud with intention:') + '</p>' +
@@ -581,7 +582,7 @@
     if (!card) return;
     var t = $('#jfThumb'); t.innerHTML = ''; t.appendChild(renderFace(card, true));
     $('#jfCardTitle').textContent = card.title || ('Card ' + card.n);
-    $('#jfCardDeck').textContent = card.deck.name + ' · Card ' + card.n;
+    $('#jfCardDeck').textContent = card.deck.name + ', card ' + card.n;
   }
   function showPrompt() { $('#jfPrompt').textContent = JPROMPTS[jPromptIdx % JPROMPTS.length]; }
   function resetJForm() {
@@ -620,7 +621,7 @@
       var art = document.createElement('article');
       art.className = 'jentry';
       art.innerHTML =
-        '<div class="je-head"><p class="eyebrow">' + esc(entryDate(e)) + (e.edited ? ' · edited' : '') + '</p>' +
+        '<div class="je-head"><p class="eyebrow">' + esc(entryDate(e)) + (e.edited ? ' (edited)' : '') + '</p>' +
         (card ? '<p class="je-card">' + esc(card.title || ('Card ' + card.n)) + ' <small>· ' + esc(card.deck.name) + '</small></p>' : '') + '</div>' +
         (e.prompt ? '<p class="je-prompt">' + esc(e.prompt) + '</p>' : '') +
         '<p class="je-text">' + esc(e.text) + '</p>' +
@@ -638,7 +639,7 @@
           jEditing = e.id;
           $('#jfText').value = e.text;
           $('#jfPrompt').textContent = e.prompt || '';
-          $('#jfDate').textContent = 'Editing · ' + entryDate(e);
+          $('#jfDate').textContent = 'Editing your entry from ' + entryDate(e);
           setJCard(card);
           $('#jfSave').textContent = 'Save changes';
           $('#jfCancel').hidden = false;
