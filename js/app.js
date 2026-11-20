@@ -241,6 +241,7 @@
   function initPromo() {
     var P = SITE.promo; if (!P || !P.code) { var bn = $('#promoBanner'); if (bn) bn.hidden = true; return; }
     $('#promoCodeText').textContent = P.code; $('#promoNoteText').textContent = P.note;
+    $('#promoBanner').hidden = !P.showOnHomepage;
     $('#copyPromo').addEventListener('click', function () {
       var btn = this, done = function () { btn.textContent = 'Copied'; setTimeout(function () { btn.textContent = 'Copy code'; }, 1800); };
       try { navigator.clipboard.writeText(P.code).then(done, function () {}); } catch (e) {}

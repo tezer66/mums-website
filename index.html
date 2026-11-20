@@ -187,8 +187,8 @@
     <div class="wrap hp-section hp-center pricing" id="pricing">
       <h2 class="hp-h2">Choose your plan</h2>
       <p class="hp-intro">Every plan includes the cards, the guidebook and your Weekly Reflections.</p>
-      <div class="promo-banner" id="promoBanner">
-        <span>New members: use code <b id="promoCodeText">WELCOME20</b> for <span id="promoNoteText">20% off your first payment</span>.</span>
+      <div class="promo-banner" id="promoBanner" hidden>
+        <span>New members: use code <b id="promoCodeText"></b> for <span id="promoNoteText">20% off your first payment</span>.</span>
         <button type="button" class="copy-btn" id="copyPromo">Copy code</button>
       </div>
       <div class="plans hp-plans">
@@ -305,7 +305,7 @@
         <p class="fine">Keep these safe. You'll need this email and password each time you sign in.</p>
         <label for="joinPromo">Promo code <span class="opt">(optional)</span></label>
         <div class="promo-row">
-          <input id="joinPromo" name="promo" autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="e.g. WELCOME20">
+          <input id="joinPromo" name="promo" autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="Enter your code">
           <button type="button" class="btn btn-ghost btn-sm" id="applyPromo">Apply</button>
         </div>
         <p class="promo-msg" id="promoMsg" role="status"></p>

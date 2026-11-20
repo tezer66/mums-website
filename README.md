@@ -79,9 +79,10 @@ such as Memberstack, Outseta or a WordPress membership plugin:
 1. Create four plans in it: one deck monthly US$9.99, all decks monthly US$19.99,
    one deck yearly US$59 and all decks yearly US$99 (prices in USD).
 2. Welcome code: in Stripe → Product catalogue → Coupons, create a **20% off, Once** coupon,
-   then add a promotion code **WELCOME20** (tick "first-time order only"). Turn on
+   then add a promotion code **RIVER** (tick "first-time order only"). Turn on
    **Allow promotion codes** on each payment link. The code shown on the site is set in
-   `content/site.js` (`promo`), so keep both the same.
+   `content/site.js` (`promo`), so keep both the same. The code is shared on social
+   media, not shown on the site (set `showOnHomepage` to true to show it).
 3. Replace `signUp` / `signIn` / `signOut` / `current` in `auth.js` with its calls,
    and send the chosen plan to its checkout.
 4. Save the "about you" answers (`saveProfile`) as member custom fields, or post them
