@@ -156,8 +156,20 @@
       row.appendChild(b);
     });
     $('#about').innerHTML = paras(SITE.about);
+    // Quotes band: Gillian's own words, one at a time.
+    var quotes = [SITE.tagline, 'Boundaries are the clearest expression of Love you hold for yourself.',
+      'Please take what resonates and leave what does not.', 'It’s never one incident that makes you say “No more!”, it happens after years of “keeping the peace”.',
+      'These cards are for the days when your healing journey feels heavy. Keep going! You’ve got this x'].filter(Boolean);
+    var qi = 0, qEl = $('#hpQuote');
+    var showQ = function () { qEl.textContent = '“' + quotes[qi] + '”'; };
+    if (qEl) {
+      showQ();
+      $('#hpPrev').addEventListener('click', function () { qi = (qi + quotes.length - 1) % quotes.length; showQ(); });
+      $('#hpNext').addEventListener('click', function () { qi = (qi + 1) % quotes.length; showQ(); });
+    }
     $('#aboutSignoff').textContent = SITE.aboutSignoff || '';
     $('#tagline').textContent = SITE.tagline ? '“' + SITE.tagline + '”' : '';
+    document.querySelectorAll('a[href="#hp-decks"]').forEach(function (a) { a.addEventListener('click', function (e) { e.preventDefault(); $('#hp-decks').scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth' }); }); });
     var c = SITE.connect || {};
     $('#connectText').textContent = c.text || '';
     var ig = $('#igLink');
