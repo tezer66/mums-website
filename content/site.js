@@ -9,7 +9,7 @@ window.HH_SITE = {
   "previewTools": true,
   "brand": "HarperHolistic",
   "owner": "Gillian Harper",
-  "tagline": "Your voice does not belong to those who told you to stay silent.",
+  "tagline": "Learning to set boundaries is ultimate self care.",
   "about": [
     "This deck was born as I started the deepest inner healing of my life — to save my life! Each card was created as I honestly acknowledged the lesson in my own life. My intention is to share my journey in hope it may help you on yours.",
     "October 2025 I was diagnosed with Stage 4 Cancer. The trauma our family, and all families experience when hearing that word, is life changing. Cancer is silent until it screams!",
