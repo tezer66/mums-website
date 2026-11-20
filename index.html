@@ -187,6 +187,10 @@
     <div class="wrap hp-section hp-center pricing" id="pricing">
       <h2 class="hp-h2">Choose your plan</h2>
       <p class="hp-intro">Every plan includes the cards, the guidebook and your Weekly Reflections.</p>
+      <div class="promo-banner" id="promoBanner">
+        <span>New members: use code <b id="promoCodeText">WELCOME20</b> for <span id="promoNoteText">20% off your first payment</span>.</span>
+        <button type="button" class="copy-btn" id="copyPromo">Copy code</button>
+      </div>
       <div class="plans hp-plans">
         <div class="plan">
           <p class="plan-name">One deck, monthly</p>
@@ -285,10 +289,10 @@
         <p class="form-lede">Create your account to start drawing your daily card.</p>
         <fieldset class="plan-pick">
           <legend>Your plan</legend>
-          <label class="plan-opt" for="plan-deck-monthly"><input type="radio" id="plan-deck-monthly" name="plan" value="deck-monthly"><span><b>One deck, monthly</b> US$9.99 a month</span></label>
-          <label class="plan-opt" for="plan-all-monthly"><input type="radio" id="plan-all-monthly" name="plan" value="all-monthly"><span><b>All decks, monthly</b> US$19.99 a month <em>Save 33%</em></span></label>
-          <label class="plan-opt" for="plan-deck-yearly"><input type="radio" id="plan-deck-yearly" name="plan" value="deck-yearly"><span><b>One deck, yearly</b> US$59 a year <em>Save 51%</em></span></label>
-          <label class="plan-opt" for="plan-all-yearly"><input type="radio" id="plan-all-yearly" name="plan" value="all-yearly" checked><span><b>All decks, yearly</b> US$99 a year <em>Best value</em></span></label>
+          <label class="plan-opt" for="plan-deck-monthly"><input type="radio" id="plan-deck-monthly" name="plan" value="deck-monthly"><span><b>One deck, monthly</b> US$9.99 a month <span class="promo-price" data-price="9.99" data-per="first month" hidden></span></span></label>
+          <label class="plan-opt" for="plan-all-monthly"><input type="radio" id="plan-all-monthly" name="plan" value="all-monthly"><span><b>All decks, monthly</b> US$19.99 a month <em>Save 33%</em> <span class="promo-price" data-price="19.99" data-per="first month" hidden></span></span></label>
+          <label class="plan-opt" for="plan-deck-yearly"><input type="radio" id="plan-deck-yearly" name="plan" value="deck-yearly"><span><b>One deck, yearly</b> US$59 a year <em>Save 51%</em> <span class="promo-price" data-price="59" data-per="first year" hidden></span></span></label>
+          <label class="plan-opt" for="plan-all-yearly"><input type="radio" id="plan-all-yearly" name="plan" value="all-yearly" checked><span><b>All decks, yearly</b> US$99 a year <em>Best value</em> <span class="promo-price" data-price="99" data-per="first year" hidden></span></span></label>
         </fieldset>
         <label for="joinName">Your first name</label>
         <input id="joinName" name="name" autocomplete="given-name" required>
@@ -299,6 +303,12 @@
         <label for="joinPass2">Confirm password</label>
         <input id="joinPass2" name="password2" type="password" autocomplete="new-password" minlength="6" required>
         <p class="fine">Keep these safe. You'll need this email and password each time you sign in.</p>
+        <label for="joinPromo">Promo code <span class="opt">(optional)</span></label>
+        <div class="promo-row">
+          <input id="joinPromo" name="promo" autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="e.g. WELCOME20">
+          <button type="button" class="btn btn-ghost btn-sm" id="applyPromo">Apply</button>
+        </div>
+        <p class="promo-msg" id="promoMsg" role="status"></p>
         <label class="keep" for="joinKeep"><input type="checkbox" id="joinKeep" name="keep"><span>Keep me signed in on this device</span></label>
         <p class="form-error" id="joinError" role="alert"></p>
         <button class="btn btn-gold btn-block" type="submit">Create my account</button>

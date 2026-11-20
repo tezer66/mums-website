@@ -1191,3 +1191,17 @@ body { font-family: var(--ui); font-size: 1rem; }
 .hp-share { display: grid; gap: .5rem; justify-items: start; margin-top: .9rem; }
 .hp-share .ico { width: 18px; height: 18px; }
 .hp-share-note { font-size: .92rem !important; color: var(--hp-lilac) !important; min-height: 1.4em; max-width: 34rem; }
+
+/* welcome promo */
+.promo-banner { display: inline-flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: .6rem 1rem; margin-top: 1.4rem;
+  padding: .7rem .8rem .7rem 1.2rem; border-radius: 999px; background: #fff; border: 1px dashed #a882c4; color: #3a1a4f; font-size: .98rem; }
+.promo-banner b { letter-spacing: .06em; color: #6a3e8c; }
+.promo-banner .copy-btn { background: #f4ecf9; color: #6a3e8c; font-family: var(--ui); font-size: .85rem; font-weight: 600; text-transform: none; letter-spacing: 0; }
+.promo-row { display: flex; gap: 8px; align-items: center; }
+.promo-row input { flex: 1; min-width: 0; text-transform: uppercase; letter-spacing: .06em; }
+.promo-msg { margin: .2rem 0 0; min-height: 1.3em; font-size: .92rem; }
+.promo-msg.ok { color: #2f6e4a; }
+.promo-msg.bad { color: var(--danger); }
+.plan-opt .promo-price { display: block; margin-top: .15rem; color: #2f6e4a; font-weight: 600; font-size: .88rem; }
+.plan-opt .promo-price::before { content: "With code: "; font-weight: 500; color: #4f7a5e; }
+@media (max-width: 520px) { .promo-banner { border-radius: 18px; } }

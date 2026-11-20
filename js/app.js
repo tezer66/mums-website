@@ -233,6 +233,41 @@
     $('#joinForm').hidden = !join;
     $('#signinForm').hidden = join;
   }
+  /* ---------------- welcome promo code ----------------
+     The site shows the code and the discounted first payment. The real discount
+     is applied at checkout by Stripe, using a promotion code with the same name. */
+  var promoApplied = null;
+  function money(n) { return 'US$' + (Math.round(n * 100) / 100).toFixed(2).replace(/\.00$/, ''); }
+  function initPromo() {
+    var P = SITE.promo; if (!P || !P.code) { var bn = $('#promoBanner'); if (bn) bn.hidden = true; return; }
+    $('#promoCodeText').textContent = P.code; $('#promoNoteText').textContent = P.note;
+    $('#copyPromo').addEventListener('click', function () {
+      var btn = this, done = function () { btn.textContent = 'Copied'; setTimeout(function () { btn.textContent = 'Copy code'; }, 1800); };
+      try { navigator.clipboard.writeText(P.code).then(done, function () {}); } catch (e) {}
+    });
+    var apply = function (quiet) {
+      var v = ($('#joinPromo').value || '').trim().toUpperCase();
+      var msg = $('#promoMsg');
+      if (!v) { promoApplied = null; msg.textContent = ''; msg.className = 'promo-msg'; showPromoPrices(); return; }
+      if (v === P.code.toUpperCase()) {
+        promoApplied = P.code; msg.textContent = P.code + ' applied: ' + P.note + '.'; msg.className = 'promo-msg ok';
+      } else {
+        promoApplied = null; if (!quiet) { msg.textContent = 'That code isn’t valid. Check the spelling, or leave it empty.'; msg.className = 'promo-msg bad'; }
+      }
+      showPromoPrices();
+    };
+    $('#applyPromo').addEventListener('click', function () { apply(false); });
+    $('#joinPromo').addEventListener('keydown', function (e) { if (e.key === 'Enter') { e.preventDefault(); apply(false); } });
+    $('#joinPromo').addEventListener('input', function () { if (!this.value.trim()) apply(true); });
+  }
+  function showPromoPrices() {
+    var P = SITE.promo;
+    document.querySelectorAll('.promo-price').forEach(function (el) {
+      el.hidden = !promoApplied;
+      if (promoApplied) el.textContent = money(parseFloat(el.dataset.price) * (100 - P.percent) / 100) + ' ' + el.dataset.per;
+    });
+  }
+
   function initAuthForms() {
     $('#tab-join').addEventListener('click', function () { setTab('join'); });
     $('#tab-signin').addEventListener('click', function () { setTab('signin'); });
@@ -250,8 +285,9 @@
       $('#joinError').textContent = '';
       var plan = (f.querySelector('input[name="plan"]:checked') || {}).value;
       if (f.password.value !== f.password2.value) { $('#joinError').textContent = 'The two passwords do not match. Please type them again.'; return; }
+      var promoUsed = promoApplied;
       Auth.signUp(f.name.value, f.email.value, f.password.value, plan, f.keep.checked)
-        .then(function () { f.reset(); $('#plan-all-yearly').checked = true; go('about-you'); })
+        .then(function (u) { if (promoUsed) store.set('hh:promo:' + u.email, promoUsed); promoApplied = null; $('#promoMsg').textContent = ''; showPromoPrices(); f.reset(); $('#plan-all-yearly').checked = true; go('about-you'); })
         .catch(function (err) { $('#joinError').textContent = err.message; });
     });
     $('#signinForm').addEventListener('submit', function (e) {
@@ -962,6 +998,7 @@
   $('#year').textContent = new Date().getFullYear();
   initHome();
   initAuthForms();
+  initPromo();
   initProfileForm();
   window.addEventListener('hashchange', route);
   route();

@@ -78,9 +78,13 @@ such as Memberstack, Outseta or a WordPress membership plugin:
 
 1. Create four plans in it: one deck monthly US$9.99, all decks monthly US$19.99,
    one deck yearly US$59 and all decks yearly US$99 (prices in USD).
-2. Replace `signUp` / `signIn` / `signOut` / `current` in `auth.js` with its calls,
+2. Welcome code: in Stripe → Product catalogue → Coupons, create a **20% off, Once** coupon,
+   then add a promotion code **WELCOME20** (tick "first-time order only"). Turn on
+   **Allow promotion codes** on each payment link. The code shown on the site is set in
+   `content/site.js` (`promo`), so keep both the same.
+3. Replace `signUp` / `signIn` / `signOut` / `current` in `auth.js` with its calls,
    and send the chosen plan to its checkout.
-3. Save the "about you" answers (`saveProfile`) as member custom fields, or post them
+4. Save the "about you" answers (`saveProfile`) as member custom fields, or post them
    to a form service that emails Gillian, so she can read them.
-4. Load Gillian's personal notes from there in `getNotes`.
-5. Save each member's daily draws on the server.
+5. Load Gillian's personal notes from there in `getNotes`.
+6. Save each member's daily draws on the server.

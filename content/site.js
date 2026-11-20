@@ -2,11 +2,14 @@
   Site text and settings for HarperHolistic (from the Companion Booklet).
   Accounts are saved in the visitor's browser only until a real membership
   service is connected (see README.md).
+  promo: the welcome code shown on the homepage and accepted on the join form.
+  The real discount is applied by Stripe (see README.md), so keep the two codes the same.
   previewTools: true shows the "Reset today's card" test button. Set it to false
   (or delete the line) before the site goes live.
 */
 window.HH_SITE = {
   "previewTools": true,
+  "promo": { "code": "WELCOME20", "percent": 20, "note": "20% off your first payment" },
   "brand": "HarperHolistic",
   "owner": "Gillian Harper",
   "tagline": "Learning to set boundaries is ultimate self care.",
