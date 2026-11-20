@@ -377,7 +377,7 @@
     } else {
       $('#reading').hidden = true;
       $('#table').hidden = false;
-      $('#drawHint').textContent = 'Breathe slowly and ask in your heart: “What do I need to hear today?” Then shuffle.';
+      $('#drawHint').textContent = 'Breathe slowly and ask in your heart: “What do I need to hear today?” Then tap the deck to shuffle.';
       selected = null;
       buildDeck();
       if (scroll) $('#drawTitle').scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'start' });
@@ -741,6 +741,7 @@
     var btn = $('#shuffleBtn');
     btn.disabled = false;
     btn.hidden = false;
+    stage.classList.add('deck-ready');
     for (var i = 0; i < DECK_SIZE; i++) {
       var el = document.createElement('button');
       el.type = 'button';
@@ -813,6 +814,7 @@
     busy = true;
     var btn = $('#shuffleBtn');
     btn.disabled = true;
+    stage.classList.remove('deck-ready');
     $('#drawHint').textContent = 'Shuffling…';
     var cards = Array.prototype.slice.call(stage.querySelectorAll('.dcard'));
 
@@ -873,6 +875,11 @@
   }
 
   $('#shuffleBtn').addEventListener('click', shuffle);
+  // Tapping the face-down deck shuffles it too (before the cards are fanned out).
+  stage.addEventListener('click', function (e) {
+    if (busy || $('#shuffleBtn').hidden || !e.target.closest('.dcard')) return;
+    shuffle();
+  });
   $('#backToday').addEventListener('click', function () { showToday(true); });
   // Preview-only: clear today's card for this deck so it can be shuffled again.
   $('#resetTodayBtn').addEventListener('click', function () {

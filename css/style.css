@@ -1182,3 +1182,7 @@ body { font-family: var(--ui); font-size: 1rem; }
 }
 
 .booklet-entry .journal-cta { justify-self: start; margin-top: .2rem; }
+
+/* the face-down deck can be tapped to shuffle */
+.stage.deck-ready .dcard { cursor: pointer; }
+.stage.deck-ready:hover .dcard:last-child { translate: 0 -6px; filter: drop-shadow(0 0 14px rgba(201,169,224,.55)); }
