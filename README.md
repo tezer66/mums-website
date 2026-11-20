@@ -8,6 +8,12 @@ A plain static site: no build step. Open `index.html` through any web server, fo
 python3 -m http.server 8000
 ```
 
+## Domain
+
+Live at **https://www.harperholistic.com** (GitHub Pages). The `CNAME` file holds the
+domain; keep it in the repository. DNS: A records for `@` → 185.199.108.153,
+185.199.109.153, 185.199.110.153, 185.199.111.153 and CNAME `www` → tezer66.github.io.
+
 ## Content
 
 All of Gillian's words live in plain files, so the code never needs editing:
