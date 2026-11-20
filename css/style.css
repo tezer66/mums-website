@@ -941,3 +941,65 @@ a.menu-item:hover, a.menu-item:focus-visible { background: #faf3fb; }
 
 /* larger shuffle cards on the daily draw */
 :root { --cw: clamp(150px, 42vw, 228px); }
+
+/* ---------- My Journal ---------- */
+.journal { padding-block: 1.5rem; display: grid; gap: 1.2rem; }
+.journal-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: end; gap: 1rem; }
+.journal-head .muted { max-width: 52ch; margin-top: .3rem; }
+.journal-tools { display: flex; flex-wrap: wrap; gap: 8px; }
+.journal-form { background: var(--plum); border: 1px solid var(--line); border-radius: 18px; padding: 1.2rem clamp(1rem, 4vw, 1.6rem) 1.3rem; display: grid; gap: .6rem; box-shadow: 0 18px 40px -30px var(--shadow); }
+.jf-top { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: .6rem 1rem; }
+.jf-card { display: inline-flex; align-items: center; gap: .6rem; border: 1px solid var(--line); border-radius: 12px; padding: 5px 6px 5px 6px; background: var(--plum-2); }
+.jf-thumb { width: 34px; display: block; border-radius: 4px; overflow: hidden; }
+.jf-thumb > * { width: 100%; height: auto; display: block; }
+.jf-cardtext { display: grid; line-height: 1.2; }
+.jf-cardtext b { font-family: var(--display); font-size: .78rem; letter-spacing: .04em; color: var(--parchment); font-weight: 500; }
+.jf-cardtext small { font-size: .85rem; color: var(--muted); }
+.jf-unlink { border: 0; background: none; color: var(--muted); font-size: 1.3rem; cursor: pointer; width: 32px; height: 32px; border-radius: 50%; }
+.jf-unlink:hover { background: var(--line); color: var(--ink); }
+.jf-prompt-label { font-family: var(--display); font-size: .7rem; letter-spacing: .14em; text-transform: uppercase; color: var(--gold); margin-top: .3rem; }
+.jf-prompt-row { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: .5rem 1rem; }
+.jf-prompt { margin: 0; font-style: italic; font-size: 1.25rem; color: var(--parchment); }
+.journal-form textarea {
+  width: 100%; min-height: 170px; resize: vertical; padding: .8rem 1rem; border-radius: 12px;
+  border: 1px solid var(--line); background: #fff; color: var(--text); font: inherit; font-size: 1.15rem; line-height: 1.6;
+  background-image: repeating-linear-gradient(transparent, transparent calc(1.6em - 1px), rgba(124,79,158,.10) calc(1.6em - 1px), rgba(124,79,158,.10) 1.6em);
+  background-attachment: local; background-position: 0 .8rem;
+}
+.journal-form textarea:focus { outline: none; border-color: var(--gold-deep); box-shadow: 0 0 0 3px rgba(214,176,98,.25); }
+.jf-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
+.jf-saved { color: #2f6e4a; font-size: 1rem; }
+.journal-list-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: .6rem 1rem; margin-top: .6rem; }
+.jl-title { font-family: var(--display); font-size: 1rem; letter-spacing: .06em; color: var(--parchment); }
+.jl-title span { color: var(--muted); font-size: .9em; }
+#jSearch { min-height: 42px; padding: .4rem 1rem; border-radius: 999px; border: 1px solid var(--line); background: #fff; color: var(--text); font: inherit; width: min(100%, 280px); }
+.journal-list { display: grid; gap: 12px; }
+.jentry { background: var(--plum); border: 1px solid var(--line); border-radius: 14px; padding: 1rem 1.1rem; display: grid; grid-template-columns: auto 1fr; gap: .2rem 1rem; }
+.jentry > :not(.je-thumb) { grid-column: 2; min-width: 0; }
+.jentry:not(:has(.je-thumb)) > * { grid-column: 1 / -1; }
+.je-thumb { grid-row: 1 / span 4; width: 54px; border-radius: 6px; overflow: hidden; align-self: start; box-shadow: 0 6px 14px -8px var(--shadow); }
+.je-thumb > * { width: 100%; height: auto; display: block; }
+.je-head { display: grid; gap: .1rem; }
+.je-card { margin: 0; font-family: var(--display); font-size: .8rem; letter-spacing: .04em; color: var(--parchment); }
+.je-card small { font-family: var(--body); letter-spacing: 0; color: var(--muted); font-size: .95rem; }
+.je-prompt { margin: .3rem 0 0; font-style: italic; color: var(--gold); font-size: 1rem; }
+.je-text { margin: .3rem 0 0; white-space: pre-wrap; overflow-wrap: anywhere; }
+.je-actions { display: flex; flex-wrap: wrap; align-items: center; gap: .4rem 1rem; margin-top: .4rem; font-size: .95rem; }
+.linkbtn { border: 0; background: none; padding: 4px 0; color: var(--gold); font: inherit; text-decoration: underline; text-underline-offset: 3px; cursor: pointer; }
+.linkbtn.danger { color: var(--danger); }
+#journalThisCard { margin-top: .4rem; }
+
+/* print only the journal */
+.journal-print { display: none; }
+@media print {
+  body.printing-journal > *:not(.journal-print) { display: none !important; }
+  body.printing-journal { background: #fff !important; color: #222; }
+  body.printing-journal .journal-print { display: block !important; font-family: Georgia, serif; color: #222; }
+  .journal-print h1 { font-size: 22pt; color: #3f1659; margin: 0 0 4pt; }
+  .journal-print .sub { color: #666; margin: 0 0 14pt; }
+  .journal-print .entry { border-top: 1px solid #ccc; padding-top: 8pt; margin-top: 12pt; break-inside: avoid; }
+  .journal-print h2 { font-size: 13pt; color: #3f1659; margin: 0 0 4pt; }
+  .journal-print .card { color: #4a1a6b; margin: 0 0 4pt; }
+  .journal-print .prompt { color: #8a6a2a; font-style: italic; margin: 0 0 4pt; }
+  .journal-print .text { margin: 0; line-height: 1.5; }
+}

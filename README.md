@@ -39,6 +39,10 @@ Cards without artwork yet are drawn in the deck's purple-and-gold frame from the
 - **Reading.** The card shows next to its guidebook message (stacked on phones).
   Tapping the card opens it full screen (true full screen on Android and desktop,
   an edge-to-edge overlay on iPhone). Tap or swipe down to close.
+- **My Journal.** Members write private reflections on the dashboard. The card they drew
+  that day is attached automatically (they can remove it), with a rotating writing prompt.
+  Entries can be edited, deleted, searched, downloaded (Word or text) or printed / saved as PDF.
+  PREVIEW: saved in the member's browser; when live, store them with the membership service.
 - **Weekly Reflections.** Seven tiles, one per day; tap any to reread it.
 - **Full deck.** Members can browse all 44 cards and their guidebook messages.
 - **Card Decks.** Each deck has its own page (`#dashboard` for Boundaries are my Love

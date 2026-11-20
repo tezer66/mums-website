@@ -339,6 +339,7 @@
             <button type="button" class="reading-card" id="readingCard" aria-label="Enlarge card"></button>
             <p class="tap-hint">Tap the card to enlarge</p>
             <div class="day-pulls" id="dayPulls" hidden></div>
+            <button type="button" class="btn btn-ghost btn-sm" id="journalThisCard">Write about this card</button>
           </div>
           <article class="booklet-entry" id="bookletEntry"></article>
         </div>
@@ -355,6 +356,51 @@
     <section class="history" aria-labelledby="histTitle">
       <h2 class="section-title" id="histTitle">Weekly Reflections</h2>
       <ol class="hist-row" id="history"></ol>
+    </section>
+
+    <section class="journal" id="journal" aria-labelledby="journalTitle">
+      <div class="journal-head">
+        <div>
+          <h2 class="section-title" id="journalTitle">My Journal</h2>
+          <p class="muted">Your private reflections. Write about your card, what came up today, or anything you need to put down.</p>
+        </div>
+        <div class="journal-tools">
+          <button type="button" class="btn btn-ghost btn-sm" id="jDownloadDoc">Download (Word)</button>
+          <button type="button" class="btn btn-ghost btn-sm" id="jDownloadTxt">Download (text)</button>
+          <button type="button" class="btn btn-ghost btn-sm" id="jPrint">Print or save as PDF</button>
+        </div>
+      </div>
+
+      <form class="journal-form" id="journalForm" novalidate>
+        <div class="jf-top">
+          <p class="eyebrow" id="jfDate"></p>
+          <div class="jf-card" id="jfCard" hidden>
+            <span class="jf-thumb" id="jfThumb"></span>
+            <span class="jf-cardtext"><b id="jfCardTitle"></b><small id="jfCardDeck"></small></span>
+            <button type="button" class="jf-unlink" id="jfUnlink" aria-label="Remove the card from this entry">×</button>
+          </div>
+        </div>
+        <label for="jfPrompt" class="jf-prompt-label">Prompt</label>
+        <div class="jf-prompt-row">
+          <p class="jf-prompt" id="jfPrompt"></p>
+          <button type="button" class="btn btn-ghost btn-sm" id="jfNewPrompt">New prompt</button>
+        </div>
+        <label for="jfText" class="sr">Your reflection</label>
+        <textarea id="jfText" rows="7" placeholder="Write freely. Only you can see this."></textarea>
+        <p class="form-error" id="jfError" role="alert"></p>
+        <div class="jf-actions">
+          <button type="submit" class="btn btn-gold" id="jfSave">Save entry</button>
+          <button type="button" class="btn btn-ghost" id="jfCancel" hidden>Cancel editing</button>
+          <span class="jf-saved" id="jfSaved" role="status"></span>
+        </div>
+      </form>
+
+      <div class="journal-list-head">
+        <h3 class="jl-title">Past entries <span id="jCount"></span></h3>
+        <label for="jSearch" class="sr">Search your journal</label>
+        <input id="jSearch" type="search" placeholder="Search your entries" autocomplete="off">
+      </div>
+      <div class="journal-list" id="journalList"></div>
     </section>
 
     <section class="library" aria-labelledby="libTitle">
@@ -453,6 +499,8 @@
     <p class="hp-copy">© <span id="year"></span> Gillian Harper. All card artwork and text belong to the author.</p>
   </div>
 </footer>
+
+<div id="journalPrint" class="journal-print" aria-hidden="true"></div>
 
 <!-- Full-screen card viewer -->
 <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Card, full size" hidden>

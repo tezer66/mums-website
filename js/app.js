@@ -355,6 +355,7 @@
     $('#guidebookSection').hidden = !DECK.hasGuidebook;
     if (DECK.hasGuidebook) renderBookletSection();
     renderNotes();
+    initJournal();
     renderDeckGrid();
     showToday(false);
   }
@@ -422,6 +423,9 @@
     holder.onclick = function () { openViewer(card); };
 
     renderBookletEntry(card);
+    $('#journalThisCard').onclick = function () { journalForCard(card, date); };
+    // The card they drew today is added to the journal automatically.
+    if (isToday && !jEditing && typeof setJCard === 'function') { setJCard(card); $('#jfPrompt').textContent = JPROMPTS[0]; }
 
     var r = $('#reading');
     r.hidden = false;
@@ -542,6 +546,184 @@
     $('#howTo').innerHTML = '<p>' + esc(h.intro || '') + '</p><ul class="steps">' +
       (h.steps || []).map(function (t) { return '<li>' + esc(t) + '</li>'; }).join('') + '</ul><p>' + esc(h.outro || '') + '</p>';
     $('#bookletLink').href = SITE.bookletPdf || '#';
+  }
+
+  /* ---------------- My Journal ----------------
+     PREVIEW: entries are saved in this browser for this member.
+     LIVE: save them to the membership service so they follow the member to every device. */
+  var JPROMPTS = [
+    'What did today’s card stir up in you?',
+    'Where in your life does this message apply right now?',
+    'What boundary would you like to practise this week?',
+    'What are you ready to let go of?',
+    'What did your body tell you today?',
+    'What truth have you been holding back?',
+    'What are you grateful for today?',
+    'What would you say to your younger self today?',
+    'Who drains your energy, and who restores it?',
+    'What does peace look like for you right now?'
+  ];
+  var jEditing = null, jCard = null, jPromptIdx = 0, jWired = false;
+  function jKey() { return 'hh:journal:' + user.email; }
+  function jEntries() { return store.getJSON(jKey(), []); }
+  function jSave(list) { store.setJSON(jKey(), list); }
+  function findCard(deckId, n) {
+    var d = null; Object.keys(DECKS).forEach(function (k) { if (DECKS[k].id === deckId) d = DECKS[k]; });
+    if (!d) return null;
+    for (var i = 0; i < d.cards.length; i++) if (d.cards[i].n === n) return d.cards[i];
+    return null;
+  }
+  function entryDate(e) { return new Date(e.created).toLocaleDateString(undefined, { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' }); }
+  function setJCard(card) {
+    jCard = card ? { deck: card.deck.id, n: card.n } : null;
+    $('#jfCard').hidden = !card;
+    if (!card) return;
+    var t = $('#jfThumb'); t.innerHTML = ''; t.appendChild(renderFace(card, true));
+    $('#jfCardTitle').textContent = card.title || ('Card ' + card.n);
+    $('#jfCardDeck').textContent = card.deck.name + ' · Card ' + card.n;
+  }
+  function showPrompt() { $('#jfPrompt').textContent = JPROMPTS[jPromptIdx % JPROMPTS.length]; }
+  function resetJForm() {
+    jEditing = null;
+    $('#jfText').value = '';
+    $('#jfSave').textContent = 'Save entry';
+    $('#jfCancel').hidden = true;
+    $('#jfError').textContent = '';
+    $('#jfDate').textContent = longDate(new Date());
+    var today = todaysCard();
+    setJCard(today);
+    jPromptIdx = dayIndex(new Date()) % JPROMPTS.length;
+    showPrompt();
+  }
+  function journalForCard(card, date) {
+    resetJForm();
+    setJCard(card);
+    $('#jfPrompt').textContent = JPROMPTS[0];
+    $('#journal').scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'start' });
+    setTimeout(function () { $('#jfText').focus({ preventScroll: true }); }, reduceMotion ? 0 : 500);
+  }
+  function renderJournal() {
+    var list = jEntries().slice().sort(function (a, b) { return b.created < a.created ? -1 : 1; });
+    var q = ($('#jSearch').value || '').trim().toLowerCase();
+    var shown = q ? list.filter(function (e) { return (e.text + ' ' + (e.prompt || '')).toLowerCase().indexOf(q) >= 0; }) : list;
+    $('#jCount').textContent = list.length ? '(' + list.length + ')' : '';
+    var holder = $('#journalList');
+    if (!list.length) {
+      holder.innerHTML = '<div class="note-empty"><p>Your first reflection will appear here. Try writing a few lines about today’s card.</p></div>';
+      return;
+    }
+    if (!shown.length) { holder.innerHTML = '<p class="muted">No entries match “' + esc(q) + '”.</p>'; return; }
+    holder.innerHTML = '';
+    shown.forEach(function (e) {
+      var card = e.card ? findCard(e.card.deck, e.card.n) : null;
+      var art = document.createElement('article');
+      art.className = 'jentry';
+      art.innerHTML =
+        '<div class="je-head"><p class="eyebrow">' + esc(entryDate(e)) + (e.edited ? ' · edited' : '') + '</p>' +
+        (card ? '<p class="je-card">' + esc(card.title || ('Card ' + card.n)) + ' <small>· ' + esc(card.deck.name) + '</small></p>' : '') + '</div>' +
+        (e.prompt ? '<p class="je-prompt">' + esc(e.prompt) + '</p>' : '') +
+        '<p class="je-text">' + esc(e.text) + '</p>' +
+        '<div class="je-actions"><button type="button" class="linkbtn" data-act="edit">Edit</button>' +
+        '<button type="button" class="linkbtn" data-act="del">Delete</button>' +
+        '<span class="je-confirm" hidden>Delete this entry? <button type="button" class="linkbtn danger" data-act="yes">Yes, delete</button> <button type="button" class="linkbtn" data-act="no">Keep it</button></span></div>';
+      if (card) { var th = document.createElement('span'); th.className = 'je-thumb'; th.appendChild(renderFace(card, true)); art.insertBefore(th, art.firstChild); }
+      art.addEventListener('click', function (ev) {
+        var b = ev.target.closest('button[data-act]'); if (!b) return;
+        var act = b.dataset.act, conf = art.querySelector('.je-confirm');
+        if (act === 'del') conf.hidden = false;
+        else if (act === 'no') conf.hidden = true;
+        else if (act === 'yes') { jSave(jEntries().filter(function (x) { return x.id !== e.id; })); if (jEditing === e.id) resetJForm(); renderJournal(); }
+        else if (act === 'edit') {
+          jEditing = e.id;
+          $('#jfText').value = e.text;
+          $('#jfPrompt').textContent = e.prompt || '';
+          $('#jfDate').textContent = 'Editing · ' + entryDate(e);
+          setJCard(card);
+          $('#jfSave').textContent = 'Save changes';
+          $('#jfCancel').hidden = false;
+          $('#journalForm').scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'center' });
+          $('#jfText').focus({ preventScroll: true });
+        }
+      });
+      holder.appendChild(art);
+    });
+  }
+  function journalAsText() {
+    var list = jEntries().slice().sort(function (a, b) { return a.created < b.created ? -1 : 1; });
+    var out = 'My Journal · HarperHolistic\n' + (user.name ? user.name + '\n' : '') + '\n';
+    list.forEach(function (e) {
+      var card = e.card ? findCard(e.card.deck, e.card.n) : null;
+      out += '────────────────────────\n' + entryDate(e) + '\n';
+      if (card) out += 'Card: ' + (card.title || 'Card ' + card.n) + ' (' + card.deck.name + ', card ' + card.n + ')\n';
+      if (e.prompt) out += 'Prompt: ' + e.prompt + '\n';
+      out += '\n' + e.text + '\n\n';
+    });
+    return out;
+  }
+  function journalAsHTML(forPrint) {
+    var list = jEntries().slice().sort(function (a, b) { return a.created < b.created ? -1 : 1; });
+    var body = '<h1>My Journal</h1><p class="sub">HarperHolistic' + (user.name ? ' · ' + esc(user.name) : '') + ' · ' + list.length + (list.length === 1 ? ' entry' : ' entries') + '</p>';
+    list.forEach(function (e) {
+      var card = e.card ? findCard(e.card.deck, e.card.n) : null;
+      body += '<div class="entry"><h2>' + esc(entryDate(e)) + '</h2>' +
+        (card ? '<p class="card"><b>' + esc(card.title || 'Card ' + card.n) + '</b> · ' + esc(card.deck.name) + ', card ' + card.n + (card.message ? '<br><i>' + esc(card.message.replace(/\n/g, ' ')) + '</i>' : '') + '</p>' : '') +
+        (e.prompt ? '<p class="prompt">' + esc(e.prompt) + '</p>' : '') +
+        '<p class="text">' + esc(e.text).replace(/\n/g, '<br>') + '</p></div>';
+    });
+    if (forPrint) return body;
+    return '<html><head><meta charset="utf-8"><title>My Journal</title><style>body{font-family:Georgia,serif;color:#2a1838;line-height:1.5}h1{color:#3f1659}h2{font-size:14pt;color:#3f1659;margin:18pt 0 4pt}.sub{color:#6f5a7c}.card{color:#4a1a6b}.prompt{color:#9c6f22;font-style:italic}.entry{border-top:1px solid #e3d2ea;padding-top:6pt}</style></head><body>' + body + '</body></html>';
+  }
+  function downloadFile(name, type, content) {
+    try {
+      var blob = new Blob(['﻿' + content], { type: type });
+      var url = URL.createObjectURL(blob);
+      var a = document.createElement('a'); a.href = url; a.download = name;
+      document.body.appendChild(a); a.click(); a.remove();
+      setTimeout(function () { URL.revokeObjectURL(url); }, 2000);
+    } catch (err) { $('#jfError').textContent = 'Your browser blocked the download. Try Print or save as PDF instead.'; }
+  }
+  function fileStamp() { var d = new Date(); return d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate()); }
+  function initJournal() {
+    resetJForm();
+    renderJournal();
+    if (jWired) return;
+    jWired = true;
+    $('#journalForm').addEventListener('submit', function (ev) {
+      ev.preventDefault();
+      var text = $('#jfText').value.trim();
+      if (!text) { $('#jfError').textContent = 'Write a few words before saving.'; return; }
+      var list = jEntries(), now = new Date().toISOString(), prompt = $('#jfPrompt').textContent;
+      if (jEditing) {
+        list.forEach(function (x) { if (x.id === jEditing) { x.text = text; x.prompt = prompt; x.card = jCard; x.edited = now; } });
+      } else {
+        list.push({ id: 'j' + Date.now().toString(36) + randomInt(1e6).toString(36), created: now, text: text, prompt: prompt, card: jCard });
+      }
+      jSave(list);
+      var msg = jEditing ? 'Changes saved' : 'Entry saved';
+      resetJForm(); renderJournal();
+      $('#jfSaved').textContent = msg;
+      setTimeout(function () { $('#jfSaved').textContent = ''; }, 2500);
+    });
+    $('#jfCancel').addEventListener('click', resetJForm);
+    $('#jfUnlink').addEventListener('click', function () { setJCard(null); });
+    $('#jfNewPrompt').addEventListener('click', function () { jPromptIdx++; showPrompt(); });
+    $('#jSearch').addEventListener('input', renderJournal);
+    var needEntries = function () {
+      if (jEntries().length) return true;
+      $('#jfError').textContent = 'Save your first entry, then you can download or print your journal.';
+      return false;
+    };
+    $('#jDownloadDoc').addEventListener('click', function () { if (needEntries()) downloadFile('My-Journal-' + fileStamp() + '.doc', 'application/msword', journalAsHTML(false)); });
+    $('#jDownloadTxt').addEventListener('click', function () { if (needEntries()) downloadFile('My-Journal-' + fileStamp() + '.txt', 'text/plain;charset=utf-8', journalAsText()); });
+    $('#jPrint').addEventListener('click', function () {
+      if (!needEntries()) return;
+      $('#journalPrint').innerHTML = journalAsHTML(true);
+      document.body.classList.add('printing-journal');
+      var done = function () { document.body.classList.remove('printing-journal'); window.removeEventListener('afterprint', done); };
+      window.addEventListener('afterprint', done);
+      try { window.print(); } catch (err) {}
+      setTimeout(done, 1500);
+    });
   }
 
   /* ---------------- the deck: shuffle, fan, choose, flip ---------------- */
