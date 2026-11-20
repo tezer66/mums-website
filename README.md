@@ -60,8 +60,8 @@ Cards without artwork yet are drawn in the deck's purple-and-gold frame from the
   (name, birthday, location, where they are in their healing, areas they want support
   with, what's on their heart, what brings them peace, how to be contacted) so Gillian
   can write personal messages. Those appear under "Notes from Gillian" on the dashboard.
-- **Plans (AUD).** Monthly per deck A$4.99, Monthly all decks A$9.99, Yearly per deck A$29,
-  Yearly full (all decks) A$49. Shown on the home page and chosen when joining.
+- **Plans (AUD).** One deck monthly A$10, all decks monthly A$20, one deck yearly A$59,
+  all decks yearly A$99. Shown on the home page and chosen when joining.
 
 ## Before going live: memberships, payments and profiles
 
@@ -76,8 +76,8 @@ answers yet, and the content isn't locked.
 To go live, connect a membership service that handles AUD subscriptions through Stripe,
 such as Memberstack, Outseta or a WordPress membership plugin:
 
-1. Create four plans in it: Monthly per deck A$4.99, Monthly all decks A$9.99,
-   Yearly per deck A$29 and Yearly full A$49.
+1. Create four plans in it: one deck monthly A$10, all decks monthly A$20,
+   one deck yearly A$59 and all decks yearly A$99.
 2. Replace `signUp` / `signIn` / `signOut` / `current` in `auth.js` with its calls,
    and send the chosen plan to its checkout.
 3. Save the "about you" answers (`saveProfile`) as member custom fields, or post them
