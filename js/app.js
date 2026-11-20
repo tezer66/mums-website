@@ -351,7 +351,7 @@
     });
     var n = DECK.cards.length, secs = (DECK.sections || []).length;
     $('#libSub').textContent = DECK.hasGuidebook
-      ? 'All ' + n + ' cards in their ' + (secs === 5 ? 'five' : secs) + ' sections. Tap a card to read its message in the guidebook.'
+      ? 'The ' + n + ' Card Deck in its ' + (secs === 5 ? 'five' : secs) + ' sections. Tap a card to read its message in the guidebook.'
       : 'All ' + n + ' cards so far. Tap a card to read Gillian’s words for it.';
     $('#guidebookSection').hidden = !DECK.hasGuidebook;
     if (DECK.hasGuidebook) renderBookletSection();
