@@ -78,7 +78,7 @@ window.HHAuth = (function () {
     email = clean(email);
     var u = users()[email];
     if (!email || !password) return Promise.reject(new Error('Please enter the email and password you chose when you joined.'));
-    if (!u || u.demo) return Promise.reject(new Error('We could not find an account for that email. Check the spelling, or become a member first.'));
+    if (!u || u.demo) return Promise.reject(new Error('We could not find an account for that email. Check the spelling, or begin your journey by joining first.'));
     return hash(password).then(function (h) {
       if (h !== u.pass) throw new Error('That password does not match. Please try again.');
       setSession(email, keep);
