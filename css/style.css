@@ -1309,3 +1309,8 @@ body.deck-cancer .dashv .dk .booklet-entry .be-message, body.deck-cancer .dashv 
 body.deck-earth .dashv .dk .deck-switch a[aria-current="page"], body.deck-cancer .dashv .dk .deck-switch a[aria-current="page"] { background: var(--hp-lilac); border-color: var(--hp-lilac); color: var(--hp-lilac-ink); }
 body.deck-earth .dashv .btn-gold:hover { background: #cddbbd !important; }
 body.deck-cancer .dashv .btn-gold:hover { background: #f1cdd8 !important; }
+/* Top menu takes the colours of the deck on screen */
+body.deck-earth .site-header { --hp-lilac: #b9cba4; --hp-lilac-ink: #1d2a1c; background: #1c2a1e !important; border-bottom-color: rgba(185,203,164,.25) !important; }
+body.deck-cancer .site-header { --hp-lilac: #e8b9c8; --hp-lilac-ink: #3a1628; background: #3a1e2f !important; border-bottom-color: rgba(232,185,200,.25) !important; }
+body.deck-earth .site-header .hp-btn:hover { background: #cddbbd; border-color: #cddbbd; }
+body.deck-cancer .site-header .hp-btn:hover { background: #f1cdd8; border-color: #f1cdd8; }

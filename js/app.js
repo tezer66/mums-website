@@ -1165,6 +1165,7 @@
     document.body.classList.toggle('needs-pay', !!(member && !member.plan));
     if (v === 'join') showJoinMode(member);
     document.querySelectorAll('[data-view]').forEach(function (s) { s.hidden = s.getAttribute('data-view') !== v; });
+    if (v !== 'dashboard') document.body.classList.remove('deck-simple', 'deck-earth', 'deck-cancer');   // deck colours only on deck pages
     if (v === 'dashboard') initDashboard(deck || BOUNDARIES);
     if (v === 'about-you') fillProfileForm();
     showLockedNotice(v === 'dashboard');
