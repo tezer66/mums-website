@@ -28,6 +28,8 @@ Accounts, passwords and the four paid plans are handled by **Memberstack** (app
 | One deck, yearly US$59 | `pln_one-deck-yearly-pom203ad` | `prc_one-deck-yearly-exm303dq` |
 | All decks, yearly US$99 | `pln_all-decks-yearly-ihlh00ah` | `prc_all-decks-yearly-71630cov` |
 
+- **Complimentary access:** the free plan **Complimentary** (`pln_complimentary-zum603w2`) opens all
+  decks. Add it to a member in Memberstack (Members, open the member, Plans, Add). It can't be joined from the site.
 - **Joining:** the member picks a plan (and their deck, on a one-deck plan), creates an account,
   then pays on Stripe's checkout. Stripe brings them back to "Tell Gillian about you".
   Someone who signs up but doesn't pay sees a "finish joining" form when they come back.

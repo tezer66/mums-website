@@ -1,6 +1,8 @@
 /*
   Site text and settings for HarperHolistic (from the Companion Booklet).
-  memberstack: the app ID and the four paid plans in Memberstack (memberstack.com),
+  memberstack: the app ID and the plans in Memberstack (memberstack.com). The free
+  "Complimentary" plan gives all decks; Gillian adds it to a member by hand in Memberstack.
+  Memberstack
   which handles accounts and takes payment through Stripe. These IDs are public;
   never put a secret key in this file, because the whole site is public.
   promo: the welcome code (shared on social media). The real discount is the
@@ -19,7 +21,8 @@ window.HH_SITE = {
       "deck-monthly": { "planId": "pln_one-deck-monthly-49m003tz", "priceId": "prc_one-deck-monthly-7vlg002g" },
       "all-monthly":  { "planId": "pln_all-decks-monthly-o4620cv4", "priceId": "prc_all-decks-monthly-84m103co" },
       "deck-yearly":  { "planId": "pln_one-deck-yearly-pom203ad", "priceId": "prc_one-deck-yearly-exm303dq" },
-      "all-yearly":   { "planId": "pln_all-decks-yearly-ihlh00ah", "priceId": "prc_all-decks-yearly-71630cov" }
+      "all-yearly":   { "planId": "pln_all-decks-yearly-ihlh00ah", "priceId": "prc_all-decks-yearly-71630cov" },
+      "all-complimentary": { "planId": "pln_complimentary-zum603w2" }
     }
   },
   "promo": { "code": "RIVER", "percent": 20, "note": "20% off your first payment", "showOnHomepage": false,
