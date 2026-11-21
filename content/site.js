@@ -2,8 +2,7 @@
   Site text and settings for HarperHolistic (from the Companion Booklet).
   memberstack: the app ID and the plans in Memberstack (memberstack.com). The free
   "Complimentary" plan gives all decks; Gillian adds it to a member by hand in Memberstack.
-  Memberstack
-  which handles accounts and takes payment through Stripe. These IDs are public;
+  Memberstack handles accounts and takes payment through Stripe. These IDs are public;
   never put a secret key in this file, because the whole site is public.
   promo: the welcome code (shared on social media). The real discount is the
   Memberstack discount of the same name, entered on the payment page.
