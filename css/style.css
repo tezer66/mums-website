@@ -1264,3 +1264,48 @@ body.mode-play .dashv .work-only { display: none !important; }
 body.deck-simple .dashv .journal-band, body.deck-simple #journalThisCard, body.deck-simple #dayJournal { display: none !important; }
 .mode-tab .work-simple, body.deck-simple .mode-tab .work-full { display: none; } body.deck-simple .mode-tab .work-simple { display: inline; }
 body.deck-simple .dashv .notes { display: none !important; }
+
+/* ---------- Deck colours: Mommas Earth Magick (sage, parchment, gold) ---------- */
+body.deck-earth .dashv {
+  --hp-lilac: #b9cba4; --hp-lilac-ink: #1d2a1c; --hp-light: #eef1e3; --hp-light-2: #e3e9d4; --hp-night: #17231a;
+}
+body.deck-earth .dashv .hp-deep { background: radial-gradient(90% 60% at 50% 30%, #2c3f2c 0%, #1a281d 55%, #121b14 100%); }
+body.deck-earth .dashv .hp-deep::before { filter: hue-rotate(-150deg) saturate(.8); }
+body.deck-earth .dashv .dk {
+  --parchment: #eef2e4; --text: #eef2e4; --ink: #eef2e4; --muted: #b8c4aa; --line: rgba(185,203,164,.25);
+  --plum: #213022; --plum-2: #283a29; --label-c: #b9cba4; --btn-line: #b9cba4; --btn-line-b: rgba(185,203,164,.6);
+}
+body.deck-earth .dashv .dk .table { background: radial-gradient(70% 70% at 50% 45%, rgba(214,190,120,.22), transparent 72%); }
+body.deck-earth .dashv .dk .deck-switch a { border-color: rgba(185,203,164,.4); color: #e2e9d6; }
+body.deck-earth .dashv .dk .reading-card { box-shadow: 0 0 0 1px rgba(214,176,98,.45), 0 0 70px -10px rgba(214,190,120,.45), 0 30px 60px -25px rgba(0,0,0,.95); }
+body.deck-earth .dashv .mode-tab[aria-selected="false"] { border-color: rgba(185,203,164,.55); }
+body.deck-earth .dashv .hp-light { background-color: var(--hp-light); background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220' viewBox='0 0 220 220'%3E%3Cg fill='%234f6b45' fill-opacity='.07'%3E%3Cpath d='M52 30a20 20 0 1 0 16 33a17 17 0 1 1-16-33z'/%3E%3Cpath d='M160 40l3.6 10.4L174 54l-10.4 3.6L160 68l-3.6-10.4L146 54l10.4-3.6z'/%3E%3Cpath d='M110 130l2.2 6.3 6.3 2.2-6.3 2.2-2.2 6.3-2.2-6.3-6.3-2.2 6.3-2.2z'/%3E%3Cpath d='M186 160a14 14 0 1 0 11 23a12 12 0 1 1-11-23z'/%3E%3Ccircle cx='30' cy='150' r='1.8'/%3E%3Ccircle cx='200' cy='110' r='1.6'/%3E%3Ccircle cx='90' cy='200' r='1.5'/%3E%3Ccircle cx='120' cy='60' r='1.3'/%3E%3Ccircle cx='60' cy='100' r='1.2'/%3E%3C/g%3E%3C/svg%3E"); }
+body.deck-earth .dashv .hp-light-2 { background-color: var(--hp-light-2); }
+body.deck-earth .dashv .lt-band .section-title, body.deck-earth .dashv .deck-sec-title { color: #2f4a2a; }
+body.deck-earth .dashv .dk .booklet-entry { --parchment: #2f4a2a; --line: #dfe5d0; --plum: #fbf9f0; --plum-2: #eef1e3; --gold: #8a6a1c; --label-c: #5d7a4f; background: #fbf9f0; }
+body.deck-earth .dashv .dk .booklet-entry .be-aff { background: #eef1e3; border-color: #dfe5d0; }
+body.deck-earth .dashv .dk .booklet-entry .be-message, body.deck-earth .dashv .dk .booklet-entry .be-affirm { color: #2f4a2a; }
+
+/* ---------- Deck colours: Cancer Care Cards (blush, rose, plum) ---------- */
+body.deck-cancer .dashv {
+  --hp-lilac: #e8b9c8; --hp-lilac-ink: #3a1628; --hp-light: #f8ecee; --hp-light-2: #f2e0e4; --hp-night: #2a1622;
+}
+body.deck-cancer .dashv .hp-deep { background: radial-gradient(90% 60% at 50% 30%, #5a3047 0%, #3a1e2f 55%, #26131f 100%); }
+body.deck-cancer .dashv .hp-deep::before { filter: hue-rotate(50deg) saturate(.9); }
+body.deck-cancer .dashv .dk {
+  --parchment: #f8e9ee; --text: #f8e9ee; --ink: #f8e9ee; --muted: #d6b5c2; --line: rgba(232,185,200,.25);
+  --plum: #3c2030; --plum-2: #47273a; --label-c: #e8b9c8; --btn-line: #e8b9c8; --btn-line-b: rgba(232,185,200,.6);
+}
+body.deck-cancer .dashv .dk .table { background: radial-gradient(70% 70% at 50% 45%, rgba(240,170,195,.24), transparent 72%); }
+body.deck-cancer .dashv .dk .deck-switch a { border-color: rgba(232,185,200,.4); color: #f3dde5; }
+body.deck-cancer .dashv .dk .reading-card { box-shadow: 0 0 0 1px rgba(232,185,200,.45), 0 0 70px -10px rgba(240,170,195,.5), 0 30px 60px -25px rgba(0,0,0,.95); }
+body.deck-cancer .dashv .mode-tab[aria-selected="false"] { border-color: rgba(232,185,200,.55); }
+body.deck-cancer .dashv .hp-light { background-color: var(--hp-light); background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220' viewBox='0 0 220 220'%3E%3Cg fill='%23a0607a' fill-opacity='.07'%3E%3Cpath d='M52 30a20 20 0 1 0 16 33a17 17 0 1 1-16-33z'/%3E%3Cpath d='M160 40l3.6 10.4L174 54l-10.4 3.6L160 68l-3.6-10.4L146 54l10.4-3.6z'/%3E%3Cpath d='M110 130l2.2 6.3 6.3 2.2-6.3 2.2-2.2 6.3-2.2-6.3-6.3-2.2 6.3-2.2z'/%3E%3Cpath d='M186 160a14 14 0 1 0 11 23a12 12 0 1 1-11-23z'/%3E%3Ccircle cx='30' cy='150' r='1.8'/%3E%3Ccircle cx='200' cy='110' r='1.6'/%3E%3Ccircle cx='90' cy='200' r='1.5'/%3E%3Ccircle cx='120' cy='60' r='1.3'/%3E%3Ccircle cx='60' cy='100' r='1.2'/%3E%3C/g%3E%3C/svg%3E"); }
+body.deck-cancer .dashv .hp-light-2 { background-color: var(--hp-light-2); }
+body.deck-cancer .dashv .lt-band .section-title, body.deck-cancer .dashv .deck-sec-title { color: #5a2a45; }
+body.deck-cancer .dashv .dk .booklet-entry { --parchment: #5a2a45; --line: #f0dbe2; --plum: #fffafa; --plum-2: #f8ecee; --gold: #a0607a; --label-c: #a0607a; background: #fffafa; }
+body.deck-cancer .dashv .dk .booklet-entry .be-aff { background: #f8ecee; border-color: #f0dbe2; }
+body.deck-cancer .dashv .dk .booklet-entry .be-message, body.deck-cancer .dashv .dk .booklet-entry .be-affirm { color: #5a2a45; }
+body.deck-earth .dashv .dk .deck-switch a[aria-current="page"], body.deck-cancer .dashv .dk .deck-switch a[aria-current="page"] { background: var(--hp-lilac); border-color: var(--hp-lilac); color: var(--hp-lilac-ink); }
+body.deck-earth .dashv .btn-gold:hover { background: #cddbbd !important; }
+body.deck-cancer .dashv .btn-gold:hover { background: #f1cdd8 !important; }

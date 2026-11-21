@@ -467,6 +467,8 @@
     DECK = deck || BOUNDARIES;
     // Mommas Earth Magick and Cancer Care Cards: no journal, notes or Weekly Reflections.
     document.body.classList.toggle('deck-simple', DECK !== BOUNDARIES);
+    document.body.classList.toggle('deck-earth', DECK.route === 'earth-magick');
+    document.body.classList.toggle('deck-cancer', DECK.route === 'cancer-care');
     var today = new Date();
     $('#dashGreeting').textContent = 'Greetings beautiful soul!';
     applyRatio($('[data-view="dashboard"]'), DECK);
@@ -758,7 +760,8 @@
   ];
   var jEditing = null, jCard = null, jPromptIdx = 0, jWired = false;
   function jKey() { return 'hh:journal:' + user.email; }
-  function jEntries() { return store.getJSON(jKey(), []); }
+  // The journal belongs to Boundaries are my Love Language: entries about Earth Magick or Cancer Care cards are left out.
+  function jEntries() { return store.getJSON(jKey(), []).filter(function (e) { return !e.card || e.card.deck === BOUNDARIES.id; }); }
   function jSave(list) { store.setJSON(jKey(), list); }
   function findCard(deckId, n) {
     var d = null; Object.keys(DECKS).forEach(function (k) { if (DECKS[k].id === deckId) d = DECKS[k]; });
@@ -802,7 +805,7 @@
     if (!panel) return;
     if (mode === 'play' || !selected || !selected.date) { panel.hidden = true; return; }
     var key = dayKey(selected.date), isToday = key === dayKey(cardDay());
-    var shown = jEntries().filter(function (e) { return dayKey(cardDay(new Date(e.created))) === key; })
+    var shown = jEntries().filter(function (e) { return dayKey(cardDay(new Date(e.created))) === key && (!e.card || e.card.deck === BOUNDARIES.id); })
       .sort(function (a, b) { return a.created < b.created ? -1 : 1; });
     panel.hidden = false;
     $('#dayJournalTitle').textContent = shown.length > 1 ? 'Your journal entries' : 'Your journal entry';
