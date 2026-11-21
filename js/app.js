@@ -469,6 +469,8 @@
     document.body.classList.toggle('deck-simple', DECK !== BOUNDARIES);
     document.body.classList.toggle('deck-earth', DECK.route === 'earth-magick');
     document.body.classList.toggle('deck-cancer', DECK.route === 'cancer-care');
+    mode = isSimpleDeck() ? 'play' : boundariesMode;
+    applyModeUI();
     var today = new Date();
     $('#dashGreeting').textContent = 'Greetings beautiful soul!';
     applyRatio($('[data-view="dashboard"]'), DECK);
@@ -496,16 +498,30 @@
   /* Decide what "today" looks like: the deck ready to shuffle, or today's reading. */
   /* Inner Work: the card of the day, saved to the journal and Weekly Reflections.
      Inner Play: shuffle and pull as many cards as you like; nothing is saved. */
-  var mode = 'work';
+  var mode = 'work', boundariesMode = 'work';
   var PLAY_BTN = document.getElementById('playAgainBtn');   // moved under the message on each Inner Play card
-  function setMode(m) {
-    mode = m;
-    document.body.classList.toggle('mode-play', m === 'play');   // Inner Play hides the journal, notes, reflections and full deck
+  // Mommas Earth Magick and Cancer Care Cards have no Inner Work / Inner Play tabs:
+  // members shuffle and pull as many cards as they like (nothing is saved).
+  var SIMPLE_DECK_TEXT = {
+    'earth-magick': { title: 'Your card', intro: 'Breathe slowly, shuffle the deck and tap the card that calls to you. Sit with it, and say the affirmation out loud.' },
+    'cancer-care': { title: 'Choose a message', intro: 'Pick a message to help someone. When you don’t know what to say, these cards can help.' }
+  };
+  function isSimpleDeck() { return DECK !== BOUNDARIES; }
+  function applyModeUI() {
+    var simple = isSimpleDeck(), m = mode;
+    document.body.classList.toggle('mode-play', !simple && m === 'play');   // Inner Play hides the journal, notes, reflections and full deck
     $('#modeWork').setAttribute('aria-selected', String(m === 'work'));
     $('#modePlay').setAttribute('aria-selected', String(m === 'play'));
-    $('#drawTitle').textContent = m === 'play' ? 'Inner Play' : 'Your card for today';
-    $('#playIntro').hidden = m !== 'play';
-    $('#workSteps').hidden = m === 'play';
+    var t = SIMPLE_DECK_TEXT[DECK.route] || { title: 'Your card', intro: '' };
+    $('#drawTitle').textContent = simple ? t.title : m === 'play' ? 'Inner Play' : 'Your card for today';
+    $('#simpleIntro').textContent = simple ? t.intro : '';
+    $('#simpleIntro').hidden = !simple;
+    $('#playIntro').hidden = simple || m !== 'play';
+    $('#workSteps').hidden = simple || m === 'play';
+  }
+  function setMode(m) {
+    mode = boundariesMode = m;
+    applyModeUI();
     busy = false;
     showToday(false);
   }
@@ -519,7 +535,7 @@
   }
   function showPlayReading(card, scroll) {
     selected = null;
-    $('#readingLabel').textContent = 'Inner Play · Card ' + card.n;
+    $('#readingLabel').textContent = (isSimpleDeck() ? '' : 'Inner Play · ') + 'Card ' + card.n;
     $('#backToday').hidden = true;
     $('#againBox').hidden = true;
     $('#dayPulls').hidden = true;
@@ -1027,7 +1043,9 @@
       btn.hidden = true;
       $('#drawIntro').hidden = true;
       $('#reshuffleBtn').hidden = mode !== 'play';
-      $('#drawHint').textContent = mode === 'play'
+      $('#drawHint').textContent = DECK.route === 'cancer-care'
+        ? 'Choose the message that feels right, or shuffle again as many times as you like.'
+        : mode === 'play'
         ? 'Choose a card that calls to you, or shuffle again as many times as you like.'
         : 'Choose the card that calls to you. The first card you feel drawn to is your card for today’s journal.';
       fanCards.forEach(function (el, j) {

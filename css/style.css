@@ -1314,3 +1314,5 @@ body.deck-earth .site-header { --hp-lilac: #b9cba4; --hp-lilac-ink: #1d2a1c; bac
 body.deck-cancer .site-header { --hp-lilac: #e8b9c8; --hp-lilac-ink: #3a1628; background: #3a1e2f !important; border-bottom-color: rgba(232,185,200,.25) !important; }
 body.deck-earth .site-header .hp-btn:hover { background: #cddbbd; border-color: #cddbbd; }
 body.deck-cancer .site-header .hp-btn:hover { background: #f1cdd8; border-color: #f1cdd8; }
+body.deck-simple .mode-tabs, body.deck-simple #againBox { display: none !important; }
+#simpleIntro[hidden] { display: none !important; }
