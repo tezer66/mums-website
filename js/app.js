@@ -606,16 +606,32 @@
     });
   }
 
+  /* Weekly Reflections run in weeks that begin on the day the member drew their
+     first card from this deck: day 1 is their first card, then a fresh week every 7 days. */
+  function startKey(email) { return 'hh:start:' + DECK.id + ':' + email; }
+  function parseDay(k) { var p = k.split('-'); return new Date(+p[0], +p[1] - 1, +p[2], 12); }
+  function reflectionsStart(draws) {
+    var saved = store.get(startKey(user.email));
+    if (saved && /^\d{4}-\d{2}-\d{2}$/.test(saved)) return parseDay(saved);
+    var keys = Object.keys(draws).filter(function (k) { return draws[k] && draws[k].length; }).sort();
+    if (!keys.length) return cardDay();               // not started yet: the week begins today
+    store.set(startKey(user.email), keys[0]);
+    return parseDay(keys[0]);
+  }
   function renderHistory() {
     var draws = getDraws(user.email);
     var ol = $('#history');
     ol.innerHTML = '';
-    for (var i = 6; i >= 0; i--) {
-      (function (date) {
+    var today = cardDay(), start = reflectionsStart(draws);
+    var daysIn = Math.max(0, Math.round((today - start) / 864e5));
+    var weekStart = new Date(start); weekStart.setDate(start.getDate() + Math.floor(daysIn / 7) * 7);
+    for (var i = 0; i < 7; i++) {
+      (function (date, dayNo) {
         var key = dayKey(date), list = draws[key] || [], card = list.length ? cardByNumber(list[0]) : null;
+        var offset = Math.round((today - date) / 864e5);   // 0 today, 1 yesterday, negative = still to come
         var li = document.createElement('li');
-        li.className = 'hist-item';
-        var label = i === 0 ? 'Today' : i === 1 ? 'Yesterday' : date.toLocaleDateString(undefined, { weekday: 'short' });
+        li.className = 'hist-item' + (offset < 0 ? ' hist-future' : '');
+        var label = offset === 0 ? 'Today' : offset === 1 ? 'Yesterday' : date.toLocaleDateString(undefined, { weekday: 'short' });
         var dayHtml = '<span class="hist-day"><b>' + esc(label) + '</b>' + esc(date.toLocaleDateString(undefined, { day: 'numeric', month: 'short' })) + '</span>';
         if (card) {
           var btn = document.createElement('button');
@@ -629,12 +645,12 @@
         } else {
           var empty = document.createElement('div');
           empty.className = 'hist-empty';
-          empty.textContent = i === 0 ? 'Waiting for you' : 'No card';
+          empty.textContent = offset === 0 ? 'Waiting for you' : offset < 0 ? 'Day ' + dayNo : 'No card';
           li.appendChild(empty);
         }
         li.insertAdjacentHTML('beforeend', dayHtml);
         ol.appendChild(li);
-      })(daysAgo(i));
+      })(new Date(weekStart.getFullYear(), weekStart.getMonth(), weekStart.getDate() + i, 12), i + 1);
     }
   }
 

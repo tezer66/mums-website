@@ -1232,3 +1232,5 @@ div.acct-field { display: grid; gap: .45rem; }
 .draw-steps li::before { content: counter(step); width: 2rem; height: 2rem; border-radius: 50%; display: grid; place-items: center; border: 1px solid rgba(214,176,98,.7); color: var(--gold, #d6b062); font-family: var(--display, serif); font-size: .95rem; }
 .draw-intro .stage-actions { margin-bottom: .6rem; }
 #drawHint:empty { display: none; }
+.hist-future .hist-empty { opacity: .55; border-style: dashed; }
+.hist-future .hist-day { opacity: .6; }

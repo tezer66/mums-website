@@ -84,7 +84,7 @@ Cards without artwork yet are drawn in the deck's purple-and-gold frame from the
   that day is attached automatically (they can remove it), with a rotating writing prompt.
   Entries can be edited, deleted, searched, downloaded (Word or text) or printed / saved as PDF.
   Saved to the member's Memberstack account.
-- **Weekly Reflections.** Seven tiles, one per day; tap any to reread it.
+- **Weekly Reflections.** Seven tiles, one per day, in weeks that start on the day the member drew their first card from that deck (day 1), then a new week every 7 days. Tap any card to reread it.
 - **Full deck.** Members can browse all 44 cards and their guidebook messages.
 - **Card Decks.** Each deck has its own page (`#dashboard` for Boundaries are my Love
   Language, `#earth-magick` for Mommas Earth Magick), reached from the Card Decks menu or
