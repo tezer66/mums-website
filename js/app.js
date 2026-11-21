@@ -969,7 +969,7 @@
       btn.hidden = true;
       $('#drawIntro').hidden = true;
       $('#reshuffleBtn').hidden = false;
-      $('#drawHint').textContent = 'Choose the card that calls to you, or shuffle again as many times as you like.';
+      $('#drawHint').textContent = 'Choose the card that calls to you. You can shuffle again if you wish, but we recommend the first card you feel drawn to as your card for today’s journal.';
       fanCards.forEach(function (el, j) {
         el.classList.add('pickable');
         el.tabIndex = 0;
