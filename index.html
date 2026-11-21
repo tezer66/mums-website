@@ -19,6 +19,7 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600;700&family=Sue+Ellen+Francisco&family=Playfair+Display:wght@400;700&family=Cinzel:wght@400;500;600&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=DM+Sans:wght@400;500;600&display=swap">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Tiro+Devanagari+Sanskrit&text=%E0%A5%90&display=swap">
 <link rel="stylesheet" href="css/style.css">
+<script data-memberstack-app="app_cmwpxru3200lz0su3hnmd9nw9" src="https://static.memberstack.com/scripts/v1/memberstack.js" type="text/javascript"></script>
 </head>
 <body>
 
@@ -279,13 +280,17 @@
       <p class="auth-quote">“Please take what resonates and leave what does not.” Gill x</p>
     </aside>
     <div class="auth-card">
-      <div class="tabs" role="tablist">
+      <div class="tabs" role="tablist" id="joinTabs">
         <button type="button" role="tab" class="tab" id="tab-join" aria-controls="joinForm" aria-selected="true">Join</button>
         <button type="button" role="tab" class="tab" id="tab-signin" aria-controls="signinForm" aria-selected="false">Sign in</button>
       </div>
 
       <form id="joinForm" class="form" novalidate>
-        <p class="form-lede">Create your account to start drawing your daily card.</p>
+        <p class="form-lede acct-field">Create your account to start drawing your daily card.</p>
+        <div class="join-pending" id="joinPending" hidden>
+          <p class="eyebrow">Almost there</p>
+          <p class="form-lede">Welcome, <span id="joinPendingName"></span>. Your account is ready. Choose your plan and pay securely to open your cards.</p>
+        </div>
         <fieldset class="plan-pick">
           <legend>Your plan</legend>
           <label class="plan-opt" for="plan-deck-monthly"><input type="radio" id="plan-deck-monthly" name="plan" value="deck-monthly"><span><b>One deck, monthly</b> US$9.99 a month <span class="promo-price" data-price="9.99" data-per="first month" hidden></span></span></label>
@@ -300,22 +305,24 @@
           <label class="plan-opt" for="deck-cancer"><input type="radio" id="deck-cancer" name="deck" value="cancer-care"><span><b>Cancer Care Cards</b></span></label>
           <p class="fine">Your deck opens on your dashboard after you join.</p>
         </fieldset>
+        <div class="acct-field">
         <label for="joinName">Your first name</label>
         <input id="joinName" name="name" autocomplete="given-name" required>
         <label for="joinEmail">Email</label>
         <input id="joinEmail" name="email" type="email" autocomplete="email" required>
         <label for="joinPass">Password</label>
-        <input id="joinPass" name="password" type="password" autocomplete="new-password" minlength="6" required>
+        <input id="joinPass" name="password" type="password" autocomplete="new-password" minlength="8" required>
         <label for="joinPass2">Confirm password</label>
-        <input id="joinPass2" name="password2" type="password" autocomplete="new-password" minlength="6" required>
+        <input id="joinPass2" name="password2" type="password" autocomplete="new-password" minlength="8" required>
         <p class="fine">Keep these safe. You'll need this email and password each time you sign in.</p>
+        </div>
         <label for="joinPromo">Promo code <span class="opt">(optional)</span></label>
         <div class="promo-row">
           <input id="joinPromo" name="promo" autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="Enter your code">
           <button type="button" class="btn btn-ghost btn-sm" id="applyPromo">Apply</button>
         </div>
         <p class="promo-msg" id="promoMsg" role="status"></p>
-        <label class="keep" for="joinKeep"><input type="checkbox" id="joinKeep" name="keep"><span>Keep me signed in on this device</span></label>
+        <label class="keep acct-field" for="joinKeep"><input type="checkbox" id="joinKeep" name="keep"><span>Keep me signed in on this device</span></label>
         <p class="form-error" id="joinError" role="alert"></p>
         <button class="btn btn-gold btn-block" type="submit">Continue to secure payment</button>
         <p class="fine pay-note" id="joinPayNote" role="status">Next, you’ll pay securely with Stripe. Card details never touch this website.</p>
@@ -329,7 +336,18 @@
         <input id="signinPass" name="password" type="password" autocomplete="current-password" required>
         <label class="keep" for="signinKeep"><input type="checkbox" id="signinKeep" name="keep"><span>Keep me signed in on this device</span></label>
         <p class="form-error" id="signinError" role="alert"></p>
+        <p class="fine reset-done" id="resetDone" hidden>Your new password is saved. Sign in with it now.</p>
         <button class="btn btn-gold btn-block" type="submit">Sign in</button>
+        <button type="button" class="link-btn" id="forgotLink">Forgot your password?</button>
+        <div class="reset-box" id="resetBox" hidden>
+          <p class="fine" id="resetMsg" role="status"></p>
+          <label for="resetCode">Code from the email</label>
+          <input id="resetCode" autocomplete="one-time-code" inputmode="numeric">
+          <label for="resetPass">New password</label>
+          <input id="resetPass" type="password" autocomplete="new-password" minlength="8">
+          <p class="form-error" id="resetError" role="alert"></p>
+          <button type="button" class="btn btn-ghost btn-block" id="resetBtn">Save new password</button>
+        </div>
       </form>
 
     </div>
@@ -344,6 +362,11 @@
     <div class="dash-head">
       <p class="eyebrow" id="dashDate"></p>
       <h1 class="dash-title" id="dashGreeting">Welcome</h1>
+    </div>
+
+    <div class="locked-note" id="lockedNote" role="status" hidden>
+      <p id="lockedText"></p>
+      <button type="button" class="btn btn-ghost btn-sm" data-billing>Upgrade to All decks</button>
     </div>
 
     <nav class="deck-switch" aria-label="Your card decks">
@@ -478,6 +501,10 @@
         <div class="prose" id="howTo"></div>
       </details>
       <a class="btn btn-ghost" id="bookletLink" href="#" target="_blank" rel="noopener">Open the guidebook (PDF)</a>
+    </section>
+    <section class="membership-row" aria-label="Your membership">
+      <p class="muted">Change your plan, update your card or cancel at any time.</p>
+      <button type="button" class="btn btn-ghost btn-sm" id="billingBtn" data-billing>Manage my subscription</button>
     </section>
     </div>
   </div>

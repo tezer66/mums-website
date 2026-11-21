@@ -1,24 +1,23 @@
 /*
   Site text and settings for HarperHolistic (from the Companion Booklet).
-  Accounts are saved in the visitor's browser only until a real membership
-  service is connected (see README.md).
-  stripe: the public (publishable) key and the four Stripe payment links, one per plan.
-  Never put a secret key (sk_...) in this file: the whole site is public.
-  promo: the welcome code accepted on the join form (shared on social media).
+  memberstack: the app ID and the four paid plans in Memberstack (memberstack.com),
+  which handles accounts and takes payment through Stripe. These IDs are public;
+  never put a secret key in this file, because the whole site is public.
+  promo: the welcome code (shared on social media). The real discount is the
+  Memberstack discount of the same name, entered on the payment page.
   showOnHomepage: true also shows the code in the homepage plans section.
-  The real discount is applied by Stripe (see README.md), so keep the two codes the same.
   previewTools: true shows the "Reset today's card" test button. Set it to false
   (or delete the line) before the site goes live.
 */
 window.HH_SITE = {
   "previewTools": true,
-  "stripe": {
-    "publishableKey": "pk_live_51UdjzSQZ8b1vLEb9TK3XKvzkdpIwfcJPOmHDHSWhZTnu6QL0uCxI7tLLYbayVicDkRjBlEapwDcjdRp7v0cFbmB100mFNR1Jd7",
-    "paymentLinks": {
-      "deck-monthly": "https://buy.stripe.com/aFa6oJael04vaGBcJm77O00",
-      "all-monthly": "https://buy.stripe.com/aFadRb3PX5oP3e9aBe77O01",
-      "deck-yearly": "https://buy.stripe.com/7sYeVf1HP8B14idfVy77O02",
-      "all-yearly": "https://buy.stripe.com/bJe6oJ5Y56sT5mhbFi77O03"
+  "memberstack": {
+    "appId": "app_cmwpxru3200lz0su3hnmd9nw9",
+    "plans": {
+      "deck-monthly": { "planId": "pln_one-deck-monthly-49m003tz", "priceId": "prc_one-deck-monthly-7vlg002g" },
+      "all-monthly":  { "planId": "pln_all-decks-monthly-o4620cv4", "priceId": "prc_all-decks-monthly-84m103co" },
+      "deck-yearly":  { "planId": "pln_one-deck-yearly-pom203ad", "priceId": "prc_one-deck-yearly-exm303dq" },
+      "all-yearly":   { "planId": "pln_all-decks-yearly-ihlh00ah", "priceId": "prc_all-decks-yearly-71630cov" }
     }
   },
   "promo": { "code": "RIVER", "percent": 20, "note": "20% off your first payment", "showOnHomepage": false },

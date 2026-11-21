@@ -1207,3 +1207,16 @@ body { font-family: var(--ui); font-size: 1rem; }
 @media (max-width: 520px) { .promo-banner { border-radius: 18px; } }
 
 .pay-note { text-align: center; margin-top: .4rem; }
+
+/* ---------- Memberstack: finish joining, forgotten password, plan notices ---------- */
+.acct-field[hidden], .join-pending[hidden], .reset-box[hidden], .locked-note[hidden], .reset-done[hidden] { display: none !important; }
+.join-pending { margin: .2rem 0 .4rem; }
+.join-pending .eyebrow { margin: 0 0 .2rem; }
+.link-btn { background: none; border: 0; padding: .6rem 0 0; margin: 0 auto; display: block; font: inherit; font-size: .92rem; color: #6b3d86; text-decoration: underline; text-underline-offset: 3px; cursor: pointer; min-height: 0; }
+.link-btn:hover { color: #3f1659; }
+.reset-box { margin-top: .8rem; padding-top: .8rem; border-top: 1px solid #e3d2ea; }
+.reset-done { color: #2f7a4b; }
+.locked-note { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: .6rem 1rem; margin: 0 0 1.2rem; padding: .8rem 1rem; border: 1px solid rgba(214,176,98,.55); border-radius: 12px; background: rgba(214,176,98,.10); }
+.locked-note p { margin: 0; flex: 1 1 16rem; color: var(--parchment, #f4ead8); }
+.membership-row { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: .6rem 1rem; margin-top: 2rem; padding-top: 1.2rem; border-top: 1px solid rgba(63,22,89,.15); }
+.membership-row p { margin: 0; }

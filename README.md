@@ -15,20 +15,37 @@ domain; keep it in the repository. DNS: A records for `@` → 185.199.108.153,
 185.199.109.153, 185.199.110.153, 185.199.111.153 and CNAME `www` → tezer66.github.io.
 
 
-## Stripe (live)
+## Memberships and payments (Memberstack + Stripe)
 
-Created in the Stripe account and wired into `content/site.js`:
+Accounts, passwords and the four paid plans are handled by **Memberstack** (app
+`app_cmwpxru3200lz0su3hnmd9nw9`), which takes payment through Stripe. The IDs are in
+`content/site.js` (`memberstack`); the code is in `js/auth.js`.
 
-| Plan | Product | Price | Payment link |
-|---|---|---|---|
-| One deck, monthly US$9.99 | `prod_VfPnwpmvLNHqC7` | `price_1Ue4yEQZ8b1vLEb951emMuTc` | https://buy.stripe.com/aFa6oJael04vaGBcJm77O00 |
-| All decks, monthly US$19.99 | `prod_VfPnO60sLq9tWn` | `price_1Ue4yFQZ8b1vLEb9XePxTcsM` | https://buy.stripe.com/aFadRb3PX5oP3e9aBe77O01 |
-| One deck, yearly US$59 | `prod_VfPnxJmHc9OOah` | `price_1Ue4yFQZ8b1vLEb9AFHJxqDc` | https://buy.stripe.com/7sYeVf1HP8B14idfVy77O02 |
-| All decks, yearly US$99 | `prod_VfPnPaGXlFcAk9` | `price_1Ue4yFQZ8b1vLEb9oCiF53rT` | https://buy.stripe.com/bJe6oJ5Y56sT5mhbFi77O03 |
+| Plan | Memberstack plan | Price |
+|---|---|---|
+| One deck, monthly US$9.99 | `pln_one-deck-monthly-49m003tz` | `prc_one-deck-monthly-7vlg002g` |
+| All decks, monthly US$19.99 | `pln_all-decks-monthly-o4620cv4` | `prc_all-decks-monthly-84m103co` |
+| One deck, yearly US$59 | `pln_one-deck-yearly-pom203ad` | `prc_one-deck-yearly-exm303dq` |
+| All decks, yearly US$99 | `pln_all-decks-yearly-ihlh00ah` | `prc_all-decks-yearly-71630cov` |
 
-Promotion code **RIVER** (coupon `C5Zt81a7`, 20% off, once). Payment links allow promotion codes and
-return to `https://www.harperholistic.xyz/#about-you` after payment. The join form sends members to
-the link for their plan with their email (and RIVER, if entered) already filled in.
+- **Joining:** the member picks a plan (and their deck, on a one-deck plan), creates an account,
+  then pays on Stripe's checkout. Stripe brings them back to "Tell Gillian about you".
+  Someone who signs up but doesn't pay sees a "finish joining" form when they come back.
+- **One-deck plans** open only the chosen deck; other decks show an "Upgrade to All decks" note.
+- **Manage my subscription** (bottom of the dashboard) opens Stripe's customer portal to change
+  plan, update a card or cancel. Turn the portal on in Stripe: Settings, Billing, Customer portal.
+- **Forgot your password?** on the sign-in form: Memberstack emails a code.
+- **RIVER:** a Memberstack discount (20% off the first payment, first-time customers). Members
+  type it on the Stripe payment page; the join form only previews the discounted price.
+- **Member data:** daily cards, journal, chosen deck and the "about you" answers are saved in each
+  member's **Member JSON** in Memberstack, so they follow the member to any device. Gillian can
+  read them in Memberstack (Members, open a member). To write a personal note, add to their
+  Member JSON: `"notes": [ { "date": "21 November 2026", "text": "Her message" } ]`.
+- **Test Mode:** until the Memberstack plan is upgraded and harperholistic.xyz is added as a live
+  domain (Settings, Application domains), payments are Stripe test payments (card 4242 4242 4242 4242).
+
+The old Stripe payment links (created before Memberstack) are no longer used by the site and can
+be archived in Stripe.
 
 ## Content
 
@@ -64,7 +81,7 @@ Cards without artwork yet are drawn in the deck's purple-and-gold frame from the
 - **My Journal.** Members write private reflections on the dashboard. The card they drew
   that day is attached automatically (they can remove it), with a rotating writing prompt.
   Entries can be edited, deleted, searched, downloaded (Word or text) or printed / saved as PDF.
-  PREVIEW: saved in the member's browser; when live, store them with the membership service.
+  Saved to the member's Memberstack account.
 - **Weekly Reflections.** Seven tiles, one per day; tap any to reread it.
 - **Full deck.** Members can browse all 44 cards and their guidebook messages.
 - **Card Decks.** Each deck has its own page (`#dashboard` for Boundaries are my Love
@@ -76,33 +93,13 @@ Cards without artwork yet are drawn in the deck's purple-and-gold frame from the
   (name, birthday, location, where they are in their healing, areas they want support
   with, what's on their heart, what brings them peace, how to be contacted) so Gillian
   can write personal messages. Those appear under "Notes from Gillian" on the dashboard.
-- **One-deck plans.** Members choose their deck when joining; it opens on their dashboard after payment and each time they sign in. The deck is sent to Stripe as the client reference (e.g. `deck-earth-magick`) so Gillian can see it on the payment.
+- **One-deck plans.** Members choose their deck when joining; it opens on their dashboard after payment and each time they sign in, on any device.
 - **Plans (USD).** One deck monthly US$9.99, all decks monthly US$19.99, one deck yearly US$59,
   all decks yearly US$99. Shown on the home page and chosen when joining.
 
-## Before going live: memberships, payments and profiles
+## Before going live
 
-First, set `"previewTools": false` in `content/site.js` to remove the
-"Reset today's card" test button.
-
-
-`js/auth.js` is a **preview**: accounts, plans, "about you" answers and card history
-are saved in the visitor's own browser. Nothing is charged, Gillian can't see the
-answers yet, and the content isn't locked.
-
-To go live, connect a membership service that handles USD subscriptions through Stripe,
-such as Memberstack, Outseta or a WordPress membership plugin:
-
-1. Create four plans in it: one deck monthly US$9.99, all decks monthly US$19.99,
-   one deck yearly US$59 and all decks yearly US$99 (prices in USD).
-2. Welcome code: in Stripe → Product catalogue → Coupons, create a **20% off, Once** coupon,
-   then add a promotion code **RIVER** (tick "first-time order only"). Turn on
-   **Allow promotion codes** on each payment link. The code shown on the site is set in
-   `content/site.js` (`promo`), so keep both the same. The code is shared on social
-   media, not shown on the site (set `showOnHomepage` to true to show it).
-3. Replace `signUp` / `signIn` / `signOut` / `current` in `auth.js` with its calls,
-   and send the chosen plan to its checkout.
-4. Save the "about you" answers (`saveProfile`) as member custom fields, or post them
-   to a form service that emails Gillian, so she can read them.
-5. Load Gillian's personal notes from there in `getNotes`.
-6. Save each member's daily draws on the server.
+1. Upgrade the Memberstack plan, add `www.harperholistic.xyz` as a live app domain and switch to Live Mode.
+2. In Stripe, turn on the customer portal and check business details, branding and receipts.
+3. Set `"previewTools": false` in `content/site.js` to remove the "Reset today's card" test button.
+4. Add the privacy policy, terms (cancellation and refunds) and wellbeing disclaimer.

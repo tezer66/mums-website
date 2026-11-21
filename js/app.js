@@ -251,7 +251,7 @@
       var msg = $('#promoMsg');
       if (!v) { promoApplied = null; msg.textContent = ''; msg.className = 'promo-msg'; showPromoPrices(); return; }
       if (v === P.code.toUpperCase()) {
-        promoApplied = P.code; msg.textContent = P.code + ' applied: ' + P.note + '.'; msg.className = 'promo-msg ok';
+        promoApplied = P.code; msg.textContent = P.code + ': ' + P.note + '. Type ' + P.code + ' again in the promotion code box on the payment page.'; msg.className = 'promo-msg ok';
       } else {
         promoApplied = null; if (!quiet) { msg.textContent = 'That code isn’t valid. Check the spelling, or leave it empty.'; msg.className = 'promo-msg bad'; }
       }
@@ -269,7 +269,9 @@
     });
   }
 
+  var PAY_NOTE = '';
   function initAuthForms() {
+    PAY_NOTE = $('#joinPayNote').textContent;
     $('#tab-join').addEventListener('click', function () { setTab('join'); });
     $('#tab-signin').addEventListener('click', function () { setTab('signin'); });
     document.querySelectorAll('[data-tab]').forEach(function (a) {
@@ -290,36 +292,70 @@
 
     $('#joinForm').addEventListener('submit', function (e) {
       e.preventDefault();
-      var f = e.target;
+      var f = e.target, btn = f.querySelector('button[type="submit"]');
       $('#joinError').textContent = '';
       var plan = (f.querySelector('input[name="plan"]:checked') || {}).value;
-      if (f.password.value !== f.password2.value) { $('#joinError').textContent = 'The two passwords do not match. Please type them again.'; return; }
-      var promoUsed = promoApplied;
       var oneDeck = plan && plan.indexOf('deck-') === 0;
       var chosenDeck = oneDeck ? ((f.querySelector('input[name="deck"]:checked') || {}).value || 'dashboard') : 'dashboard';
-      Auth.signUp(f.name.value, f.email.value, f.password.value, plan, f.keep.checked)
-        .then(function (u) { store.set('hh:home:' + u.email, chosenDeck); if (promoUsed) store.set('hh:promo:' + u.email, promoUsed); promoApplied = null; $('#promoMsg').textContent = ''; showPromoPrices();
-          // Go to Stripe's secure checkout for the chosen plan; Stripe brings them back to "Tell Gillian about you".
-          var link = SITE.stripe && SITE.stripe.paymentLinks && SITE.stripe.paymentLinks[plan];
-          if (link) {
-            var url = link + '?prefilled_email=' + encodeURIComponent(u.email) + (promoUsed ? '&prefilled_promo_code=' + encodeURIComponent(promoUsed) : '') + (oneDeck ? '&client_reference_id=deck-' + chosenDeck : '');
-            $('#joinError').textContent = '';
-            $('#joinPayNote').textContent = 'Taking you to secure checkout with Stripe…';
-            window.location.href = url;
-            return;
-          } f.reset(); $('#plan-all-yearly').checked = true; syncDeckPick(); go('about-you'); })
-        .catch(function (err) { $('#joinError').textContent = err.message; });
+      var already = Auth.current();   // signed up before but has not paid yet
+      if (!already && f.password.value !== f.password2.value) { $('#joinError').textContent = 'The two passwords do not match. Please type them again.'; return; }
+      btn.disabled = true;
+      $('#joinPayNote').textContent = already ? 'Opening secure checkout…' : 'Creating your account…';
+      (already ? Promise.resolve(already) : Auth.signUp(f.name.value, f.email.value, f.password.value, plan, f.keep.checked))
+        .then(function (u) {
+          store.set('hh:home:' + u.email, chosenDeck);
+          store.set('hh:plan-choice:' + u.email, plan);
+          if (promoApplied) store.set('hh:promo:' + u.email, promoApplied);
+          $('#joinPayNote').textContent = 'Taking you to secure checkout with Stripe…';
+          // Stripe checkout (through Memberstack); afterwards Stripe brings them back to "Tell Gillian about you".
+          return Auth.checkout(plan);
+        })
+        .catch(function (err) {
+          btn.disabled = false;
+          $('#joinPayNote').textContent = PAY_NOTE;
+          $('#joinError').textContent = err.message;
+          if (Auth.current()) route();   // the account was made: show the "finish joining" form
+        });
     });
     $('#signinForm').addEventListener('submit', function (e) {
       e.preventDefault();
-      var f = e.target;
+      var f = e.target, btn = f.querySelector('button[type="submit"]');
       $('#signinError').textContent = '';
+      btn.disabled = true;
       Auth.signIn(f.email.value, f.password.value, f.keep.checked)
         .then(function () { f.reset(); go(homeDeck()); })
-        .catch(function (err) { $('#signinError').textContent = err.message; });
+        .catch(function (err) { $('#signinError').textContent = err.message; })
+        .then(function () { btn.disabled = false; });
     });
 
-    $('#signOutBtn').addEventListener('click', function () { Auth.signOut(); go('home'); });
+    // Forgotten password: Memberstack emails a code.
+    $('#forgotLink').addEventListener('click', function () {
+      var em = $('#signinEmail').value.trim();
+      $('#signinError').textContent = '';
+      if (!em) { $('#signinError').textContent = 'Type your email above first, then tap "Forgot your password?" again.'; $('#signinEmail').focus(); return; }
+      Auth.sendReset(em).then(function () {
+        $('#resetBox').hidden = false;
+        $('#resetMsg').textContent = 'We have emailed a code to ' + em + '. Enter it below with your new password.';
+        $('#resetCode').focus();
+      }).catch(function (err) { $('#signinError').textContent = err.message; });
+    });
+    $('#resetBtn').addEventListener('click', function () {
+      $('#resetError').textContent = '';
+      Auth.resetPassword($('#resetCode').value, $('#resetPass').value).then(function () {
+        $('#resetBox').hidden = true; $('#resetCode').value = ''; $('#resetPass').value = '';
+        $('#signinError').textContent = '';
+        $('#signinPass').value = ''; $('#signinPass').focus();
+        $('#resetDone').hidden = false;
+      }).catch(function (err) { $('#resetError').textContent = err.message; });
+    });
+
+    document.querySelectorAll('[data-billing]').forEach(function (b) {
+      b.addEventListener('click', function () {
+        b.disabled = true;
+        Auth.manageBilling().catch(function (err) { b.disabled = false; alert(err.message); });
+      });
+    });
+    $('#signOutBtn').addEventListener('click', function () { Auth.signOut().then(function () { go('home'); }); document.body.classList.remove('is-member'); });
   }
 
   /* ---------------- "Tell Gillian about you" ---------------- */
@@ -999,20 +1035,67 @@
   function go(view) {
     if (location.hash === '#' + view) route(); else location.hash = view;
   }
+  var lastRefresh = 0, authKnown = false;
   function route() {
     var v = (location.hash || '#home').slice(1);
     var member = Auth.current();
+    // Until we know whether someone is signed in, don't flash the join page on member pages.
+    if (!authKnown && (DECKS[v] || v === 'about-you' || v === 'home-deck')) {
+      document.querySelectorAll('[data-view]').forEach(function (s) { s.hidden = true; });
+      return;
+    }
     if (v === 'home-deck') { if (member) { location.replace('#' + homeDeck()); return; } v = 'join'; }
     var deck = DECKS[v] || null;
     if (deck) v = 'dashboard';
     if (VIEWS.indexOf(v) < 0) v = 'home';
     if ((v === 'dashboard' || v === 'about-you') && !member) v = 'join';
-    if (v === 'join' && member) { location.replace('#' + homeDeck()); return; }
+    // Signed up but not paid yet (or just back from checkout while Stripe catches up).
+    if (member && !member.plan && (v === 'dashboard' || v === 'join')) {
+      if (Date.now() - lastRefresh > 5000) { lastRefresh = Date.now(); Auth.refresh().then(route); return; }
+      v = 'join';
+    }
+    if (v === 'join' && member && member.plan) { location.replace('#' + homeDeck()); return; }
+    // One-deck plans open only the deck the member chose.
+    if (v === 'dashboard' && member && member.plan && member.plan.indexOf('deck-') === 0) {
+      var mine = homeDeck(), want = deck ? deck.route : 'dashboard';
+      if (want !== mine) { lockedNotice = want; location.replace('#' + mine); return; }
+    }
     document.body.classList.toggle('is-member', !!member);
+    document.body.classList.toggle('needs-pay', !!(member && !member.plan));
+    if (v === 'join') showJoinMode(member);
     document.querySelectorAll('[data-view]').forEach(function (s) { s.hidden = s.getAttribute('data-view') !== v; });
     if (v === 'dashboard') initDashboard(deck || BOUNDARIES);
     if (v === 'about-you') fillProfileForm();
+    showLockedNotice(v === 'dashboard');
     window.scrollTo(0, 0);
+  }
+
+  // Shown on a one-deck member's dashboard after they tried to open another deck.
+  var lockedNotice = null;
+  var DECK_NAMES = { dashboard: 'Boundaries are my Love Language', 'earth-magick': "Momma's Earth Magick", 'cancer-care': 'Cancer Care Cards' };
+  function showLockedNotice(onDash) {
+    var el = $('#lockedNote');
+    if (!onDash || !lockedNotice) { el.hidden = true; return; }
+    $('#lockedText').textContent = DECK_NAMES[lockedNotice] + ' is part of the All decks plan. Your plan includes ' + DECK_NAMES[homeDeck()] + '.';
+    el.hidden = false;
+    lockedNotice = null;
+  }
+
+  // The join page doubles as "finish joining" for members who have not paid yet.
+  function showJoinMode(member) {
+    var pending = !!(member && !member.plan);
+    document.querySelectorAll('#joinForm .acct-field').forEach(function (el) { el.hidden = pending; });
+    $('#joinPending').hidden = !pending;
+    if (pending) {
+      $('#joinPendingName').textContent = member.name;
+      var wanted = store.get('hh:plan-choice:' + member.email), deckWanted = store.get('hh:home:' + member.email);
+      if (wanted && $('#plan-' + wanted)) $('#plan-' + wanted).checked = true;
+      var dr = deckWanted && $('#joinForm input[name="deck"][value="' + deckWanted + '"]');
+      if (dr) dr.checked = true;
+      $('#joinForm input[name="plan"]:checked').dispatchEvent(new Event('change'));
+    }
+    $('#joinTabs').hidden = pending;
+    if (pending) setTab('join');
   }
 
   (function wireDecksMenu() {
@@ -1028,5 +1111,6 @@
   initPromo();
   initProfileForm();
   window.addEventListener('hashchange', route);
-  route();
+  route();                                  // show the page straight away…
+  Auth.ready().then(function () { authKnown = true; route(); }); // …then again once sign-in is known
 })();
