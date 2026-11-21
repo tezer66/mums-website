@@ -18,7 +18,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600;700&family=Sue+Ellen+Francisco&family=Playfair+Display:wght@400;700&family=Cinzel:wght@400;500;600&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=DM+Sans:wght@400;500;600&display=swap">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Tiro+Devanagari+Sanskrit&text=%E0%A5%90&display=swap">
-<link rel="stylesheet" href="css/style.css?v=202611211102">
+<link rel="stylesheet" href="css/style.css?v=202611212354">
 <script data-memberstack-app="app_cmwpxru3200lz0su3hnmd9nw9" src="https://static.memberstack.com/scripts/v1/memberstack.js" type="text/javascript"></script>
 </head>
 <body>
@@ -57,11 +57,12 @@
         <p class="hp-eyebrow">By Gillian Harper</p>
         <h1 class="hp-h1">Healing Inspiration Cards</h1>
         <p class="hp-lead">Welcome to Boundaries are my Love Language.</p>
-        <p>This healing inspiration card deck was created for every soul who has struggled to speak uncomfortable truths, set personal boundaries or walk away from situations and relationships that did not have the best intention for your highest good.</p>
+        <p>Healing inspiration cards for every soul learning to speak their truth, set boundaries and let go of what no longer serves them.</p>
         <p class="hp-tagline" id="tagline"></p>
         <div class="hp-ctas">
           <a href="#join" class="hp-btn" data-tab="join">Join and draw your card</a>
-          <a href="#hp-decks" class="hp-btn hp-btn-line">Explore the decks</a>
+          <a href="#hp-try" class="hp-btn hp-btn-line" data-guest>Try 4 free cards</a>
+          <a href="#hp-decks" class="hp-btn hp-btn-line" data-member>Explore the decks</a>
         </div>
       </div>
       <div class="hp-hero-art" aria-hidden="true">
@@ -70,6 +71,32 @@
           <img class="hd hd-2" src="images/cards/card-04.webp" alt="">
           <img class="hd hd-3" src="images/cards/back.webp" alt="">
         </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TRY THE CARDS (visitors): up to 4 free pulls, then join -->
+  <div class="hp-band hp-deep hp-try" id="hp-try" data-guest>
+    <div class="wrap hp-section hp-center">
+      <p class="hp-eyebrow">Try the cards</p>
+      <h2 class="hp-h2">Shuffle the deck and choose a card</h2>
+      <p class="hp-intro" id="tryIntro">Breathe slowly and ask your heart “What do I need to hear today?”</p>
+      <div class="try-stage" id="tryStage" aria-live="polite"></div>
+      <div class="try-result" id="tryResult" hidden>
+        <div class="try-face" id="tryFace"></div>
+        <div class="try-words">
+          <p class="try-title" id="tryTitle"></p>
+          <p class="try-msg" id="tryMsg"></p>
+          <p class="try-aff" id="tryAff"></p>
+        </div>
+      </div>
+      <div class="hp-ctas try-actions">
+        <button type="button" class="hp-btn" id="tryShuffle">Shuffle the deck</button>
+      </div>
+      <p class="try-left" id="tryLeft"></p>
+      <div class="try-done" id="tryDone" hidden>
+        <p>You’ve drawn your 4 free cards. Join to experience the full decks: a card every morning, the guidebook, your journal and Weekly Reflections.</p>
+        <a href="#join" class="hp-btn" data-tab="join">Join to experience the full decks</a>
       </div>
     </div>
   </div>
@@ -146,19 +173,19 @@
       </div>
       <div class="hp-row hp-row-flip">
         <div class="hp-row-copy">
-          <p class="hp-eyebrow">Mommas Earth Magick</p>
-          <h2 class="hp-h2">Rituals to release, protect and begin again</h2>
-          <p>Full moon releases, morning rituals, energy protection and forgiveness, with Gillian’s own words beside every card.</p>
-        </div>
-        <div class="hp-row-art"><img class="hp-frame" src="images/earth-magick/card-01.webp" alt="Mommas Earth Magick card: Open the Channel" loading="lazy"></div>
-      </div>
-      <div class="hp-row">
-        <div class="hp-row-copy">
           <p class="hp-eyebrow">Cancer Care Cards</p>
           <h2 class="hp-h2">The words you need when you don’t know what to say</h2>
           <p>Kind, practical messages to say or text someone going through cancer, ready to copy and send with one tap.</p>
         </div>
         <div class="hp-row-art"><img class="hp-frame" src="images/cancer-care/card-01.webp" alt="Cancer Care card: This is just a chapter, not your whole story" loading="lazy"></div>
+      </div>
+      <div class="hp-row">
+        <div class="hp-row-copy">
+          <p class="hp-eyebrow">Mommas Earth Magick</p>
+          <h2 class="hp-h2">Rituals to release, protect and begin again</h2>
+          <p>Full moon releases, morning rituals, energy protection and forgiveness, with Gillian’s own words beside every card.</p>
+        </div>
+        <div class="hp-row-art"><img class="hp-frame" src="images/earth-magick/card-01.webp" alt="Mommas Earth Magick card: Open the Channel" loading="lazy"></div>
       </div>
     </div>
   </div>
@@ -601,11 +628,11 @@
   <p class="lb-hint">Tap anywhere or swipe down to close</p>
 </div>
 
-<script src="content/site.js?v=202611211102"></script>
-<script src="content/cards.js?v=202611211102"></script>
-<script src="content/earth-magick-deck.js?v=202611211102"></script>
-<script src="content/cancer-care-deck.js?v=202611211102"></script>
-<script src="js/auth.js?v=202611211102"></script>
-<script src="js/app.js?v=202611211102"></script>
+<script src="content/site.js?v=202611212354"></script>
+<script src="content/cards.js?v=202611212354"></script>
+<script src="content/earth-magick-deck.js?v=202611212354"></script>
+<script src="content/cancer-care-deck.js?v=202611212354"></script>
+<script src="js/auth.js?v=202611212354"></script>
+<script src="js/app.js?v=202611212354"></script>
 </body>
 </html>

@@ -138,7 +138,76 @@
   })();
 
   /* ---------------- home ---------------- */
+  /* ---------------- homepage: try 4 free cards (visitors) ---------------- */
+  var TRY_LIMIT = 4, TRY_KEY = 'hh:free-pulls';
+  function initTry() {
+    var stageEl = $('#tryStage'); if (!stageEl) return;
+    var btn = $('#tryShuffle'), FANN = 5, picking = false;
+    var cards = BOUNDARIES.cards.filter(function (c) { return c.image; });
+    function used() { var n = parseInt(store.get(TRY_KEY) || '0', 10); return isNaN(n) ? 0 : n; }
+    function showLeft() {
+      var left = Math.max(0, TRY_LIMIT - used());
+      $('#tryLeft').textContent = left ? left + (left === 1 ? ' free card left' : ' free cards left') : '';
+      if (!left) { btn.hidden = true; $('#tryDone').hidden = false; }
+    }
+    function stack() {
+      stageEl.innerHTML = '';
+      stageEl.classList.remove('is-fanned');
+      for (var i = 0; i < FANN; i++) {
+        var b = document.createElement('button');
+        b.type = 'button'; b.className = 'try-card'; b.tabIndex = -1; b.disabled = true;
+        b.setAttribute('aria-label', 'Choose card ' + (i + 1) + ' of ' + FANN);
+        b.innerHTML = '<img src="' + BOUNDARIES.back + '" alt="" draggable="false">';
+        b.style.setProperty('--i', i);
+        stageEl.appendChild(b);
+      }
+    }
+    function shuffle() {
+      if (picking || used() >= TRY_LIMIT) return;
+      $('#tryResult').hidden = true;
+      stack();
+      btn.disabled = true;
+      stageEl.classList.add('is-shuffling');
+      setTimeout(function () {
+        stageEl.classList.remove('is-shuffling');
+        stageEl.classList.add('is-fanned');
+        btn.disabled = false; btn.textContent = 'Shuffle again';
+        $('#tryIntro').textContent = 'Tap the card that calls to you.';
+        stageEl.querySelectorAll('.try-card').forEach(function (b) {
+          b.disabled = false; b.tabIndex = 0;
+          b.addEventListener('click', function () { choose(b); }, { once: true });
+        });
+      }, reduceMotion ? 50 : 1400);
+    }
+    function choose(b) {
+      if (picking) return;
+      picking = true;
+      store.set(TRY_KEY, String(used() + 1));
+      var card = cards[randomInt(cards.length)];
+      stageEl.querySelectorAll('.try-card').forEach(function (x) { x.disabled = true; if (x !== b) x.classList.add('is-gone'); });
+      b.classList.add('is-chosen');
+      setTimeout(function () {
+        var face = $('#tryFace'); face.innerHTML = ''; face.appendChild(renderFace(card));
+        face.onclick = function () { openViewer(card); };
+        var bk = card.booklet || {};
+        $('#tryTitle').textContent = card.title || '';
+        $('#tryMsg').textContent = card.message || '';
+        $('#tryAff').textContent = bk.affirmation ? '“' + bk.affirmation + '”' : '';
+        stageEl.innerHTML = '';
+        $('#tryResult').hidden = false;
+        $('#tryIntro').textContent = 'Read it slowly, and say the affirmation out loud.';
+        btn.textContent = 'Shuffle again';
+        picking = false;
+        showLeft();
+      }, reduceMotion ? 50 : 700);
+    }
+    btn.addEventListener('click', shuffle);
+    stack();
+    showLeft();
+  }
+
   function initHome() {
+    initTry();
     var row = $('#showcase');
     row.innerHTML = '';
     BOUNDARIES.cards.filter(function (c) { return c.image; }).slice(0, 4).forEach(function (card) {
