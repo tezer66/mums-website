@@ -93,7 +93,7 @@ Cards without artwork yet are drawn in the deck's purple-and-gold frame from the
   the switcher at the top of the dashboard. Each deck has its own daily card, Weekly
   Reflections and full-deck grid, and keeps its own card shape. Cancer Care Cards is at `#cancer-care`. To add an Earth Magick card, add its image to
   `images/earth-magick/` and copy an entry in `content/earth-magick-deck.js`.
-- **Tell Gillian about you.** After joining, members answer a few optional questions
+- **Tell Gillian about you.** Notes from Gillian are part of the **yearly** plans (and Complimentary). Monthly members see an "Upgrade to yearly" note instead, and go straight to their cards after paying. After joining a yearly plan, members answer a few optional questions
   (name, birthday, location, where they are in their healing, areas they want support
   with, what's on their heart, what brings them peace, how to be contacted) so Gillian
   can write personal messages. Those appear under "Notes from Gillian" on the dashboard.

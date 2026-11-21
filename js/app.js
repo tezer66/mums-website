@@ -304,7 +304,8 @@
           if (promoApplied) store.set('hh:promo:' + u.email, promoApplied);
           $('#joinPayNote').textContent = 'Taking you to secure checkout with Stripe…';
           // Stripe checkout (through Memberstack); afterwards Stripe brings them back to "Tell Gillian about you".
-          return Auth.checkout(plan);
+          // Yearly members go on to "Tell Gillian about you" (for her personal notes); monthly members go to their cards.
+          return Auth.checkout(plan, { success: hasNotes(plan) ? '#about-you' : '#home-deck' });
         })
         .catch(function (err) {
           btn.disabled = false;
@@ -399,8 +400,19 @@
     });
     $('#profileError').textContent = '';
   }
+  // Notes from Gillian are part of the yearly plans (and complimentary access).
+  function hasNotes(plan) { return /yearly|complimentary/.test(plan || ''); }
   function renderNotes() {
     var holder = $('#notesList'), u = Auth.current();
+    if (!hasNotes(u.plan)) {
+      $('#profileBtn').hidden = true;
+      holder.innerHTML = '<div class="note-empty note-locked"><p>Personal notes from Gillian are part of the yearly membership. Gillian gets to know you and writes to you herself.</p><button type="button" class="btn btn-gold btn-sm" data-billing>Upgrade to yearly</button></div>';
+      holder.querySelector('[data-billing]').addEventListener('click', function () {
+        var b = this; b.disabled = true;
+        Auth.manageBilling().catch(function (err) { b.disabled = false; alert(err.message); });
+      });
+      return;
+    }
     var profile = Auth.getProfile(u.email);
     $('#profileBtn').textContent = profile ? 'Edit your answers' : 'Tell Gillian about you';
     $('#profileBtn').hidden = !profile;

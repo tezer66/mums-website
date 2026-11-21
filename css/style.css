@@ -1257,3 +1257,4 @@ body.mode-play .dashv .work-only { display: none !important; }
 .dj-title { margin: 0 0 .8rem; font-family: var(--display, serif); font-weight: 600; font-size: 1.35rem; color: #3f1659; }
 .day-journal .journal-list { display: grid; gap: .8rem; }
 .day-journal .dj-empty { margin: 0; font-style: italic; }
+.plan-opt .plan-extra { display: block; font-size: .85rem; color: #7b4f9e; margin-top: .15rem; }
