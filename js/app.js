@@ -878,6 +878,7 @@
   function buildDeck() {
     stage.innerHTML = '';
     busy = false;
+    $('#reshuffleBtn').hidden = true;
     var btn = $('#shuffleBtn');
     btn.disabled = false;
     btn.hidden = false;
@@ -967,7 +968,8 @@
     seq.then(function () { return fanOut(cards); }).then(function (fanCards) {
       btn.hidden = true;
       $('#drawIntro').hidden = true;
-      $('#drawHint').textContent = 'Choose the card that calls to you.';
+      $('#reshuffleBtn').hidden = false;
+      $('#drawHint').textContent = 'Choose the card that calls to you, or shuffle again as many times as you like.';
       fanCards.forEach(function (el, j) {
         el.classList.add('pickable');
         el.tabIndex = 0;
@@ -982,6 +984,7 @@
   function choose(el, fanCards) {
     if (!busy || el.dataset.chosen) return;
     el.dataset.chosen = '1';
+    $('#reshuffleBtn').hidden = true;
     if (todaysCard()) { busy = false; showToday(true); return; } // already chosen today (e.g. in another tab)
     var card = pickCardFor(user.email);
     var today = cardDay();
@@ -1016,6 +1019,13 @@
   }
 
   $('#shuffleBtn').addEventListener('click', shuffle);
+  // Not drawn to any of the fanned cards? Gather them up and shuffle again, as often as they like.
+  $('#reshuffleBtn').addEventListener('click', function () {
+    if (todaysCard()) { showToday(true); return; }
+    buildDeck();
+    $('#shuffleBtn').hidden = true;
+    shuffle();
+  });
   // Tapping the face-down deck shuffles it too (before the cards are fanned out).
   stage.addEventListener('click', function (e) {
     if (busy || $('#shuffleBtn').hidden || !e.target.closest('.dcard')) return;
