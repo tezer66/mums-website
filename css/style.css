@@ -1244,3 +1244,4 @@ div.acct-field { display: grid; gap: .45rem; }
 .play-intro { max-width: 34rem; margin: .3rem auto 1rem; line-height: 1.55; opacity: .9; }
 .play-intro[hidden], .draw-steps[hidden], .play-again[hidden] { display: none !important; }
 .play-again { margin-top: 1.2rem; }
+body.mode-play .dashv .work-only { display: none !important; }

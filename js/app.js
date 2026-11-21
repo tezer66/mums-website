@@ -496,6 +496,7 @@
   var PLAY_BTN = document.getElementById('playAgainBtn');   // moved under the message on each Inner Play card
   function setMode(m) {
     mode = m;
+    document.body.classList.toggle('mode-play', m === 'play');   // Inner Play hides the journal, notes, reflections and full deck
     $('#modeWork').setAttribute('aria-selected', String(m === 'work'));
     $('#modePlay').setAttribute('aria-selected', String(m === 'play'));
     $('#drawTitle').textContent = m === 'play' ? 'Inner Play' : 'Your card for today';
