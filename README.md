@@ -34,8 +34,8 @@ Accounts, passwords and the four paid plans are handled by **Memberstack** (app
   then pays on Stripe's checkout. Stripe brings them back to "Tell Gillian about you".
   Someone who signs up but doesn't pay sees a "finish joining" form when they come back.
 - **One-deck plans** open only the chosen deck; other decks show an "Upgrade to All decks" note.
-- **Manage my subscription** (bottom of the dashboard) opens Stripe's customer portal to change
-  plan, update a card or cancel. Turn the portal on in Stripe: Settings, Billing, Customer portal.
+- **Cancelling:** members email Gillian; cancel their subscription in Stripe (Customers, open the customer,
+  cancel subscription at period end). The "Upgrade" buttons open Stripe's customer portal.
 - **Forgot your password?** on the sign-in form: Memberstack emails a code.
 - **RIVER:** a Memberstack discount (20% off the first payment, first-time customers). Members
   type it on the Stripe payment page; the join form only previews the discounted price.

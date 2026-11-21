@@ -1316,3 +1316,21 @@ body.deck-earth .site-header .hp-btn:hover { background: #cddbbd; border-color: 
 body.deck-cancer .site-header .hp-btn:hover { background: #f1cdd8; border-color: #f1cdd8; }
 body.deck-simple .mode-tabs, body.deck-simple #againBox { display: none !important; }
 #simpleIntro[hidden] { display: none !important; }
+/* Footer takes the colours of the deck on screen */
+body.deck-earth .site-footer.hp-footer { --hp-lilac: #b9cba4; --hp-lilac-ink: #1d2a1c; --hp-muted-dark: #b8c4aa; background: #17231a !important; }
+body.deck-earth .site-footer.hp-footer::before { filter: hue-rotate(-150deg) saturate(.8); }
+body.deck-earth .hp-foot .email-chip { border-color: rgba(185,203,164,.4); }
+body.deck-earth .hp-foot .copy-btn { background: rgba(185,203,164,.18); }
+body.deck-earth .hp-copy { border-top-color: rgba(185,203,164,.2); color: #a7b59a !important; }
+body.deck-earth .hp-copy a { color: #cddbbd; }
+body.deck-earth .hp-foot .hp-btn-line { border-color: rgba(185,203,164,.6); color: #dfe8d2; }
+body.deck-cancer .site-footer.hp-footer { --hp-lilac: #e8b9c8; --hp-lilac-ink: #3a1628; --hp-muted-dark: #d6b5c2; background: #2a1622 !important; }
+body.deck-cancer .site-footer.hp-footer::before { filter: hue-rotate(50deg) saturate(.9); }
+body.deck-cancer .hp-foot .email-chip { border-color: rgba(232,185,200,.4); }
+body.deck-cancer .hp-foot .copy-btn { background: rgba(232,185,200,.18); }
+body.deck-cancer .hp-copy { border-top-color: rgba(232,185,200,.2); color: #c7a3b3 !important; }
+body.deck-cancer .hp-copy a { color: #f1cdd8; }
+body.deck-cancer .hp-foot .hp-btn-line { border-color: rgba(232,185,200,.6); color: #f6e1e8; }
+/* the strip between the full deck and the footer (Manage my subscription) */
+body.deck-earth .dashv .membership-row { border-top-color: rgba(47,74,42,.15); }
+body.deck-cancer .dashv .membership-row { border-top-color: rgba(90,42,69,.15); }
