@@ -560,7 +560,9 @@
     var card = todaysCard();
     if (card) {
       $('#table').hidden = true;
-      $('#drawIntro').hidden = true;
+      // The three steps stay under "Your card for today"; only the shuffle button goes.
+      $('#drawIntro').hidden = false;
+      $('#shuffleBtn').hidden = true;
       $('#drawHint').textContent = 'This is the card you chose today. Sit with it, and say the affirmation out loud.';
       showReading(card, cardDay(), scroll);
     } else {
@@ -1041,7 +1043,7 @@
 
     seq.then(function () { return fanOut(cards); }).then(function (fanCards) {
       btn.hidden = true;
-      $('#drawIntro').hidden = true;
+      if (mode === 'play') $('#drawIntro').hidden = true;
       $('#reshuffleBtn').hidden = mode !== 'play';
       $('#drawHint').textContent = DECK.route === 'cancer-care'
         ? 'Choose the message that feels right, or shuffle again as many times as you like.'
