@@ -1261,3 +1261,5 @@ body.mode-play .dashv .work-only { display: none !important; }
 .mode-tab[aria-selected="true"] { background: var(--hp-lilac, #c9a9e0); border-color: var(--hp-lilac, #c9a9e0); box-shadow: none; color: var(--hp-lilac-ink, #2a1538); }
 .mode-tab[aria-selected="true"] span { opacity: .85; }
 .mode-tab[aria-selected="false"] { border-color: rgba(201,169,224,.55); }
+body.deck-simple .dashv .journal-band, body.deck-simple #journalThisCard, body.deck-simple #dayJournal { display: none !important; }
+.mode-tab .work-simple, body.deck-simple .mode-tab .work-full { display: none; } body.deck-simple .mode-tab .work-simple { display: inline; }

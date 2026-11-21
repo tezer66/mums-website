@@ -467,6 +467,8 @@
     if (!user) return;
     if (busy && deck !== DECK) busy = false;
     DECK = deck || BOUNDARIES;
+    // Mommas Earth Magick and Cancer Care Cards: no journal, notes or Weekly Reflections.
+    document.body.classList.toggle('deck-simple', DECK !== BOUNDARIES);
     var today = new Date();
     $('#dashGreeting').textContent = 'Greetings beautiful soul!';
     applyRatio($('[data-view="dashboard"]'), DECK);
