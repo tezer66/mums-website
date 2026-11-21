@@ -49,11 +49,6 @@
     if (t <= d) t.setDate(t.getDate() + 1);
     return t;
   }
-  function untilNext() {
-    var ms = nextCardTime() - new Date(), h = Math.floor(ms / 3600e3), m = Math.ceil((ms % 3600e3) / 60e3);
-    if (m === 60) { h++; m = 0; }
-    return (h ? h + (h === 1 ? ' hour' : ' hours') : '') + (h && m ? ' ' : '') + (m || !h ? m + (m === 1 ? ' minute' : ' minutes') : '');
-  }
   function dayIndex(d) { return Math.floor(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()) / 864e5); }
   function longDate(d) { return d.toLocaleDateString(undefined, { weekday: 'long', day: 'numeric', month: 'long' }); }
 
@@ -565,7 +560,7 @@
     back.hidden = isToday;
     back.textContent = hasToday ? 'Back to today' : "Choose today's card";
     $('#againBox').hidden = !isToday;
-    if (isToday) $('#nextCardNote').textContent = 'Your next daily inner work card will be ready at 5am, in ' + untilNext() + '.';
+    if (isToday) tickCountdown();
     $('#previewReset').hidden = !(isToday && SITE.previewTools);
 
     // every card pulled on that day, to switch between
@@ -1106,9 +1101,17 @@
     if (busy || !user || $('[data-view="dashboard"]').hidden) { lastCardDay = k; return; }
     // (applies to whichever deck is on screen)
     if (k !== lastCardDay) { lastCardDay = k; showToday(false); }
-    else if (!$('#againBox').hidden) $('#nextCardNote').textContent = 'Your next daily inner work card will be ready at 5am, in ' + untilNext() + '.';
   }
   setInterval(refreshIfNewDay, 60e3);
+  // Countdown to the next daily inner work card (5am), ticking every second.
+  function tickCountdown() {
+    var el = $('#nextCardNote'); if (!el || $('#againBox').hidden) return;
+    var ms = Math.max(0, nextCardTime() - new Date()), t = Math.floor(ms / 1000);
+    var h = Math.floor(t / 3600), m = Math.floor(t % 3600 / 60), sec = t % 60;
+    el.textContent = pad(h) + ':' + pad(m) + ':' + pad(sec);
+    if (ms === 0) refreshIfNewDay();
+  }
+  setInterval(tickCountdown, 1000);
   document.addEventListener('visibilitychange', function () { if (!document.hidden) refreshIfNewDay(); });
 
   /* ---------------- routing ---------------- */
