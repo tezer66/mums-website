@@ -1263,3 +1263,4 @@ body.mode-play .dashv .work-only { display: none !important; }
 .mode-tab[aria-selected="false"] { border-color: rgba(201,169,224,.55); }
 body.deck-simple .dashv .journal-band, body.deck-simple #journalThisCard, body.deck-simple #dayJournal { display: none !important; }
 .mode-tab .work-simple, body.deck-simple .mode-tab .work-full { display: none; } body.deck-simple .mode-tab .work-simple { display: inline; }
+body.deck-simple .dashv .notes { display: none !important; }

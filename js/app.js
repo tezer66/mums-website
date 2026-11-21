@@ -421,10 +421,8 @@
         holder.innerHTML = notes.map(function (n) {
           return '<article class="note"><p class="eyebrow">' + esc(n.date || '') + '</p><p>' + esc(n.text) + '</p><p class="note-from">Love, Gill x</p></article>';
         }).join('');
-      } else if (profile) {
-        holder.innerHTML = '<div class="note-empty"><p>Thank you for sharing a little of yourself. When Gillian writes to you personally, her note will appear here.</p></div>';
       } else {
-        holder.innerHTML = '<div class="note-empty"><p>Gillian writes personal messages for members. Answer a few gentle questions so she can get to know you.</p><a href="#about-you" class="btn btn-gold btn-sm">Tell Gillian about you</a></div>';
+        holder.innerHTML = '<div class="note-empty"><p>If you would like to receive personal messages from me, tell me a little about yourself.</p>' + (profile ? '' : '<a href="#about-you" class="btn btn-gold btn-sm">Tell Gill about you</a>') + '</div>';
       }
     });
   }
