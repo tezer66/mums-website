@@ -421,6 +421,10 @@
           <button type="button" class="btn btn-gold journal-cta" id="journalThisCard">Daily journal entry</button>
           <button type="button" class="btn btn-gold play-again" id="playAgainBtn" hidden>Shuffle again</button>
         </div>
+        <section class="day-journal" id="dayJournal" aria-labelledby="dayJournalTitle" hidden>
+          <h3 class="dj-title" id="dayJournalTitle">Your journal entry</h3>
+          <div class="journal-list" id="journalList"></div>
+        </section>
         <div class="again" id="againBox" hidden>
           <span class="again-moon" aria-hidden="true">☾</span>
           <p class="next-countdown" id="nextCardNote" role="timer" aria-label="Time until your next daily inner work card">--:--:--</p>
@@ -471,12 +475,6 @@
         </div>
       </form>
 
-      <div class="journal-list-head">
-        <h3 class="jl-title">Past entries <span id="jCount"></span></h3>
-        <label for="jSearch" class="sr">Search your journal</label>
-        <input id="jSearch" type="search" placeholder="Search your entries" autocomplete="off">
-      </div>
-      <div class="journal-list" id="journalList"></div>
     </section>
 
     <section class="notes" aria-labelledby="notesTitle">

@@ -83,7 +83,8 @@ Cards without artwork yet are drawn in the deck's purple-and-gold frame from the
   an edge-to-edge overlay on iPhone). Tap or swipe down to close.
 - **My Journal.** Members write private reflections on the dashboard. The card they drew
   that day is attached automatically (they can remove it), with a rotating writing prompt.
-  Entries can be edited, deleted, searched, downloaded (Word or text) or printed / saved as PDF.
+  Entries appear under the card they belong to: tap a card in Weekly Reflections (or today's card) to see
+  what was written that day, and edit or delete it there. The whole journal can be downloaded (Word or text) or printed / saved as PDF.
   Saved to the member's Memberstack account.
 - **Weekly Reflections.** Seven tiles, one per day, in weeks that start on the day the member drew their first card from that deck (day 1), then a new week every 7 days. Tap any card to reread it.
 - **Full deck.** Members can browse all 44 cards and their guidebook messages.

@@ -517,6 +517,7 @@
     holder.onclick = function () { openViewer(card); };
     renderBookletEntry(card);
     PLAY_BTN.hidden = false;
+    $('#dayJournal').hidden = true;
     $('#bookletEntry').appendChild(PLAY_BTN);
     var r = $('#reading');
     r.hidden = false;
@@ -596,6 +597,7 @@
     r.hidden = false;
     r.style.animation = 'none'; void r.offsetWidth; r.style.animation = '';
     renderHistory();
+    renderJournal();
     if (scroll) r.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'start' });
   }
 
@@ -782,17 +784,24 @@
     $('#journal').scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'start' });
     setTimeout(function () { $('#jfText').focus({ preventScroll: true }); }, reduceMotion ? 0 : 500);
   }
+  /* Journal entries are shown with their card: tap a card in Weekly Reflections (or today's
+     card) and the entries written that day appear under its message. */
   function renderJournal() {
-    var list = jEntries().slice().sort(function (a, b) { return b.created < a.created ? -1 : 1; });
-    var q = ($('#jSearch').value || '').trim().toLowerCase();
-    var shown = q ? list.filter(function (e) { return (e.text + ' ' + (e.prompt || '')).toLowerCase().indexOf(q) >= 0; }) : list;
-    $('#jCount').textContent = list.length ? '(' + list.length + ')' : '';
+    var panel = $('#dayJournal');
+    if (!panel) return;
+    if (mode === 'play' || !selected || !selected.date) { panel.hidden = true; return; }
+    var key = dayKey(selected.date), isToday = key === dayKey(cardDay());
+    var shown = jEntries().filter(function (e) { return dayKey(cardDay(new Date(e.created))) === key; })
+      .sort(function (a, b) { return a.created < b.created ? -1 : 1; });
+    panel.hidden = false;
+    $('#dayJournalTitle').textContent = shown.length > 1 ? 'Your journal entries' : 'Your journal entry';
     var holder = $('#journalList');
-    if (!list.length) {
-      holder.innerHTML = '<div class="note-empty"><p>Your first reflection will appear here. Try writing a few lines about today’s card.</p></div>';
+    if (!shown.length) {
+      holder.innerHTML = '<p class="muted dj-empty">' + (isToday
+        ? 'You haven’t written about today’s card yet. Tap “Daily journal entry” to begin.'
+        : 'You didn’t write a journal entry on this day.') + '</p>';
       return;
     }
-    if (!shown.length) { holder.innerHTML = '<p class="muted">No entries match “' + esc(q) + '”.</p>'; return; }
     holder.innerHTML = '';
     shown.forEach(function (e) {
       var card = e.card ? findCard(e.card.deck, e.card.n) : null;
@@ -887,7 +896,6 @@
     $('#jfCancel').addEventListener('click', resetJForm);
     $('#jfUnlink').addEventListener('click', function () { setJCard(null); });
     $('#jfNewPrompt').addEventListener('click', function () { jPromptIdx++; showPrompt(); });
-    $('#jSearch').addEventListener('input', renderJournal);
     var needEntries = function () {
       if (jEntries().length) return true;
       $('#jfError').textContent = 'Save your first entry, then you can download or print your journal.';

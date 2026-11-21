@@ -1246,3 +1246,14 @@ div.acct-field { display: grid; gap: .45rem; }
 .play-again { margin-top: 1.2rem; }
 body.mode-play .dashv .work-only { display: none !important; }
 .next-countdown { margin: 0; font-family: var(--display, serif); font-size: 2.2rem; letter-spacing: .08em; color: var(--gold, #d6b062); font-variant-numeric: tabular-nums; line-height: 1.1; }
+/* Journal entries shown under the selected card (Weekly Reflections / today's card) */
+.day-journal[hidden] { display: none !important; }
+.dk .day-journal {
+  --parchment: #3f1659; --text: #2f1c3b; --ink: #2f1c3b; --muted: #6f5a7c; --line: #e3d2ea; --plum: #fff; --plum-2: #f4ecf9;
+  --gold: #8a5a1c; --label-c: #7b4f9e;
+  margin-top: 1.4rem; padding: 1.1rem 1.2rem 1.2rem; border-radius: 18px; background: #fbf7fd; color: #2f1c3b;
+  box-shadow: 0 30px 60px -34px rgba(0,0,0,.8);
+}
+.dj-title { margin: 0 0 .8rem; font-family: var(--display, serif); font-weight: 600; font-size: 1.35rem; color: #3f1659; }
+.day-journal .journal-list { display: grid; gap: .8rem; }
+.day-journal .dj-empty { margin: 0; font-style: italic; }
