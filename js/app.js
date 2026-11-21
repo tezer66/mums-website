@@ -565,7 +565,7 @@
     back.hidden = isToday;
     back.textContent = hasToday ? 'Back to today' : "Choose today's card";
     $('#againBox').hidden = !isToday;
-    if (isToday) $('#nextCardNote').textContent = 'Your next card will be ready at 5am, in ' + untilNext() + '.';
+    if (isToday) $('#nextCardNote').textContent = 'Your next daily inner work card will be ready at 5am, in ' + untilNext() + '.';
     $('#previewReset').hidden = !(isToday && SITE.previewTools);
 
     // every card pulled on that day, to switch between
@@ -1106,7 +1106,7 @@
     if (busy || !user || $('[data-view="dashboard"]').hidden) { lastCardDay = k; return; }
     // (applies to whichever deck is on screen)
     if (k !== lastCardDay) { lastCardDay = k; showToday(false); }
-    else if (!$('#againBox').hidden) $('#nextCardNote').textContent = 'Your next card will be ready at 5am, in ' + untilNext() + '.';
+    else if (!$('#againBox').hidden) $('#nextCardNote').textContent = 'Your next daily inner work card will be ready at 5am, in ' + untilNext() + '.';
   }
   setInterval(refreshIfNewDay, 60e3);
   document.addEventListener('visibilitychange', function () { if (!document.hidden) refreshIfNewDay(); });
