@@ -477,10 +477,9 @@
     document.querySelectorAll('.deck-switch a').forEach(function (a) {
       if (a.getAttribute('href') === '#' + DECK.route) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current');
     });
-    var n = DECK.cards.length, secs = (DECK.sections || []).length;
     $('#libSub').textContent = DECK.hasGuidebook
-      ? 'The ' + n + ' Card Deck in its ' + (secs === 5 ? 'five' : secs) + ' sections. Tap a card to read its message in the guidebook.'
-      : 'All ' + n + ' cards so far. Tap a card to read Gillian’s words for it.';
+      ? 'Tap a card to read its message in the guidebook.'
+      : 'Tap a card to read Gillian’s words for it.';
     $('#guidebookSection').hidden = !DECK.hasGuidebook;
     if (DECK.hasGuidebook) renderBookletSection();
     renderNotes();
