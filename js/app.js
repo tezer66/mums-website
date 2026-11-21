@@ -277,8 +277,16 @@
         setTab(a.getAttribute('data-tab'));
         var plan = a.getAttribute('data-plan');
         if (plan && $('#plan-' + plan)) $('#plan-' + plan).checked = true;
+        syncDeckPick();
       });
     });
+    // One-deck plans: let the member choose which deck, and open it after joining.
+    function syncDeckPick() {
+      var p = ($('#joinForm').querySelector('input[name="plan"]:checked') || {}).value || '';
+      $('#deckPick').hidden = p.indexOf('deck-') !== 0;
+    }
+    document.querySelectorAll('#joinForm input[name="plan"]').forEach(function (r) { r.addEventListener('change', syncDeckPick); });
+    syncDeckPick();
 
     $('#joinForm').addEventListener('submit', function (e) {
       e.preventDefault();
@@ -287,18 +295,19 @@
       var plan = (f.querySelector('input[name="plan"]:checked') || {}).value;
       if (f.password.value !== f.password2.value) { $('#joinError').textContent = 'The two passwords do not match. Please type them again.'; return; }
       var promoUsed = promoApplied;
+      var oneDeck = plan && plan.indexOf('deck-') === 0;
+      var chosenDeck = oneDeck ? ((f.querySelector('input[name="deck"]:checked') || {}).value || 'dashboard') : 'dashboard';
       Auth.signUp(f.name.value, f.email.value, f.password.value, plan, f.keep.checked)
-        .then(function (u) { if (promoUsed) store.set('hh:promo:' + u.email, promoUsed); promoApplied = null; $('#promoMsg').textContent = ''; showPromoPrices();
+        .then(function (u) { store.set('hh:home:' + u.email, chosenDeck); if (promoUsed) store.set('hh:promo:' + u.email, promoUsed); promoApplied = null; $('#promoMsg').textContent = ''; showPromoPrices();
           // Go to Stripe's secure checkout for the chosen plan; Stripe brings them back to "Tell Gillian about you".
           var link = SITE.stripe && SITE.stripe.paymentLinks && SITE.stripe.paymentLinks[plan];
           if (link) {
-            var url = link + '?prefilled_email=' + encodeURIComponent(u.email) + (promoUsed ? '&prefilled_promo_code=' + encodeURIComponent(promoUsed) : '');
+            var url = link + '?prefilled_email=' + encodeURIComponent(u.email) + (promoUsed ? '&prefilled_promo_code=' + encodeURIComponent(promoUsed) : '') + (oneDeck ? '&client_reference_id=deck-' + chosenDeck : '');
             $('#joinError').textContent = '';
             $('#joinPayNote').textContent = 'Taking you to secure checkout with Stripe…';
-            f.reset();
             window.location.href = url;
             return;
-          } f.reset(); $('#plan-all-yearly').checked = true; go('about-you'); })
+          } f.reset(); $('#plan-all-yearly').checked = true; syncDeckPick(); go('about-you'); })
         .catch(function (err) { $('#joinError').textContent = err.message; });
     });
     $('#signinForm').addEventListener('submit', function (e) {
@@ -306,7 +315,7 @@
       var f = e.target;
       $('#signinError').textContent = '';
       Auth.signIn(f.email.value, f.password.value, f.keep.checked)
-        .then(function () { f.reset(); go('dashboard'); })
+        .then(function () { f.reset(); go(homeDeck()); })
         .catch(function (err) { $('#signinError').textContent = err.message; });
     });
 
@@ -339,7 +348,7 @@
         heart: f.heart.value.trim(), hope: f.hope.value.trim(), peace: f.peace.value.trim(),
         contact: pick('contact'), consent: true
       };
-      Auth.saveProfile(u.email, profile).then(function () { go('dashboard'); });
+      Auth.saveProfile(u.email, profile).then(function () { go(homeDeck()); });
     });
   }
   function fillProfileForm() {
@@ -981,17 +990,24 @@
 
   /* ---------------- routing ---------------- */
   var VIEWS = ['home', 'join', 'dashboard', 'about-you'];   // deck pages (DECKS) show the dashboard view
+  // The deck a member opens to: the one they chose on a one-deck plan, otherwise Boundaries.
+  function homeDeck() {
+    var m = Auth.current();
+    var d = m && store.get('hh:home:' + m.email);
+    return d && (d === 'dashboard' || DECKS[d]) ? d : 'dashboard';
+  }
   function go(view) {
     if (location.hash === '#' + view) route(); else location.hash = view;
   }
   function route() {
     var v = (location.hash || '#home').slice(1);
     var member = Auth.current();
+    if (v === 'home-deck') { if (member) { location.replace('#' + homeDeck()); return; } v = 'join'; }
     var deck = DECKS[v] || null;
     if (deck) v = 'dashboard';
     if (VIEWS.indexOf(v) < 0) v = 'home';
     if ((v === 'dashboard' || v === 'about-you') && !member) v = 'join';
-    if (v === 'join' && member) { v = 'dashboard'; deck = null; }
+    if (v === 'join' && member) { location.replace('#' + homeDeck()); return; }
     document.body.classList.toggle('is-member', !!member);
     document.querySelectorAll('[data-view]').forEach(function (s) { s.hidden = s.getAttribute('data-view') !== v; });
     if (v === 'dashboard') initDashboard(deck || BOUNDARIES);

@@ -293,6 +293,13 @@
           <label class="plan-opt" for="plan-deck-yearly"><input type="radio" id="plan-deck-yearly" name="plan" value="deck-yearly"><span><b>One deck, yearly</b> US$59 a year <em>Save 51%</em> <span class="promo-price" data-price="59" data-per="first year" hidden></span></span></label>
           <label class="plan-opt" for="plan-all-yearly"><input type="radio" id="plan-all-yearly" name="plan" value="all-yearly" checked><span><b>All decks, yearly</b> US$99 a year <em>Best value</em> <span class="promo-price" data-price="99" data-per="first year" hidden></span></span></label>
         </fieldset>
+        <fieldset class="plan-pick deck-pick" id="deckPick" hidden>
+          <legend>Choose your deck</legend>
+          <label class="plan-opt" for="deck-boundaries"><input type="radio" id="deck-boundaries" name="deck" value="dashboard" checked><span><b>Boundaries are my Love Language</b></span></label>
+          <label class="plan-opt" for="deck-earth"><input type="radio" id="deck-earth" name="deck" value="earth-magick"><span><b>Momma's Earth Magick</b></span></label>
+          <label class="plan-opt" for="deck-cancer"><input type="radio" id="deck-cancer" name="deck" value="cancer-care"><span><b>Cancer Care Cards</b></span></label>
+          <p class="fine">Your deck opens on your dashboard after you join.</p>
+        </fieldset>
         <label for="joinName">Your first name</label>
         <input id="joinName" name="name" autocomplete="given-name" required>
         <label for="joinEmail">Email</label>
@@ -525,7 +532,7 @@
 
       <p class="form-error" id="profileError" role="alert"></p>
       <button class="btn btn-gold btn-block" type="submit">Send to Gillian</button>
-      <a href="#dashboard" class="btn btn-ghost btn-block" id="profileSkip">Skip for now</a>
+      <a href="#home-deck" class="btn btn-ghost btn-block" id="profileSkip">Skip for now</a>
     </form>
   </div>
   </div>

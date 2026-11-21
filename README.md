@@ -76,6 +76,7 @@ Cards without artwork yet are drawn in the deck's purple-and-gold frame from the
   (name, birthday, location, where they are in their healing, areas they want support
   with, what's on their heart, what brings them peace, how to be contacted) so Gillian
   can write personal messages. Those appear under "Notes from Gillian" on the dashboard.
+- **One-deck plans.** Members choose their deck when joining; it opens on their dashboard after payment and each time they sign in. The deck is sent to Stripe as the client reference (e.g. `deck-earth-magick`) so Gillian can see it on the payment.
 - **Plans (USD).** One deck monthly US$9.99, all decks monthly US$19.99, one deck yearly US$59,
   all decks yearly US$99. Shown on the home page and chosen when joining.
 
