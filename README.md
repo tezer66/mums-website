@@ -14,6 +14,22 @@ Live at **https://www.harperholistic.xyz** (GitHub Pages). The `CNAME` file hold
 domain; keep it in the repository. DNS: A records for `@` → 185.199.108.153,
 185.199.109.153, 185.199.110.153, 185.199.111.153 and CNAME `www` → tezer66.github.io.
 
+
+## Stripe (live)
+
+Created in the Stripe account and wired into `content/site.js`:
+
+| Plan | Product | Price | Payment link |
+|---|---|---|---|
+| One deck, monthly US$9.99 | `prod_VfPnwpmvLNHqC7` | `price_1Ue4yEQZ8b1vLEb951emMuTc` | https://buy.stripe.com/aFa6oJael04vaGBcJm77O00 |
+| All decks, monthly US$19.99 | `prod_VfPnO60sLq9tWn` | `price_1Ue4yFQZ8b1vLEb9XePxTcsM` | https://buy.stripe.com/aFadRb3PX5oP3e9aBe77O01 |
+| One deck, yearly US$59 | `prod_VfPnxJmHc9OOah` | `price_1Ue4yFQZ8b1vLEb9AFHJxqDc` | https://buy.stripe.com/7sYeVf1HP8B14idfVy77O02 |
+| All decks, yearly US$99 | `prod_VfPnPaGXlFcAk9` | `price_1Ue4yFQZ8b1vLEb9oCiF53rT` | https://buy.stripe.com/bJe6oJ5Y56sT5mhbFi77O03 |
+
+Promotion code **RIVER** (coupon `C5Zt81a7`, 20% off, once). Payment links allow promotion codes and
+return to `https://www.harperholistic.xyz/#about-you` after payment. The join form sends members to
+the link for their plan with their email (and RIVER, if entered) already filled in.
+
 ## Content
 
 All of Gillian's words live in plain files, so the code never needs editing:

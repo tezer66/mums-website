@@ -288,7 +288,17 @@
       if (f.password.value !== f.password2.value) { $('#joinError').textContent = 'The two passwords do not match. Please type them again.'; return; }
       var promoUsed = promoApplied;
       Auth.signUp(f.name.value, f.email.value, f.password.value, plan, f.keep.checked)
-        .then(function (u) { if (promoUsed) store.set('hh:promo:' + u.email, promoUsed); promoApplied = null; $('#promoMsg').textContent = ''; showPromoPrices(); f.reset(); $('#plan-all-yearly').checked = true; go('about-you'); })
+        .then(function (u) { if (promoUsed) store.set('hh:promo:' + u.email, promoUsed); promoApplied = null; $('#promoMsg').textContent = ''; showPromoPrices();
+          // Go to Stripe's secure checkout for the chosen plan; Stripe brings them back to "Tell Gillian about you".
+          var link = SITE.stripe && SITE.stripe.paymentLinks && SITE.stripe.paymentLinks[plan];
+          if (link) {
+            var url = link + '?prefilled_email=' + encodeURIComponent(u.email) + (promoUsed ? '&prefilled_promo_code=' + encodeURIComponent(promoUsed) : '');
+            $('#joinError').textContent = '';
+            $('#joinPayNote').textContent = 'Taking you to secure checkout with Stripe…';
+            f.reset();
+            window.location.href = url;
+            return;
+          } f.reset(); $('#plan-all-yearly').checked = true; go('about-you'); })
         .catch(function (err) { $('#joinError').textContent = err.message; });
     });
     $('#signinForm').addEventListener('submit', function (e) {

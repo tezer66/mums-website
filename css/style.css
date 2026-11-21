@@ -1205,3 +1205,5 @@ body { font-family: var(--ui); font-size: 1rem; }
 .plan-opt .promo-price { display: block; margin-top: .15rem; color: #2f6e4a; font-weight: 600; font-size: .88rem; }
 .plan-opt .promo-price::before { content: "With code: "; font-weight: 500; color: #4f7a5e; }
 @media (max-width: 520px) { .promo-banner { border-radius: 18px; } }
+
+.pay-note { text-align: center; margin-top: .4rem; }
