@@ -6,6 +6,8 @@
   promo: the welcome code (shared on social media). The real discount is the
   Memberstack discount of the same name, entered on the payment page.
   showOnHomepage: true also shows the code in the homepage plans section.
+  getCodeLink: where the join form sends people to find the code. Paste the link
+  to a particular Instagram (or Facebook) post here to send them to that post.
   previewTools: true shows the "Reset today's card" test button. Set it to false
   (or delete the line) before the site goes live.
 */
@@ -20,7 +22,9 @@ window.HH_SITE = {
       "all-yearly":   { "planId": "pln_all-decks-yearly-ihlh00ah", "priceId": "prc_all-decks-yearly-71630cov" }
     }
   },
-  "promo": { "code": "RIVER", "percent": 20, "note": "20% off your first payment", "showOnHomepage": false },
+  "promo": { "code": "RIVER", "percent": 20, "note": "20% off your first payment", "showOnHomepage": false,
+    "getCodeText": "Don’t have a code? Find this month’s code on Instagram",
+    "getCodeLink": "https://www.instagram.com/harper.holistic/" },
   "brand": "HarperHolistic",
   "owner": "Gillian Harper",
   "tagline": "Learning to set boundaries is ultimate self care.",

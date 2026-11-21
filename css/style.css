@@ -1221,3 +1221,7 @@ body { font-family: var(--ui); font-size: 1rem; }
 .membership-row { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: .6rem 1rem; margin-top: 2rem; padding-top: 1.2rem; border-top: 1px solid rgba(63,22,89,.15); }
 .membership-row p { margin: 0; }
 .hp-copy a { color: #d7c3e6; text-underline-offset: 3px; }
+.promo-get { display: inline-flex; align-items: center; gap: .45rem; margin: .1rem 0 .6rem; font-size: .92rem; color: #6b3d86; text-decoration: underline; text-underline-offset: 3px; }
+.promo-get .ico { width: 18px; height: 18px; flex: none; }
+.promo-get[hidden] { display: none !important; }
+div.acct-field { display: grid; gap: .45rem; }
