@@ -454,10 +454,6 @@
   var selected = null; // { card, date } being shown in the reading panel
   var busy = false;
 
-  function greeting() {
-    var h = new Date().getHours();
-    return h < 12 ? 'Good morning' : h < 18 ? 'Good afternoon' : 'Good evening';
-  }
 
   function initDashboard(deck) {
     user = Auth.current();
@@ -466,7 +462,7 @@
     DECK = deck || BOUNDARIES;
     var today = new Date();
     $('#dashDate').textContent = longDate(today);
-    $('#dashGreeting').textContent = greeting() + ', ' + user.name;
+    $('#dashGreeting').textContent = 'Greetings beautiful soul!';
     applyRatio($('[data-view="dashboard"]'), DECK);
     document.querySelectorAll('.deck-switch a').forEach(function (a) {
       if (a.getAttribute('href') === '#' + DECK.route) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current');
