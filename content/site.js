@@ -55,18 +55,17 @@ window.HH_SITE = {
     "intro": "There is no right or wrong way to use this deck. You may like to follow the suggested steps or create your own special ritual.",
     "steps": [
       "Find a quiet place at home or sit outside in nature.",
-      "Hold the cards close to your heart, let them feel your heart beat.",
-      "Close your eyes and breathe slowly.",
-      "Feel yourself connecting.",
+      "Close your eyes, breathe slowly & feel yourself connecting.",
       "In your mind and in your heart ask: “What do I need to hear today?”",
       "Shuffle the deck, stop when it feels right.",
       "Allow your intuition to guide you.",
-      "Pull 1 or as many cards as you feel called to.",
+      "Tap on one card, read its message & say the affirmation.",
       "Take your time to sit with each message.",
-      "Say the affirmation.",
-      "There is no need to rush."
+      "Write in your journal & your card saves automatically.",
+      "At the end of the week, reflect on your journal entries.",
+      "Celebrate how far you’ve come."
     ],
-    "outro": "These cards are for the days when your healing journey feels heavy. Keep the card/s visible all day as a reminder of how far you have come. Keep going! You've got this x"
+    "outro": "Keep going! You've got this x"
   },
   "profileQuestions": {
     "stages": [
