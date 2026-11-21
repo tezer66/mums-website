@@ -171,7 +171,7 @@
     var shareBtn = $('#shareVideo'), shareNote = $('#shareNote');
     if (shareBtn) shareBtn.addEventListener('click', function () {
       var url = 'media/harperholistic-share.mp4', name = 'HarperHolistic-cards.mp4';
-      var text = 'Which card resonates with you today? Healing Inspiration Cards by Gillian Harper @harper.holistic www.harperholistic.com';
+      var text = 'Which card resonates with you today? Healing Inspiration Cards by Gillian Harper @harper.holistic www.harperholistic.xyz';
       var note = function (t) { shareNote.textContent = t; };
       var saveFile = function (blob) {
         try {
