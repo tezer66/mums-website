@@ -1220,3 +1220,4 @@ body { font-family: var(--ui); font-size: 1rem; }
 .locked-note p { margin: 0; flex: 1 1 16rem; color: var(--parchment, #f4ead8); }
 .membership-row { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: .6rem 1rem; margin-top: 2rem; padding-top: 1.2rem; border-top: 1px solid rgba(63,22,89,.15); }
 .membership-row p { margin: 0; }
+.hp-copy a { color: #d7c3e6; text-underline-offset: 3px; }
