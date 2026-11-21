@@ -1234,3 +1234,13 @@ div.acct-field { display: grid; gap: .45rem; }
 #drawHint:empty { display: none; }
 .hist-future .hist-empty { opacity: .55; border-style: dashed; }
 .hist-future .hist-day { opacity: .6; }
+/* Inner Work / Inner Play */
+.mode-tabs { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; width: 100%; max-width: 34rem; margin: 0 auto 1rem; }
+.mode-tab { display: grid; gap: .15rem; padding: .75rem .8rem; border-radius: 14px; border: 1px solid rgba(214,176,98,.45); background: rgba(255,255,255,.04); color: var(--parchment, #f4ead8); font: inherit; text-align: center; cursor: pointer; min-height: 0; transition: background .2s, border-color .2s; }
+.mode-tab b { font-family: var(--display, serif); font-weight: 500; font-size: 1.05rem; letter-spacing: .04em; }
+.mode-tab span { font-size: .82rem; line-height: 1.35; opacity: .8; }
+.mode-tab[aria-selected="true"] { background: rgba(214,176,98,.16); border-color: var(--gold, #d6b062); box-shadow: 0 0 0 1px var(--gold, #d6b062) inset; }
+.mode-tab:focus-visible { outline: 2px solid var(--gold, #d6b062); outline-offset: 2px; }
+.play-intro { max-width: 34rem; margin: .3rem auto 1rem; line-height: 1.55; opacity: .9; }
+.play-intro[hidden], .draw-steps[hidden], .play-again[hidden] { display: none !important; }
+.play-again { margin-top: 1.2rem; }

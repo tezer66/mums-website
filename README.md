@@ -67,6 +67,7 @@ Cards without artwork yet are drawn in the deck's purple-and-gold frame from the
 
 ## How it works
 
+- **Inner Work and Inner Play.** Two tabs above the deck. Inner Work is the card of the day (below), saved to the journal and Weekly Reflections. Inner Play lets members shuffle and pull as many cards as they like, with each card's message; nothing is saved.
 - **Daily card.** On the dashboard the member shuffles the deck (riffle, cut, riffle),
   the cards fan out face down, and they tap one. It flips to reveal a card chosen at
   random, skipping cards drawn in the past week. **One card per day.** A new card day

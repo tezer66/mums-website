@@ -380,9 +380,14 @@
 
     <section class="draw" aria-labelledby="drawTitle">
       <div class="draw-head">
+        <div class="mode-tabs" role="tablist" aria-label="Choose how to use the deck">
+          <button type="button" role="tab" class="mode-tab" id="modeWork" aria-selected="true"><b>Inner Work</b><span>Card of the day, saved to your journal</span></button>
+          <button type="button" role="tab" class="mode-tab" id="modePlay" aria-selected="false"><b>Inner Play</b><span>Shuffle and pull as often as you like</span></button>
+        </div>
         <h2 class="section-title" id="drawTitle">Your card for today</h2>
         <div class="draw-intro" id="drawIntro">
-          <ol class="draw-steps">
+          <p class="play-intro" id="playIntro" hidden>Shuffle as many times as you like and pull a card whenever you feel called. Inner Play cards are just for you in the moment and aren’t saved to your journal.</p>
+          <ol class="draw-steps" id="workSteps">
             <li>Sit quietly to ground yourself</li>
             <li>Breathe slowly &amp; ask your heart “What do I need to hear today?”</li>
             <li>Shuffle the deck &amp; intuitively tap on a card</li>
@@ -414,6 +419,7 @@
           </div>
           <article class="booklet-entry" id="bookletEntry"></article>
           <button type="button" class="btn btn-gold journal-cta" id="journalThisCard">Daily journal entry</button>
+          <button type="button" class="btn btn-gold play-again" id="playAgainBtn" hidden>Shuffle again</button>
         </div>
         <div class="again" id="againBox" hidden>
           <span class="again-moon" aria-hidden="true">☾</span>

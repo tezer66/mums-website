@@ -490,7 +490,52 @@
   }
 
   /* Decide what "today" looks like: the deck ready to shuffle, or today's reading. */
+  /* Inner Work: the card of the day, saved to the journal and Weekly Reflections.
+     Inner Play: shuffle and pull as many cards as you like; nothing is saved. */
+  var mode = 'work';
+  var PLAY_BTN = document.getElementById('playAgainBtn');   // moved under the message on each Inner Play card
+  function setMode(m) {
+    mode = m;
+    $('#modeWork').setAttribute('aria-selected', String(m === 'work'));
+    $('#modePlay').setAttribute('aria-selected', String(m === 'play'));
+    $('#drawTitle').textContent = m === 'play' ? 'Inner Play' : 'Your card for today';
+    $('#playIntro').hidden = m !== 'play';
+    $('#workSteps').hidden = m === 'play';
+    busy = false;
+    showToday(false);
+  }
+  function showPlay(scroll) {
+    $('#reading').hidden = true;
+    $('#table').hidden = false;
+    $('#drawIntro').hidden = false;
+    $('#drawHint').textContent = '';
+    buildDeck();
+    if (scroll) $('#drawTitle').scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'start' });
+  }
+  function showPlayReading(card, scroll) {
+    selected = null;
+    $('#readingLabel').textContent = 'Inner Play · Card ' + card.n;
+    $('#backToday').hidden = true;
+    $('#againBox').hidden = true;
+    $('#previewReset').hidden = true;
+    $('#dayPulls').hidden = true;
+    var holder = $('#readingCard');
+    holder.innerHTML = '';
+    holder.appendChild(renderFace(card));
+    holder.setAttribute('aria-label', 'Enlarge ' + cardLabel(card));
+    holder.onclick = function () { openViewer(card); };
+    renderBookletEntry(card);
+    PLAY_BTN.hidden = false;
+    $('#bookletEntry').appendChild(PLAY_BTN);
+    var r = $('#reading');
+    r.hidden = false;
+    r.style.animation = 'none'; void r.offsetWidth; r.style.animation = '';
+    if (scroll) r.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'start' });
+  }
+
   function showToday(scroll) {
+    PLAY_BTN.hidden = true;
+    if (mode === 'play') { renderHistory(); showPlay(scroll); return; }
     var card = todaysCard();
     if (card) {
       $('#table').hidden = true;
@@ -510,6 +555,7 @@
   }
 
   function showReading(card, date, scroll) {
+    PLAY_BTN.hidden = true;
     var isToday = date && dayKey(date) === dayKey(cardDay());
     selected = { card: card, date: date };
 
@@ -968,8 +1014,10 @@
     seq.then(function () { return fanOut(cards); }).then(function (fanCards) {
       btn.hidden = true;
       $('#drawIntro').hidden = true;
-      $('#reshuffleBtn').hidden = false;
-      $('#drawHint').textContent = 'Choose the card that calls to you. You can shuffle again if you wish, but we recommend the first card you feel drawn to as your card for today’s journal.';
+      $('#reshuffleBtn').hidden = mode !== 'play';
+      $('#drawHint').textContent = mode === 'play'
+        ? 'Choose a card that calls to you, or shuffle again as many times as you like.'
+        : 'Choose the card that calls to you. The first card you feel drawn to is your card for today’s journal.';
       fanCards.forEach(function (el, j) {
         el.classList.add('pickable');
         el.tabIndex = 0;
@@ -985,10 +1033,11 @@
     if (!busy || el.dataset.chosen) return;
     el.dataset.chosen = '1';
     $('#reshuffleBtn').hidden = true;
-    if (todaysCard()) { busy = false; showToday(true); return; } // already chosen today (e.g. in another tab)
-    var card = pickCardFor(user.email);
+    var play = mode === 'play';
+    if (!play && todaysCard()) { busy = false; showToday(true); return; } // already chosen today (e.g. in another tab)
+    var card = play ? DECK.cards[randomInt(DECK.cards.length)] : pickCardFor(user.email);
     var today = cardDay();
-    saveDraw(user.email, today, card.n);
+    if (!play) saveDraw(user.email, today, card.n);
 
     fanCards.forEach(function (c) {
       c.classList.remove('pickable');
@@ -1001,7 +1050,7 @@
 
     el.querySelector('.front').appendChild(renderFace(card));
     el.style.zIndex = '50';
-    $('#drawHint').textContent = 'Your card for today…';
+    $('#drawHint').textContent = play ? 'Your card…' : 'Your card for today…';
 
     animate(el, [{ transform: el.style.transform }, { transform: 'translate(0,-6px) rotate(0deg) scale(1.08)' }],
       { duration: reduceMotion ? 1 : 520, easing: 'cubic-bezier(.2,.8,.2,1)' })
@@ -1013,15 +1062,27 @@
       .then(function () {
         busy = false;
         $('#table').hidden = true;
+        if (play) { $('#drawHint').textContent = ''; $('#drawIntro').hidden = true; showPlayReading(card, true); return; }
         $('#drawHint').textContent = 'This is the card you chose today. Sit with it, and say the affirmation out loud.';
         showReading(card, today, true);
       });
   }
 
   $('#shuffleBtn').addEventListener('click', shuffle);
+  $('#modeWork').addEventListener('click', function () { if (mode !== 'work') setMode('work'); });
+  $('#modePlay').addEventListener('click', function () { if (mode !== 'play') setMode('play'); });
+  PLAY_BTN.addEventListener('click', function () {
+    PLAY_BTN.hidden = true;
+    $('#reading').hidden = true;
+    $('#table').hidden = false;
+    buildDeck();
+    $('#shuffleBtn').hidden = true;
+    $('#table').scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'center' });
+    shuffle();
+  });
   // Not drawn to any of the fanned cards? Gather them up and shuffle again, as often as they like.
   $('#reshuffleBtn').addEventListener('click', function () {
-    if (todaysCard()) { showToday(true); return; }
+    if (mode !== 'play' && todaysCard()) { showToday(true); return; }
     buildDeck();
     $('#shuffleBtn').hidden = true;
     shuffle();
