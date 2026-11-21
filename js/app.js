@@ -509,7 +509,6 @@
     $('#readingLabel').textContent = 'Inner Play · Card ' + card.n;
     $('#backToday').hidden = true;
     $('#againBox').hidden = true;
-    $('#previewReset').hidden = true;
     $('#dayPulls').hidden = true;
     var holder = $('#readingCard');
     holder.innerHTML = '';
@@ -561,7 +560,6 @@
     back.textContent = hasToday ? 'Back to today' : "Choose today's card";
     $('#againBox').hidden = !isToday;
     if (isToday) tickCountdown();
-    $('#previewReset').hidden = !(isToday && SITE.previewTools);
 
     // every card pulled on that day, to switch between
     var pulls = [];
@@ -1085,15 +1083,6 @@
     shuffle();
   });
   $('#backToday').addEventListener('click', function () { showToday(true); });
-  // Preview-only: clear today's card for this deck so it can be shuffled again.
-  $('#resetTodayBtn').addEventListener('click', function () {
-    if (!SITE.previewTools || !user) return;
-    var draws = getDraws(user.email);
-    delete draws[dayKey(cardDay())];
-    store.setJSON(drawsKey(user.email), draws);
-    if (typeof setJCard === 'function' && !jEditing) setJCard(null);
-    showToday(true);
-  });
   // Keep the dashboard current if it is left open past 5am, or reopened later.
   var lastCardDay = dayKey(cardDay());
   function refreshIfNewDay() {

@@ -104,5 +104,4 @@ Cards without artwork yet are drawn in the deck's purple-and-gold frame from the
 
 1. Upgrade the Memberstack plan, add `www.harperholistic.xyz` as a live app domain and switch to Live Mode.
 2. In Stripe, turn on the customer portal and check business details, branding and receipts.
-3. Set `"previewTools": false` in `content/site.js` to remove the "Reset today's card" test button.
-4. Terms (`terms.html`) and privacy policy (`privacy.html`) are live; their links are set in the Stripe customer portal. Update the date at the top when you change them.
+3. Terms (`terms.html`) and privacy policy (`privacy.html`) are live; their links are set in the Stripe customer portal. Update the date at the top when you change them.

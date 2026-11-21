@@ -9,11 +9,8 @@
   showOnHomepage: true also shows the code in the homepage plans section.
   getCodeLink: where the join form sends people to find the code. Paste the link
   to a particular Instagram (or Facebook) post here to send them to that post.
-  previewTools: true shows the "Reset today's card" test button. Set it to false
-  (or delete the line) before the site goes live.
 */
 window.HH_SITE = {
-  "previewTools": true,
   "memberstack": {
     "appId": "app_cmwpxru3200lz0su3hnmd9nw9",
     "plans": {
