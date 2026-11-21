@@ -380,16 +380,22 @@
 
     <section class="draw" aria-labelledby="drawTitle">
       <div class="draw-head">
-        <p class="eyebrow" id="deckName">Boundaries are my Love Language</p>
         <h2 class="section-title" id="drawTitle">Your card for today</h2>
-        <p class="muted" id="drawHint">Breathe slowly and ask in your heart: “What do I need to hear today?” Then tap the deck to shuffle.</p>
+        <div class="draw-intro" id="drawIntro">
+          <ol class="draw-steps">
+            <li>Sit quietly to ground yourself</li>
+            <li>Breathe slowly &amp; ask your heart “What do I need to hear today?”</li>
+            <li>Shuffle the deck &amp; intuitively tap on a card</li>
+          </ol>
+          <div class="stage-actions">
+            <button type="button" class="btn btn-gold" id="shuffleBtn">Shuffle the deck</button>
+          </div>
+        </div>
+        <p class="muted" id="drawHint"></p>
       </div>
 
       <div class="table" id="table">
         <div class="stage" id="stage" aria-live="polite"></div>
-        <div class="stage-actions">
-          <button type="button" class="btn btn-gold" id="shuffleBtn">Shuffle the deck</button>
-        </div>
       </div>
 
       <div class="reading" id="reading" hidden>

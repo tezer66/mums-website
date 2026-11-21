@@ -468,7 +468,6 @@
     $('#dashDate').textContent = longDate(today);
     $('#dashGreeting').textContent = greeting() + ', ' + user.name;
     applyRatio($('[data-view="dashboard"]'), DECK);
-    $('#deckName').textContent = DECK.name;
     document.querySelectorAll('.deck-switch a').forEach(function (a) {
       if (a.getAttribute('href') === '#' + DECK.route) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current');
     });
@@ -495,12 +494,14 @@
     var card = todaysCard();
     if (card) {
       $('#table').hidden = true;
+      $('#drawIntro').hidden = true;
       $('#drawHint').textContent = 'This is the card you chose today. Sit with it, and say the affirmation out loud.';
       showReading(card, cardDay(), scroll);
     } else {
       $('#reading').hidden = true;
       $('#table').hidden = false;
-      $('#drawHint').textContent = 'Breathe slowly and ask in your heart: “What do I need to hear today?” Then tap the deck to shuffle.';
+      $('#drawIntro').hidden = false;
+      $('#drawHint').textContent = '';
       selected = null;
       buildDeck();
       if (scroll) $('#drawTitle').scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'start' });
@@ -949,6 +950,7 @@
 
     seq.then(function () { return fanOut(cards); }).then(function (fanCards) {
       btn.hidden = true;
+      $('#drawIntro').hidden = true;
       $('#drawHint').textContent = 'Choose the card that calls to you.';
       fanCards.forEach(function (el, j) {
         el.classList.add('pickable');
