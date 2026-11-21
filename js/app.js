@@ -468,7 +468,6 @@
     if (busy && deck !== DECK) busy = false;
     DECK = deck || BOUNDARIES;
     var today = new Date();
-    $('#dashDate').textContent = longDate(today);
     $('#dashGreeting').textContent = 'Greetings beautiful soul!';
     applyRatio($('[data-view="dashboard"]'), DECK);
     document.querySelectorAll('.deck-switch a').forEach(function (a) {

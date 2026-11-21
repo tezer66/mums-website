@@ -1258,3 +1258,6 @@ body.mode-play .dashv .work-only { display: none !important; }
 .day-journal .journal-list { display: grid; gap: .8rem; }
 .day-journal .dj-empty { margin: 0; font-style: italic; }
 .plan-opt .plan-extra { display: block; font-size: .85rem; color: #7b4f9e; margin-top: .15rem; }
+.mode-tab[aria-selected="true"] { background: var(--hp-lilac, #c9a9e0); border-color: var(--hp-lilac, #c9a9e0); box-shadow: none; color: var(--hp-lilac-ink, #2a1538); }
+.mode-tab[aria-selected="true"] span { opacity: .85; }
+.mode-tab[aria-selected="false"] { border-color: rgba(201,169,224,.55); }
