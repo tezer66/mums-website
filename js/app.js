@@ -214,7 +214,7 @@
         picking = false;
         btn.textContent = 'Shuffle the deck';
         if (triesUsed(route) >= TRY_LIMIT) {
-          btn.textContent = 'Join to experience the full decks';
+          btn.textContent = 'Join';
           setTimeout(openJoinPrompt, reduceMotion ? 300 : 2200);
         }
       }, reduceMotion ? 50 : 700);
@@ -235,7 +235,7 @@
       shuffle();
     }
     if (cover) { cover.addEventListener('click', tapDeck); cover.classList.add('try-tappable'); }
-    if (triesUsed(route) >= TRY_LIMIT) btn.textContent = 'Join to experience the full decks';
+    if (triesUsed(route) >= TRY_LIMIT) btn.textContent = 'Join';
   }
   function initTry() {
     document.querySelectorAll('[data-try-deck]').forEach(makeTry);
