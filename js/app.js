@@ -311,7 +311,7 @@
 
     // Quotes band: Gillian's own words, one at a time.
     var quotes = ['Your voice does not belong to those who told you to stay silent.', 'Boundaries are the clearest expression of Love you hold for yourself.',
-      'Please take what resonates and leave what does not.', 'It’s never one incident that makes you say “No more!”, it happens after years of “keeping the peace”.',
+      'Please take what resonates and leave what does not.', 'It’s never one incident that makes you say No more! It happens after years of “keeping the peace”.',
       'These cards are for the days when your healing journey feels heavy. Keep going! You’ve got this x'].filter(Boolean);
     var qi = 0, qEl = $('#hpQuote');
     var showQ = function () { qEl.textContent = '“' + quotes[qi] + '”'; };
