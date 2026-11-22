@@ -188,7 +188,7 @@
       setTimeout(function () {
         stageEl.classList.remove('is-shuffling');
         stageEl.classList.add('is-fanned');
-        btn.disabled = false; btn.textContent = 'Shuffle again';
+        btn.disabled = false; btn.textContent = 'Choose a card';
         stageEl.querySelectorAll('.try-card').forEach(function (b) {
           b.disabled = false; b.tabIndex = 0;
           b.addEventListener('click', function () { choose(b); }, { once: true });
@@ -212,6 +212,7 @@
         stageEl.hidden = true; stageEl.innerHTML = '';
         result.hidden = false;
         picking = false;
+        btn.textContent = 'Shuffle the deck';
         if (triesUsed(route) >= TRY_LIMIT) {
           btn.textContent = 'Join to experience the full decks';
           setTimeout(openJoinPrompt, reduceMotion ? 300 : 2200);
@@ -219,9 +220,21 @@
       }, reduceMotion ? 50 : 700);
     }
     btn.addEventListener('click', function () {
+      // Cards fanned out: the button chooses one for them (the middle card).
+      if (stageEl.classList.contains('is-fanned') && !picking) {
+        var mid = stageEl.querySelectorAll('.try-card')[Math.floor(FANN / 2)];
+        if (mid) { choose(mid); return; }
+      }
       if (triesUsed(route) >= TRY_LIMIT && !picking) { openJoinPrompt(); return; }
       shuffle();
     });
+    // Tapping the deck shuffles it.
+    function tapDeck() {
+      if (document.body.classList.contains('is-member') || picking || stageEl.classList.contains('is-shuffling') || stageEl.classList.contains('is-fanned')) return;
+      if (triesUsed(route) >= TRY_LIMIT) { openJoinPrompt(); return; }
+      shuffle();
+    }
+    if (cover) { cover.addEventListener('click', tapDeck); cover.classList.add('try-tappable'); }
     if (triesUsed(route) >= TRY_LIMIT) btn.textContent = 'Join to experience the full decks';
   }
   function initTry() {
