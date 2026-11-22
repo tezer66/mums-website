@@ -43,7 +43,7 @@ window.HH_SITE = {
     "Welcome to Boundaries are my Love Language.",
     "This healing inspiration card deck was created for every soul who has struggled to speak uncomfortable truths, set personal boundaries or walk away from situations and relationships that did not have the best intention for your highest good.",
     "This deck is lovingly intended to encourage everyone healing from unhealthy patterns built on silence, blame, or denial — to Reclaim your Voice, Step back into your Power and finally breathe easy with Peace and the Freedom you deserve!",
-    "Each card names something most of us have lived through without ever having the words for it. It’s never one incident that makes you say “No more!”, it happens after years of “keeping the peace” and “breaking the ice.”",
+    "Each card names something most of us have lived through without ever having the words for it. It’s never one incident that makes you say No more! It happens after years of “keeping the peace” and “breaking the ice.”",
     "Cycle breakers are labelled “the problem” because we speak the truth — which makes stepping away feel isolating especially if you’re the first in your Generational line to do it. The guilt you feel from setting a boundary shows how deeply you were trained to abandon yourself.",
     "The purpose of this deck is simple — to support you on your healing journey back to yourself, one truth at a time.",
     "Love Gill x"
