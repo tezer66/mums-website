@@ -144,8 +144,14 @@
   var TRY_LIMIT = 4;
   function tryKey(route) { return 'hh:free-shuffles:' + route; }
   function triesUsed(route) { var n = parseInt(store.get(tryKey(route)) || '0', 10); return isNaN(n) ? 0 : n; }
-  function openJoinPrompt() {
+  var JOIN_PROMPT_TEXT = {
+    dashboard: 'Join to receive the full 44 card deck, guidebook, journal & weekly reflection.',
+    'cancer-care': 'Join to receive the full card deck.',
+    'earth-magick': 'Join to receive the full card deck.'
+  };
+  function openJoinPrompt(route) {
     var jp = $('#joinPrompt'); if (!jp || document.body.classList.contains('is-member')) return;
+    $('#joinPromptText').textContent = JOIN_PROMPT_TEXT[route] || JOIN_PROMPT_TEXT.dashboard;
     jp.hidden = false;
     setTimeout(function () { $('#joinPromptGo').focus(); }, 50);
   }
@@ -177,7 +183,7 @@
     }
     function shuffle() {
       if (picking) return;
-      if (triesUsed(route) >= TRY_LIMIT) { openJoinPrompt(); return; }
+      if (triesUsed(route) >= TRY_LIMIT) { openJoinPrompt(route); return; }
       store.set(tryKey(route), String(triesUsed(route) + 1));
       if (cover) cover.hidden = true;
       result.hidden = true;
@@ -215,7 +221,7 @@
         btn.textContent = 'Shuffle the deck';
         if (triesUsed(route) >= TRY_LIMIT) {
           btn.textContent = 'Join';
-          setTimeout(openJoinPrompt, reduceMotion ? 300 : 2200);
+          setTimeout(function () { openJoinPrompt(route); }, reduceMotion ? 300 : 2200);
         }
       }, reduceMotion ? 50 : 700);
     }
@@ -225,13 +231,13 @@
         var mid = stageEl.querySelectorAll('.try-card')[Math.floor(FANN / 2)];
         if (mid) { choose(mid); return; }
       }
-      if (triesUsed(route) >= TRY_LIMIT && !picking) { openJoinPrompt(); return; }
+      if (triesUsed(route) >= TRY_LIMIT && !picking) { openJoinPrompt(route); return; }
       shuffle();
     });
     // Tapping the deck shuffles it.
     function tapDeck() {
       if (document.body.classList.contains('is-member') || picking || stageEl.classList.contains('is-shuffling') || stageEl.classList.contains('is-fanned')) return;
-      if (triesUsed(route) >= TRY_LIMIT) { openJoinPrompt(); return; }
+      if (triesUsed(route) >= TRY_LIMIT) { openJoinPrompt(route); return; }
       shuffle();
     }
     if (cover) { cover.addEventListener('click', tapDeck); cover.classList.add('try-tappable'); }
