@@ -1364,3 +1364,26 @@ body.deck-cancer .dashv .membership-row { border-top-color: rgba(90,42,69,.15); 
 .try-done { display: grid; gap: 1rem; justify-items: center; max-width: 34rem; margin-top: 1rem; padding: 1.4rem 1.2rem; border-radius: 18px; border: 1px solid rgba(201,169,224,.35); background: rgba(255,255,255,.04); }
 .try-done p { margin: 0; color: var(--hp-text-on-dark); }
 @media (max-width: 420px) { .try-card { width: 120px; margin-left: -60px; } .try-stage { height: 250px; } .try-stage.is-fanned .try-card { transform: translate(calc((var(--i) - 2) * 40px), 8px) rotate(calc((var(--i) - 2) * 9deg)); } }
+/* Header: name with "Healing Inspiration Cards / By Gillian Harper" beneath */
+.brand-text { display: grid; gap: .15rem; line-height: 1.1; }
+.brand-sub { font-family: var(--hp-sans, sans-serif); font-size: .72rem; letter-spacing: .06em; line-height: 1.35; color: var(--hp-muted-dark, #c4b2d0); font-weight: 400; text-transform: none; }
+
+/* Homepage shuffle widgets (hero + each deck) */
+.try { display: grid; justify-items: center; gap: 1rem; }
+.try-cover[hidden], .try-stage[hidden], .try-result[hidden] { display: none !important; }
+.try .try-stage { margin: .4rem auto 0; }
+.try .try-card { aspect-ratio: var(--ar, 4 / 5); }
+.try .try-result { margin: .2rem auto 0; }
+.try .try-face { width: min(260px, 66vw); }
+.try-btn { justify-self: center; }
+body.is-member .try-btn { display: none; }
+.hp-hero-art.try { align-content: center; }
+
+/* "Would you like to join?" */
+.join-prompt { position: fixed; inset: 0; z-index: 200; display: grid; place-items: center; padding: 16px; background: rgba(12,6,18,.72); backdrop-filter: blur(3px); }
+.join-prompt[hidden] { display: none; }
+.jp-card { width: min(460px, 100%); display: grid; gap: .9rem; justify-items: center; text-align: center; padding: 2rem 1.4rem 1.6rem; border-radius: 22px; background: radial-gradient(90% 80% at 50% 20%, #3b2153, #1d1029); color: var(--hp-text-on-dark, #f1e7f6); border: 1px solid rgba(201,169,224,.35); box-shadow: 0 40px 80px -30px rgba(0,0,0,.9); }
+.jp-card .hp-h2 { margin: 0; }
+.jp-card p { margin: 0; color: var(--hp-muted-dark, #c4b2d0); }
+.jp-card .hp-ctas { justify-content: center; margin-top: .4rem; }
+.try .hero-deck { margin-bottom: 1.6rem !important; }

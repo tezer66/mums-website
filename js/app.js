@@ -138,18 +138,31 @@
   })();
 
   /* ---------------- home ---------------- */
-  /* ---------------- homepage: try 4 free cards (visitors) ---------------- */
-  var TRY_LIMIT = 4, TRY_KEY = 'hh:free-pulls';
-  function initTry() {
-    var stageEl = $('#tryStage'); if (!stageEl) return;
-    var btn = $('#tryShuffle'), FANN = 5, picking = false;
-    var cards = BOUNDARIES.cards.filter(function (c) { return c.image; });
-    function used() { var n = parseInt(store.get(TRY_KEY) || '0', 10); return isNaN(n) ? 0 : n; }
-    function showLeft() {
-      var left = Math.max(0, TRY_LIMIT - used());
-      $('#tryLeft').textContent = left ? left + (left === 1 ? ' free card left' : ' free cards left') : '';
-      if (!left) { btn.hidden = true; $('#tryDone').hidden = false; }
-    }
+  /* ---------------- homepage: shuffle the deck (visitors) ----------------
+     Each deck image on the homepage has a "Shuffle the deck" button. Visitors can
+     shuffle each deck 4 times; after the 4th card, "Would you like to join?" opens. */
+  var TRY_LIMIT = 4;
+  function tryKey(route) { return 'hh:free-shuffles:' + route; }
+  function triesUsed(route) { var n = parseInt(store.get(tryKey(route)) || '0', 10); return isNaN(n) ? 0 : n; }
+  function openJoinPrompt() {
+    var jp = $('#joinPrompt'); if (!jp || document.body.classList.contains('is-member')) return;
+    jp.hidden = false;
+    setTimeout(function () { $('#joinPromptGo').focus(); }, 50);
+  }
+  function closeJoinPrompt() { var jp = $('#joinPrompt'); if (jp) jp.hidden = true; }
+  function makeTry(root) {
+    var route = root.getAttribute('data-try-deck'), deck = DECKS[route];
+    if (!deck) return;
+    var FANN = 5, picking = false;
+    var cards = deck.cards.filter(function (c) { return c.image; });
+    var cover = root.querySelector('.try-cover');
+    var stageEl = document.createElement('div'); stageEl.className = 'try-stage'; stageEl.hidden = true;
+    var result = document.createElement('div'); result.className = 'try-result'; result.hidden = true;
+    result.innerHTML = '<div class="try-face"></div><div class="try-words"><p class="try-title"></p><p class="try-msg"></p><p class="try-aff"></p></div>';
+    var btn = document.createElement('button'); btn.type = 'button'; btn.className = 'hp-btn try-btn'; btn.textContent = 'Shuffle the deck';
+    root.appendChild(stageEl); root.appendChild(result); root.appendChild(btn);
+    applyRatio(root, deck);
+
     function stack() {
       stageEl.innerHTML = '';
       stageEl.classList.remove('is-fanned');
@@ -157,22 +170,25 @@
         var b = document.createElement('button');
         b.type = 'button'; b.className = 'try-card'; b.tabIndex = -1; b.disabled = true;
         b.setAttribute('aria-label', 'Choose card ' + (i + 1) + ' of ' + FANN);
-        b.innerHTML = '<img src="' + BOUNDARIES.back + '" alt="" draggable="false">';
+        b.innerHTML = '<img src="' + deck.back + '" alt="" draggable="false">';
         b.style.setProperty('--i', i);
         stageEl.appendChild(b);
       }
     }
     function shuffle() {
-      if (picking || used() >= TRY_LIMIT) return;
-      $('#tryResult').hidden = true;
+      if (picking) return;
+      if (triesUsed(route) >= TRY_LIMIT) { openJoinPrompt(); return; }
+      store.set(tryKey(route), String(triesUsed(route) + 1));
+      if (cover) cover.hidden = true;
+      result.hidden = true;
       stack();
+      stageEl.hidden = false;
       btn.disabled = true;
       stageEl.classList.add('is-shuffling');
       setTimeout(function () {
         stageEl.classList.remove('is-shuffling');
         stageEl.classList.add('is-fanned');
         btn.disabled = false; btn.textContent = 'Shuffle again';
-        $('#tryIntro').textContent = 'Tap the card that calls to you.';
         stageEl.querySelectorAll('.try-card').forEach(function (b) {
           b.disabled = false; b.tabIndex = 0;
           b.addEventListener('click', function () { choose(b); }, { once: true });
@@ -182,33 +198,46 @@
     function choose(b) {
       if (picking) return;
       picking = true;
-      store.set(TRY_KEY, String(used() + 1));
       var card = cards[randomInt(cards.length)];
+      var pre = new Image(); pre.src = card.image;   // start loading while the card lifts
       stageEl.querySelectorAll('.try-card').forEach(function (x) { x.disabled = true; if (x !== b) x.classList.add('is-gone'); });
       b.classList.add('is-chosen');
       setTimeout(function () {
-        var face = $('#tryFace'); face.innerHTML = ''; face.appendChild(renderFace(card));
+        var face = result.querySelector('.try-face'); face.innerHTML = ''; face.appendChild(renderFace(card));
         face.onclick = function () { openViewer(card); };
-        var bk = card.booklet || {};
-        $('#tryTitle').textContent = card.title || '';
-        $('#tryMsg').textContent = card.message || '';
-        $('#tryAff').textContent = bk.affirmation ? '“' + bk.affirmation + '”' : '';
-        stageEl.innerHTML = '';
-        $('#tryResult').hidden = false;
-        $('#tryIntro').textContent = 'Read it slowly, and say the affirmation out loud.';
-        btn.textContent = 'Shuffle again';
+        var aff = (card.booklet && card.booklet.affirmation) || '';
+        result.querySelector('.try-title').textContent = card.title || '';
+        result.querySelector('.try-msg').textContent = (card.message || '').replace(/\n/g, ' ');
+        result.querySelector('.try-aff').textContent = aff ? '“' + aff + '”' : '';
+        stageEl.hidden = true; stageEl.innerHTML = '';
+        result.hidden = false;
         picking = false;
-        showLeft();
+        if (triesUsed(route) >= TRY_LIMIT) {
+          btn.textContent = 'Join to experience the full decks';
+          setTimeout(openJoinPrompt, reduceMotion ? 300 : 2200);
+        }
       }, reduceMotion ? 50 : 700);
     }
-    btn.addEventListener('click', shuffle);
-    stack();
-    showLeft();
+    btn.addEventListener('click', function () {
+      if (triesUsed(route) >= TRY_LIMIT && !picking) { openJoinPrompt(); return; }
+      shuffle();
+    });
+    if (triesUsed(route) >= TRY_LIMIT) btn.textContent = 'Join to experience the full decks';
+  }
+  function initTry() {
+    document.querySelectorAll('[data-try-deck]').forEach(makeTry);
+    var jp = $('#joinPrompt');
+    if (jp) {
+      $('#joinPromptClose').addEventListener('click', closeJoinPrompt);
+      $('#joinPromptGo').addEventListener('click', function () { closeJoinPrompt(); setTab('join'); });
+      jp.addEventListener('click', function (e) { if (e.target === jp) closeJoinPrompt(); });
+      document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !jp.hidden) closeJoinPrompt(); });
+    }
   }
 
   function initHome() {
     initTry();
-    var row = $('#showcase');
+    var row = $('#showcase') || document.createElement('div');
     row.innerHTML = '';
     BOUNDARIES.cards.filter(function (c) { return c.image; }).slice(0, 4).forEach(function (card) {
       var b = document.createElement('button');
