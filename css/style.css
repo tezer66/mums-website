@@ -1389,3 +1389,4 @@ body.is-member .try-btn { display: none; }
 .try .hero-deck { margin-bottom: 1.6rem !important; }
 body:not(.is-member) .try-tappable { cursor: pointer; } body:not(.is-member) .try-tappable:hover { filter: brightness(1.06); }
 .jp-card .jp-text { font-family: var(--hp-serif, serif); font-size: 1.35rem; line-height: 1.35; color: var(--hp-text-on-dark, #f1e7f6); }
+.hp-path-sign { font-family: var(--hp-serif, serif); font-style: italic; font-size: 1.1rem; margin-top: -.2rem; }
