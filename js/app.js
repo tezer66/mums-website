@@ -315,7 +315,7 @@
       $('#hpNext').addEventListener('click', function () { qi = (qi + 1) % quotes.length; showQ(); });
     }
     $('#aboutSignoff').textContent = SITE.aboutSignoff || '';
-    $('#tagline').textContent = SITE.tagline ? '“' + SITE.tagline + '”' : '';
+    if ($('#tagline')) $('#tagline').textContent = SITE.tagline ? '“' + SITE.tagline + '”' : '';
     document.querySelectorAll('a[href="#hp-decks"]').forEach(function (a) { a.addEventListener('click', function (e) { e.preventDefault(); $('#hp-decks').scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth' }); }); });
     var c = SITE.connect || {};
     $('#connectText').textContent = c.text || '';
