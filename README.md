@@ -48,7 +48,7 @@ be archived in Stripe.
 
 ## Giving back to cancer research
 
-**Yearly membership only:** 20% of every yearly payment (the price paid, before payment fees) is donated to cancer research in Australia by Gillian herself. The promise is in `terms.html` (section 5).
+**Yearly membership only:** 20% of every yearly payment (the price paid, before payment fees) is donated to cancer research by Gillian herself. The promise is in `terms.html` (section 5).
 There is no promo code. Monthly has no donation.
 Settings: `"giving"` in `content/site.js` (percent, cause, and the charity's name once chosen).
 

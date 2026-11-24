@@ -20,7 +20,7 @@ window.HH_SITE = {
     }
   },
   "newsletterPdf": "",
-  "giving": { "percent": 20, "cause": "cancer research in Australia", "charity": "" },
+  "giving": { "percent": 20, "cause": "cancer research", "charity": "" },
   "brand": "HarperHolistic",
   "owner": "Gillian Harper",
   "tagline": "Learning to set boundaries is ultimate self care.",

@@ -399,7 +399,7 @@
     });
     // Giving back: 20% of every yearly payment goes to charity.
     var G = SITE.giving || {};
-    var causeText = G.charity ? G.cause + ' (' + G.charity + ')' : (G.cause || 'cancer research in Australia');
+    var causeText = G.charity ? G.cause + ' (' + G.charity + ')' : (G.cause || 'cancer research');
     document.querySelectorAll('[data-give-cause]').forEach(function (el) { el.textContent = causeText; });
     // Yearly membership: 20% of every payment goes to charity. Monthly: no donation.
     function syncYearly() {
