@@ -393,37 +393,41 @@
         setTab(a.getAttribute('data-tab'));
         var plan = a.getAttribute('data-plan');
         if (plan && $('#plan-' + plan)) $('#plan-' + plan).checked = true;
-        syncDeckPick();
       });
     });
-    // One-deck plans: let the member choose which deck, and open it after joining.
-    function syncDeckPick() {
-      var p = ($('#joinForm').querySelector('input[name="plan"]:checked') || {}).value || '';
-      $('#deckPick').hidden = p.indexOf('deck-') !== 0;
-    }
-    document.querySelectorAll('#joinForm input[name="plan"]').forEach(function (r) { r.addEventListener('change', syncDeckPick); });
-    syncDeckPick();
+    // Cancer Care Cards on their own (one-off) shows once its Memberstack plan is set in content/site.js.
+    var cc = (SITE.memberstack && SITE.memberstack.plans || {})['cancer-care'] || {};
+    document.querySelectorAll('[data-cancer-only]').forEach(function (el) { el.hidden = !cc.priceId; });
+    if (cc.price) document.querySelectorAll('[data-cancer-price]').forEach(function (el) { el.textContent = cc.price; });
+    if (cc.price) document.querySelectorAll('#plan-cancer-care ~ span .promo-price').forEach(function (el) { el.dataset.price = cc.price; });
+    // Members with Cancer Care Cards only can join all decks from the deck page.
+    document.querySelectorAll('[data-upgrade]').forEach(function (b) {
+      b.addEventListener('click', function () {
+        b.disabled = true;
+        Auth.checkout(b.getAttribute('data-upgrade'), { success: '#dashboard', cancel: location.hash || '#cancer-care' })
+          .catch(function (err) { b.disabled = false; alert(err.message); });
+      });
+    });
 
     $('#joinForm').addEventListener('submit', function (e) {
       e.preventDefault();
       var f = e.target, btn = f.querySelector('button[type="submit"]');
       $('#joinError').textContent = '';
       var plan = (f.querySelector('input[name="plan"]:checked') || {}).value;
-      var oneDeck = plan && plan.indexOf('deck-') === 0;
-      var chosenDeck = oneDeck ? ((f.querySelector('input[name="deck"]:checked') || {}).value || 'dashboard') : 'dashboard';
+      var newsletter = !!(f.newsletter && f.newsletter.checked);
       var already = Auth.current();   // signed up before but has not paid yet
       if (!already && f.password.value !== f.password2.value) { $('#joinError').textContent = 'The two passwords do not match. Please type them again.'; return; }
       btn.disabled = true;
       $('#joinPayNote').textContent = already ? 'Opening secure checkout…' : 'Creating your account…';
       (already ? Promise.resolve(already) : Auth.signUp(f.name.value, f.email.value, f.password.value, plan, f.keep.checked))
         .then(function (u) {
-          store.set('hh:home:' + u.email, chosenDeck);
           store.set('hh:plan-choice:' + u.email, plan);
+          Auth.setNewsletter(newsletter);
           if (promoApplied) store.set('hh:promo:' + u.email, promoApplied);
           $('#joinPayNote').textContent = 'Taking you to secure checkout with Stripe…';
           // Stripe checkout (through Memberstack); afterwards Stripe brings them back to "Tell Gillian about you".
           // Yearly members go on to "Tell Gillian about you" (for her personal notes); monthly members go to their cards.
-          return Auth.checkout(plan, { success: hasNotes(plan) ? '#about-you' : '#home-deck' });
+          return Auth.checkout(plan, { success: hasNotes(plan) ? '#about-you' : '#home-deck' });   // yearly: Tell Gill about you first
         })
         .catch(function (err) {
           btn.disabled = false;
@@ -1264,11 +1268,10 @@
 
   /* ---------------- routing ---------------- */
   var VIEWS = ['home', 'join', 'dashboard', 'about-you'];   // deck pages (DECKS) show the dashboard view
-  // The deck a member opens to: the one they chose on a one-deck plan, otherwise Boundaries.
+  // The deck a member opens to: Cancer Care Cards for that one-off purchase, otherwise Boundaries.
   function homeDeck() {
     var m = Auth.current();
-    var d = m && store.get('hh:home:' + m.email);
-    return d && (d === 'dashboard' || DECKS[d]) ? d : 'dashboard';
+    return m && m.plan === 'cancer-care' ? 'cancer-care' : 'dashboard';
   }
   function go(view) {
     if (location.hash === '#' + view) route(); else location.hash = view;
@@ -1293,8 +1296,8 @@
       v = 'join';
     }
     if (v === 'join' && member && member.plan) { location.replace('#' + homeDeck()); return; }
-    // One-deck plans open only the deck the member chose.
-    if (v === 'dashboard' && member && member.plan && member.plan.indexOf('deck-') === 0) {
+    // Cancer Care Cards only (one-off): the other decks are part of the All decks membership.
+    if (v === 'dashboard' && member && member.plan === 'cancer-care') {
       var mine = homeDeck(), want = deck ? deck.route : 'dashboard';
       if (want !== mine) { lockedNotice = want; location.replace('#' + mine); return; }
     }
@@ -1315,7 +1318,7 @@
   function showLockedNotice(onDash) {
     var el = $('#lockedNote');
     if (!onDash || !lockedNotice) { el.hidden = true; return; }
-    $('#lockedText').textContent = DECK_NAMES[lockedNotice] + ' is part of the All decks plan. Your plan includes ' + DECK_NAMES[homeDeck()] + '.';
+    $('#lockedText').textContent = DECK_NAMES[lockedNotice] + ' is part of the All decks membership. Your purchase includes Cancer Care Cards.';
     el.hidden = false;
     lockedNotice = null;
   }
@@ -1327,11 +1330,8 @@
     $('#joinPending').hidden = !pending;
     if (pending) {
       $('#joinPendingName').textContent = member.name;
-      var wanted = store.get('hh:plan-choice:' + member.email), deckWanted = store.get('hh:home:' + member.email);
-      if (wanted && $('#plan-' + wanted)) $('#plan-' + wanted).checked = true;
-      var dr = deckWanted && $('#joinForm input[name="deck"][value="' + deckWanted + '"]');
-      if (dr) dr.checked = true;
-      $('#joinForm input[name="plan"]:checked').dispatchEvent(new Event('change'));
+      var wanted = store.get('hh:plan-choice:' + member.email);
+      if (wanted && $('#plan-' + wanted) && !$('#plan-' + wanted).closest('[hidden]')) $('#plan-' + wanted).checked = true;
     }
     $('#joinTabs').hidden = pending;
     if (pending) setTab('join');

@@ -1408,3 +1408,4 @@ body:not(.is-member) .try-tappable { cursor: pointer; } body:not(.is-member) .tr
 .hp-story { display: grid; gap: 1rem; margin-bottom: 2rem; }
 .hp-story p { margin: 0 !important; }
 .hp-top-sign { margin: 1rem 0 0; font-family: var(--hp-serif, serif); font-style: italic; font-size: 1.25rem; line-height: 1.4; color: var(--hp-lilac); }
+.plan-opt[hidden], .plan[hidden] { display: none !important; }

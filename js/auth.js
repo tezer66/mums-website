@@ -239,6 +239,16 @@ window.HHAuth = (function () {
       .catch(function (err) { throw new Error(nicer(err, 'That code did not work. Check the email and try again.')); });
   }
 
+  /* Monthly newsletter: kept in the member JSON ("newsletter": true) and, if Gillian has made a
+     custom field called "newsletter" in Memberstack, there too, so she can export the list. */
+  function setNewsletter(on) {
+    if (!json) return Promise.resolve();
+    json.newsletter = !!on;
+    var p = push();
+    if (ms && ms.updateMember) ms.updateMember({ customFields: { newsletter: on ? 'yes' : 'no' } }).catch(function () {});
+    return p;
+  }
+
   /* "Tell Gillian about you" answers and Gillian's notes, kept in the member JSON. */
   function getProfile() { return json && json.profile ? json.profile : null; }
   function saveProfile(email, profile) {
@@ -250,6 +260,6 @@ window.HHAuth = (function () {
   function getNotes() { return Promise.resolve(json && Array.isArray(json.notes) ? json.notes : []); }
 
   return { ready: ready, refresh: refresh, signUp: signUp, signIn: signIn, signOut: signOut, current: current,
-           checkout: checkout, manageBilling: manageBilling, sendReset: sendReset, resetPassword: resetPassword,
+           checkout: checkout, manageBilling: manageBilling, setNewsletter: setNewsletter, sendReset: sendReset, resetPassword: resetPassword,
            store: store, getProfile: getProfile, saveProfile: saveProfile, getNotes: getNotes };
 })();
