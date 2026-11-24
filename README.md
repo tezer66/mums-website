@@ -48,15 +48,15 @@ be archived in Stripe.
 
 ## Giving back to cancer research
 
-**Yearly membership only:** 20% of every yearly payment (the price paid, before payment fees) is donated to cancer research by Gillian herself. The promise is in `terms.html` (section 5).
+**Yearly membership only:** US$5 from every yearly membership payment is donated to cancer research by Gillian herself. The promise is in `terms.html` (section 5).
 There is no promo code. Monthly has no donation.
-Settings: `"giving"` in `content/site.js` (percent, cause, and the charity's name once chosen).
+Settings: `"giving"` in `content/site.js` (amount, cause, and the charity's name once chosen).
 
 The old **RIVER** discount (Memberstack, Plans, Discounts) should be archived so it can't be used on Stripe's payment page.
 
 **Every month or quarter:**
 1. In Stripe, add up the yearly payments received in the period (Payments, filter by the yearly product).
-2. Donate 20% of that total to the charity, and keep the receipt.
+2. Donate US$5 for each yearly payment received (for example 12 payments = US$60), and keep the receipt.
 3. Post the total donated on Instagram or the website (the Terms promise to share it).
 
 ## Content

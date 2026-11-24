@@ -397,11 +397,12 @@
         syncYearly();
       });
     });
-    // Giving back: 20% of every yearly payment goes to charity.
+    // Giving back: US$5 from every yearly membership goes to charity (amount set in content/site.js).
     var G = SITE.giving || {};
     var causeText = G.charity ? G.cause + ' (' + G.charity + ')' : (G.cause || 'cancer research');
     document.querySelectorAll('[data-give-cause]').forEach(function (el) { el.textContent = causeText; });
-    // Yearly membership: 20% of every payment goes to charity. Monthly: no donation.
+    document.querySelectorAll('[data-give-amount]').forEach(function (el) { el.textContent = G.amount || 5; });
+    // Yearly membership: a donation goes to charity. Monthly: no donation.
     function syncYearly() {
       var yearly = (($('#joinForm').querySelector('input[name="plan"]:checked') || {}).value) === 'all-yearly';
       $('#giveAuto').hidden = !yearly;

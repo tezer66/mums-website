@@ -5,7 +5,7 @@
   "Complimentary" plan gives all decks; Gillian adds it to a member by hand in Memberstack.
   Memberstack handles accounts and takes payment through Stripe. These IDs are public;
   never put a secret key in this file, because the whole site is public.
-  giving: 20% of every yearly payment is donated. Put the charity's
+  giving: US$5 (amount) from every yearly membership is donated. Put the charity's
   name in "charity" once chosen, e.g. "Cure Cancer"; it is shown beside the promise.
   newsletterPdf: the latest monthly newsletter (a PDF), e.g. "content/newsletter/2026-12.pdf".
   Until it is set, the Monthly Newsletter links say "coming soon".
@@ -20,7 +20,7 @@ window.HH_SITE = {
     }
   },
   "newsletterPdf": "",
-  "giving": { "percent": 20, "cause": "cancer research", "charity": "" },
+  "giving": { "amount": 5, "cause": "cancer research", "charity": "" },
   "brand": "HarperHolistic",
   "owner": "Gillian Harper",
   "tagline": "Learning to set boundaries is ultimate self care.",
