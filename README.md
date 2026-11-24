@@ -25,7 +25,6 @@ Accounts, passwords and the four paid plans are handled by **Memberstack** (app
 |---|---|---|
 | All decks, monthly US$9.99 (Cancer Care included, newsletter) | `pln_one-deck-monthly-49m003tz` (renamed in Memberstack) | `prc_one-deck-monthly-7vlg002g` |
 | All decks, yearly US$59 (plus personal messages from Gill) | `pln_one-deck-yearly-pom203ad` (renamed in Memberstack) | `prc_one-deck-yearly-exm303dq` |
-| Cancer Care Cards only, one-off (US$14.99 suggested) | set in `content/site.js` once created | one-time price |
 | Earlier All decks US$19.99 / US$99 (archived; existing members keep access) | `pln_all-decks-monthly-o4620cv4`, `pln_all-decks-yearly-ihlh00ah` | |
 
 - **Complimentary access:** the free plan **Complimentary** (`pln_complimentary-zum603w2`) opens all
@@ -33,7 +32,6 @@ Accounts, passwords and the four paid plans are handled by **Memberstack** (app
 - **Joining:** the member picks a plan (and their deck, on a one-deck plan), creates an account,
   then pays on Stripe's checkout. Stripe brings them back to "Tell Gillian about you".
   Someone who signs up but doesn't pay sees a "finish joining" form when they come back.
-- **Cancer Care Cards only** (one-off) opens only Cancer Care; the other decks show a note with buttons to join All decks.
 - **Monthly newsletter:** the join form has a tick-box (on by default). The choice is saved in the member JSON
   (`"newsletter": true`) and in a Memberstack custom field `newsletter` (yes/no) if that field exists.
 - **Cancelling:** members email Gillian; cancel their subscription in Stripe (Customers, open the customer,
