@@ -1409,3 +1409,7 @@ body:not(.is-member) .try-tappable { cursor: pointer; } body:not(.is-member) .tr
 .hp-story p { margin: 0 !important; }
 .hp-top-sign { margin: 1rem 0 0; font-family: var(--hp-serif, serif); font-style: italic; font-size: 1.25rem; line-height: 1.4; color: var(--hp-lilac); }
 .plan-opt[hidden], .plan[hidden] { display: none !important; }
+.nl-link { display: inline-flex; align-items: center; gap: .4rem; font-size: .92rem; color: #6b3d86; text-decoration: underline; text-underline-offset: 3px; }
+.nl-link .ico { width: 18px; height: 18px; flex: none; }
+.plan-best .nl-link { color: var(--hp-lilac, #c9a9e0); }
+.nl-row { margin: .2rem 0 .4rem; }

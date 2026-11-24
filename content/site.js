@@ -11,6 +11,8 @@
   promo: the welcome code (shared on social media). The real discount is the
   Memberstack discount of the same name, entered on the payment page.
   showOnHomepage: true also shows the code in the homepage plans section.
+  newsletterPdf: the latest monthly newsletter (a PDF), e.g. "content/newsletter/2026-12.pdf".
+  Until it is set, the Monthly Newsletter links say "coming soon".
   getCodeLink: where the join form sends people to find the code. Paste the link
   to a particular Instagram (or Facebook) post here to send them to that post.
 */
@@ -26,6 +28,7 @@ window.HH_SITE = {
       "all-complimentary": { "planId": "pln_complimentary-zum603w2" }
     }
   },
+  "newsletterPdf": "",
   "promo": { "code": "RIVER", "percent": 20, "note": "20% off your first payment", "showOnHomepage": false,
     "getCodeText": "Don’t have a code? Find this month’s code on Instagram",
     "getCodeLink": "https://www.instagram.com/harper.holistic/" },

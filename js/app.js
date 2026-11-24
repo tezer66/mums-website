@@ -395,6 +395,13 @@
         if (plan && $('#plan-' + plan)) $('#plan-' + plan).checked = true;
       });
     });
+    // Monthly Newsletter links: open the latest newsletter PDF (set in content/site.js), or say coming soon.
+    document.querySelectorAll('[data-newsletter]').forEach(function (a) {
+      if (SITE.newsletterPdf) { a.href = SITE.newsletterPdf; return; }
+      a.removeAttribute('target'); a.href = '#';
+      a.querySelector('span').textContent = 'Monthly Newsletter (coming soon)';
+      a.addEventListener('click', function (e) { e.preventDefault(); });
+    });
     // Cancer Care Cards on their own (one-off) shows once its Memberstack plan is set in content/site.js.
     var cc = (SITE.memberstack && SITE.memberstack.plans || {})['cancer-care'] || {};
     document.querySelectorAll('[data-cancer-only]').forEach(function (el) { el.hidden = !cc.priceId; });
