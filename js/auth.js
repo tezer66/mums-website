@@ -249,6 +249,17 @@ window.HHAuth = (function () {
     return p;
   }
 
+  /* "Pay full price and give back": 20% of every payment from this member is donated. Kept in the
+     member JSON ("giveBack": true) and in a Memberstack custom field "give-back" (yes/no), so Gillian
+     can filter members and add up what to donate. */
+  function setGiveBack(on) {
+    if (!json) return Promise.resolve();
+    json.giveBack = !!on;
+    var p = push();
+    if (ms && ms.updateMember) ms.updateMember({ customFields: { 'give-back': on ? 'yes' : 'no' } }).catch(function () {});
+    return p;
+  }
+
   /* "Tell Gillian about you" answers and Gillian's notes, kept in the member JSON. */
   function getProfile() { return json && json.profile ? json.profile : null; }
   function saveProfile(email, profile) {
@@ -260,6 +271,6 @@ window.HHAuth = (function () {
   function getNotes() { return Promise.resolve(json && Array.isArray(json.notes) ? json.notes : []); }
 
   return { ready: ready, refresh: refresh, signUp: signUp, signIn: signIn, signOut: signOut, current: current,
-           checkout: checkout, manageBilling: manageBilling, setNewsletter: setNewsletter, sendReset: sendReset, resetPassword: resetPassword,
+           checkout: checkout, manageBilling: manageBilling, setNewsletter: setNewsletter, setGiveBack: setGiveBack, sendReset: sendReset, resetPassword: resetPassword,
            store: store, getProfile: getProfile, saveProfile: saveProfile, getNotes: getNotes };
 })();

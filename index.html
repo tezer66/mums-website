@@ -29,7 +29,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600;700&family=Sue+Ellen+Francisco&family=Playfair+Display:wght@400;700&family=Cinzel:wght@400;500;600&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=DM+Sans:wght@400;500;600&display=swap">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Tiro+Devanagari+Sanskrit&text=%E0%A5%90&display=swap">
-<link rel="stylesheet" href="css/style.css?v=202611240542">
+<link rel="stylesheet" href="css/style.css?v=202611240554">
 <script data-memberstack-app="app_cmwpxru3200lz0su3hnmd9nw9" src="https://static.memberstack.com/scripts/v1/memberstack.js" type="text/javascript"></script>
 </head>
 <body>
@@ -156,6 +156,7 @@
         <span>New members: use code <b id="promoCodeText"></b> for <span id="promoNoteText">20% off your first payment</span>.</span>
         <button type="button" class="copy-btn" id="copyPromo">Copy code</button>
       </div>
+      <p class="give-note">Prefer to give back? Pay full price and <b>20% of every payment</b> goes to <span data-give-cause>cancer research in Australia</span>. <a href="#join" data-tab="join" data-give="1">Join and give back</a></p>
       <div class="plans hp-plans">
         <div class="plan">
           <p class="plan-name">All decks</p>
@@ -270,6 +271,8 @@
         <input id="joinPass2" name="password2" type="password" autocomplete="new-password" minlength="8" required>
         <p class="fine">Keep these safe. You'll need this email and password each time you sign in.</p>
         </div>
+        <label class="keep give-opt" for="joinGive"><input type="checkbox" id="joinGive" name="give"><span><b>Pay full price and give back.</b> 20% of every payment I make goes to <span data-give-cause>cancer research in Australia</span>. <small>Tick this instead of using a promo code.</small></span></label>
+        <div id="promoBlock">
         <label for="joinPromo">Promo code <span class="opt">(optional)</span></label>
         <div class="promo-row">
           <input id="joinPromo" name="promo" autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="Enter your code">
@@ -277,6 +280,7 @@
         </div>
         <p class="promo-msg" id="promoMsg" role="status"></p>
         <a class="promo-get" id="promoGet" href="#" target="_blank" rel="noopener" hidden><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="12" r="4.2" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="17.4" cy="6.6" r="1.2" fill="currentColor"/></svg><span id="promoGetText"></span></a>
+        </div>
         <label class="keep" for="joinNews"><input type="checkbox" id="joinNews" name="newsletter" checked><span>Send me Gill’s monthly newsletter: wellness, rituals and new messages. Unsubscribe any time.</span></label>
         <label class="keep acct-field" for="joinKeep"><input type="checkbox" id="joinKeep" name="keep"><span>Keep me signed in on this device</span></label>
         <p class="form-error" id="joinError" role="alert"></p>
@@ -570,11 +574,11 @@
   <p class="lb-hint">Tap anywhere or swipe down to close</p>
 </div>
 
-<script src="content/site.js?v=202611240542"></script>
-<script src="content/cards.js?v=202611240542"></script>
-<script src="content/earth-magick-deck.js?v=202611240542"></script>
-<script src="content/cancer-care-deck.js?v=202611240542"></script>
-<script src="js/auth.js?v=202611240542"></script>
-<script src="js/app.js?v=202611240542"></script>
+<script src="content/site.js?v=202611240554"></script>
+<script src="content/cards.js?v=202611240554"></script>
+<script src="content/earth-magick-deck.js?v=202611240554"></script>
+<script src="content/cancer-care-deck.js?v=202611240554"></script>
+<script src="js/auth.js?v=202611240554"></script>
+<script src="js/app.js?v=202611240554"></script>
 </body>
 </html>

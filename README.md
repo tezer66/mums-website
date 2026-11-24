@@ -48,6 +48,20 @@ Accounts, passwords and the four paid plans are handled by **Memberstack** (app
 The old Stripe payment links (created before Memberstack) are no longer used by the site and can
 be archived in Stripe.
 
+## Giving back to cancer research
+
+Members can tick **Pay full price and give back** on the join form (instead of using a promo code).
+20% of every payment they make is donated by Gillian herself; the promise is in `terms.html` (section 5).
+The choice is saved in each member's Member JSON (`"giveBack": true`) and in a Memberstack custom field
+**give-back** (yes/no): in Memberstack, Settings, Custom fields, add a field with the key `give-back`.
+Settings: `"giving"` in `content/site.js` (percent, cause, and the charity's name once chosen).
+
+**Every month or quarter:**
+1. In Memberstack, Members, filter `give-back = yes`.
+2. In Stripe, add up what those members paid in the period (Payments, filter by customer email).
+3. Donate 20% of that total to the charity, and keep the receipt.
+4. Post the total donated on Instagram or the website (the Terms promise to share it).
+
 ## Content
 
 All of Gillian's words live in plain files, so the code never needs editing:

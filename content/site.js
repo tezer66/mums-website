@@ -8,6 +8,8 @@
   promo: the welcome code (shared on social media). The real discount is the
   Memberstack discount of the same name, entered on the payment page.
   showOnHomepage: true also shows the code in the homepage plans section.
+  giving: members who tick "Pay full price" have 20% of every payment donated. Put the charity's
+  name in "charity" once chosen, e.g. "Cure Cancer"; it is shown beside the promise.
   newsletterPdf: the latest monthly newsletter (a PDF), e.g. "content/newsletter/2026-12.pdf".
   Until it is set, the Monthly Newsletter links say "coming soon".
   getCodeLink: where the join form sends people to find the code. Paste the link
@@ -23,6 +25,7 @@ window.HH_SITE = {
     }
   },
   "newsletterPdf": "",
+  "giving": { "percent": 20, "cause": "cancer research in Australia", "charity": "" },
   "promo": { "code": "RIVER", "percent": 20, "note": "20% off your first payment", "showOnHomepage": false,
     "getCodeText": "Don’t have a code? Find this month’s code on Instagram",
     "getCodeLink": "https://www.instagram.com/harper.holistic/" },

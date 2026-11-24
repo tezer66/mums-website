@@ -1449,3 +1449,9 @@ body:not(.is-member) .try-tappable { cursor: pointer; } body:not(.is-member) .tr
 .deck-slide .try-face img, .deck-slide .try-face .face-text { height: 100%; width: auto; }
 .try[data-try-deck="cancer-care"] img.hp-frame.try-cover { aspect-ratio: 1080 / 1350; }
 .try[data-try-deck="earth-magick"] img.hp-frame.try-cover { aspect-ratio: 1280 / 1920; }
+.give-opt { margin: .6rem 0 .2rem; padding: .85rem 1rem; border: 1px solid #e3d2ea; border-radius: 14px; background: #f4ecf9; align-items: flex-start; }
+.give-opt:has(input:checked) { border-color: #a882c4; background: #efe3f7; }
+.give-opt b { color: #3f1659; } .give-opt small { display: block; margin-top: .2rem; color: #6f5a7c; }
+#promoBlock[hidden] { display: none !important; }
+.give-note { margin: 0 auto 1.6rem; max-width: 40rem; text-align: center; color: #5a4a68; }
+.give-note a { color: #6b3d86; text-underline-offset: 3px; }

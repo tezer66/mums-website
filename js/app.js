@@ -429,8 +429,19 @@
         setTab(a.getAttribute('data-tab'));
         var plan = a.getAttribute('data-plan');
         if (plan && $('#plan-' + plan)) $('#plan-' + plan).checked = true;
+        if (a.getAttribute('data-give')) { $('#joinGive').checked = true; syncGive(); }
       });
     });
+    // "Pay full price and give back": 20% of every payment goes to charity. Instead of (not with) a promo code.
+    var G = SITE.giving || {};
+    var causeText = G.charity ? G.cause + ' (' + G.charity + ')' : (G.cause || 'cancer research in Australia');
+    document.querySelectorAll('[data-give-cause]').forEach(function (el) { el.textContent = causeText; });
+    function syncGive() {
+      var on = $('#joinGive').checked;
+      $('#promoBlock').hidden = on;
+      if (on) { $('#joinPromo').value = ''; promoApplied = null; $('#promoMsg').textContent = ''; showPromoPrices(); }
+    }
+    $('#joinGive').addEventListener('change', syncGive);
     // Monthly Newsletter links: open the latest newsletter PDF (set in content/site.js), or say coming soon.
     document.querySelectorAll('[data-newsletter]').forEach(function (a) {
       if (SITE.newsletterPdf) { a.href = SITE.newsletterPdf; return; }
@@ -458,6 +469,7 @@
       $('#joinError').textContent = '';
       var plan = (f.querySelector('input[name="plan"]:checked') || {}).value;
       var newsletter = !!(f.newsletter && f.newsletter.checked);
+      var give = !!(f.give && f.give.checked);
       var already = Auth.current();   // signed up before but has not paid yet
       if (!already && f.password.value !== f.password2.value) { $('#joinError').textContent = 'The two passwords do not match. Please type them again.'; return; }
       btn.disabled = true;
@@ -466,6 +478,7 @@
         .then(function (u) {
           store.set('hh:plan-choice:' + u.email, plan);
           Auth.setNewsletter(newsletter);
+          Auth.setGiveBack(give);
           if (promoApplied) store.set('hh:promo:' + u.email, promoApplied);
           $('#joinPayNote').textContent = 'Taking you to secure checkout with Stripe…';
           // Stripe checkout (through Memberstack); afterwards Stripe brings them back to "Tell Gillian about you".
