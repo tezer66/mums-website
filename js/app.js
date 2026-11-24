@@ -254,8 +254,44 @@
     }
   }
 
+  /* ---------------- homepage: swipe between the three decks ---------------- */
+  function initDeckCarousel() {
+    var track = $('#deckCarousel'); if (!track) return;
+    var band = $('#hp-decks');
+    var slides = Array.prototype.slice.call(track.querySelectorAll('.deck-slide'));
+    var tabs = Array.prototype.slice.call(document.querySelectorAll('.deck-tab'));
+    var dots = Array.prototype.slice.call(document.querySelectorAll('.deck-dots span'));
+    var THEMES = ['', 'deck-on-cancer', 'deck-on-earth'];
+    var current = -1;
+    function show(i) {
+      if (i === current) return;
+      current = i;
+      tabs.forEach(function (t, j) { t.setAttribute('aria-selected', String(j === i)); });
+      dots.forEach(function (d, j) { d.classList.toggle('is-on', j === i); });
+      slides.forEach(function (s, j) { s.setAttribute('aria-hidden', String(j !== i)); });
+      THEMES.forEach(function (c) { if (c) band.classList.remove(c); });
+      if (THEMES[i]) band.classList.add(THEMES[i]);
+    }
+    function goTo(i) {
+      i = (i + slides.length) % slides.length;
+      track.scrollTo({ left: i * track.clientWidth, behavior: reduceMotion ? 'auto' : 'smooth' });
+      show(i);
+    }
+    var t = null;
+    track.addEventListener('scroll', function () {
+      clearTimeout(t);
+      t = setTimeout(function () { show(Math.round(track.scrollLeft / Math.max(1, track.clientWidth))); }, 60);
+    }, { passive: true });
+    tabs.forEach(function (tab, i) { tab.addEventListener('click', function () { goTo(i); }); });
+    $('.deck-prev').addEventListener('click', function () { goTo(current - 1); });
+    $('.deck-next').addEventListener('click', function () { goTo(current + 1); });
+    window.addEventListener('resize', function () { track.scrollLeft = current * track.clientWidth; });
+    show(0);
+  }
+
   function initHome() {
     initTry();
+    initDeckCarousel();
     var row = $('#showcase') || document.createElement('div');
     row.innerHTML = '';
     BOUNDARIES.cards.filter(function (c) { return c.image; }).slice(0, 4).forEach(function (card) {
