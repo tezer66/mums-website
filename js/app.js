@@ -429,19 +429,22 @@
         setTab(a.getAttribute('data-tab'));
         var plan = a.getAttribute('data-plan');
         if (plan && $('#plan-' + plan)) $('#plan-' + plan).checked = true;
-        if (a.getAttribute('data-give')) { $('#joinGive').checked = true; syncGive(); }
+        syncYearly();
       });
     });
     // "Pay full price and give back": 20% of every payment goes to charity. Instead of (not with) a promo code.
     var G = SITE.giving || {};
     var causeText = G.charity ? G.cause + ' (' + G.charity + ')' : (G.cause || 'cancer research in Australia');
     document.querySelectorAll('[data-give-cause]').forEach(function (el) { el.textContent = causeText; });
-    function syncGive() {
-      var on = $('#joinGive').checked;
-      $('#promoBlock').hidden = on;
-      if (on) { $('#joinPromo').value = ''; promoApplied = null; $('#promoMsg').textContent = ''; showPromoPrices(); }
+    // Yearly membership only: a promo code, and 20% of every payment goes to charity. Monthly: neither.
+    function syncYearly() {
+      var yearly = (($('#joinForm').querySelector('input[name="plan"]:checked') || {}).value) === 'all-yearly';
+      $('#promoBlock').hidden = !yearly;
+      $('#giveAuto').hidden = !yearly;
+      if (!yearly) { $('#joinPromo').value = ''; promoApplied = null; $('#promoMsg').textContent = ''; showPromoPrices(); }
     }
-    $('#joinGive').addEventListener('change', syncGive);
+    document.querySelectorAll('#joinForm input[name="plan"]').forEach(function (r) { r.addEventListener('change', syncYearly); });
+    syncYearly();
     // Monthly Newsletter links: open the latest newsletter PDF (set in content/site.js), or say coming soon.
     document.querySelectorAll('[data-newsletter]').forEach(function (a) {
       if (SITE.newsletterPdf) { a.href = SITE.newsletterPdf; return; }
@@ -469,7 +472,7 @@
       $('#joinError').textContent = '';
       var plan = (f.querySelector('input[name="plan"]:checked') || {}).value;
       var newsletter = !!(f.newsletter && f.newsletter.checked);
-      var give = !!(f.give && f.give.checked);
+      var give = plan === 'all-yearly';
       var already = Auth.current();   // signed up before but has not paid yet
       if (!already && f.password.value !== f.password2.value) { $('#joinError').textContent = 'The two passwords do not match. Please type them again.'; return; }
       btn.disabled = true;
@@ -1388,6 +1391,7 @@
       $('#joinPendingName').textContent = member.name;
       var wanted = store.get('hh:plan-choice:' + member.email);
       if (wanted && $('#plan-' + wanted) && !$('#plan-' + wanted).closest('[hidden]')) $('#plan-' + wanted).checked = true;
+      $('#joinForm input[name="plan"]:checked').dispatchEvent(new Event('change'));
     }
     $('#joinTabs').hidden = pending;
     if (pending) setTab('join');

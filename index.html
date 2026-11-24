@@ -29,7 +29,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600;700&family=Sue+Ellen+Francisco&family=Playfair+Display:wght@400;700&family=Cinzel:wght@400;500;600&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=DM+Sans:wght@400;500;600&display=swap">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Tiro+Devanagari+Sanskrit&text=%E0%A5%90&display=swap">
-<link rel="stylesheet" href="css/style.css?v=202611240554">
+<link rel="stylesheet" href="css/style.css?v=202611240604">
 <script data-memberstack-app="app_cmwpxru3200lz0su3hnmd9nw9" src="https://static.memberstack.com/scripts/v1/memberstack.js" type="text/javascript"></script>
 </head>
 <body>
@@ -156,7 +156,6 @@
         <span>New members: use code <b id="promoCodeText"></b> for <span id="promoNoteText">20% off your first payment</span>.</span>
         <button type="button" class="copy-btn" id="copyPromo">Copy code</button>
       </div>
-      <p class="give-note">Prefer to give back? Pay full price and <b>20% of every payment</b> goes to <span data-give-cause>cancer research in Australia</span>. <a href="#join" data-tab="join" data-give="1">Join and give back</a></p>
       <div class="plans hp-plans">
         <div class="plan">
           <p class="plan-name">All decks</p>
@@ -169,6 +168,7 @@
           <p class="plan-name">All decks</p>
           <p class="plan-price"><span class="cur">US$</span>59<span class="per">/ year</span></p>
           <p class="plan-note plan-titles">Boundaries are my Love Language<br>Cancer Care Cards<br>Momma’s Earth Magick</p>
+          <p class="plan-note plan-give">20% of every yearly payment goes to <span data-give-cause>cancer research in Australia</span>.</p>
           <a href="#join" class="hp-btn" data-tab="join" data-plan="all-yearly">Choose</a>
         </div>
       </div>
@@ -257,7 +257,7 @@
         </div>
         <fieldset class="plan-pick">
           <legend>Your plan</legend>
-          <label class="plan-opt" for="plan-all-monthly"><input type="radio" id="plan-all-monthly" name="plan" value="all-monthly"><span><b>All decks</b> US$9.99 / month <small class="plan-extra">Boundaries are my Love Language · Cancer Care Cards · Momma’s Earth Magick</small> <span class="promo-price" data-price="9.99" data-per="first month" hidden></span></span></label>
+          <label class="plan-opt" for="plan-all-monthly"><input type="radio" id="plan-all-monthly" name="plan" value="all-monthly"><span><b>All decks</b> US$9.99 / month <small class="plan-extra">Boundaries are my Love Language · Cancer Care Cards · Momma’s Earth Magick</small></span></label>
           <label class="plan-opt" for="plan-all-yearly"><input type="radio" id="plan-all-yearly" name="plan" value="all-yearly" checked><span><b>All decks</b> US$59 / year <em>Best value, save 51%</em> <small class="plan-extra">Boundaries are my Love Language · Cancer Care Cards · Momma’s Earth Magick</small> <span class="promo-price" data-price="59" data-per="first year" hidden></span></span></label>
         </fieldset>
         <div class="acct-field">
@@ -271,7 +271,7 @@
         <input id="joinPass2" name="password2" type="password" autocomplete="new-password" minlength="8" required>
         <p class="fine">Keep these safe. You'll need this email and password each time you sign in.</p>
         </div>
-        <label class="keep give-opt" for="joinGive"><input type="checkbox" id="joinGive" name="give"><span><b>Pay full price and give back.</b> 20% of every payment I make goes to <span data-give-cause>cancer research in Australia</span>. <small>Tick this instead of using a promo code.</small></span></label>
+        <p class="give-auto" id="giveAuto"><b>Giving back:</b> 20% of every yearly payment goes to <span data-give-cause>cancer research in Australia</span>.</p>
         <div id="promoBlock">
         <label for="joinPromo">Promo code <span class="opt">(optional)</span></label>
         <div class="promo-row">
@@ -574,11 +574,11 @@
   <p class="lb-hint">Tap anywhere or swipe down to close</p>
 </div>
 
-<script src="content/site.js?v=202611240554"></script>
-<script src="content/cards.js?v=202611240554"></script>
-<script src="content/earth-magick-deck.js?v=202611240554"></script>
-<script src="content/cancer-care-deck.js?v=202611240554"></script>
-<script src="js/auth.js?v=202611240554"></script>
-<script src="js/app.js?v=202611240554"></script>
+<script src="content/site.js?v=202611240604"></script>
+<script src="content/cards.js?v=202611240604"></script>
+<script src="content/earth-magick-deck.js?v=202611240604"></script>
+<script src="content/cancer-care-deck.js?v=202611240604"></script>
+<script src="js/auth.js?v=202611240604"></script>
+<script src="js/app.js?v=202611240604"></script>
 </body>
 </html>

@@ -50,17 +50,19 @@ be archived in Stripe.
 
 ## Giving back to cancer research
 
-Members can tick **Pay full price and give back** on the join form (instead of using a promo code).
-20% of every payment they make is donated by Gillian herself; the promise is in `terms.html` (section 5).
-The choice is saved in each member's Member JSON (`"giveBack": true`) and in a Memberstack custom field
-**give-back** (yes/no): in Memberstack, Settings, Custom fields, add a field with the key `give-back`.
+**Yearly membership only:** 20% of every yearly payment (the price paid after any promo code, before payment
+fees) is donated to cancer research in Australia by Gillian herself. The promise is in `terms.html` (section 5).
+**Promo codes (RIVER) also apply to the yearly membership only.** Monthly has neither the donation nor a code.
 Settings: `"giving"` in `content/site.js` (percent, cause, and the charity's name once chosen).
 
+In Memberstack, set the **RIVER** discount to apply to **All decks, yearly** only (Plans, Discounts, RIVER).
+Yearly members are saved with `"giveBack": true` in their Member JSON and a custom field **give-back** (yes)
+if that field exists (Settings, Custom fields, key `give-back`).
+
 **Every month or quarter:**
-1. In Memberstack, Members, filter `give-back = yes`.
-2. In Stripe, add up what those members paid in the period (Payments, filter by customer email).
-3. Donate 20% of that total to the charity, and keep the receipt.
-4. Post the total donated on Instagram or the website (the Terms promise to share it).
+1. In Stripe, add up the yearly payments received in the period (Payments, filter by the yearly product).
+2. Donate 20% of that total to the charity, and keep the receipt.
+3. Post the total donated on Instagram or the website (the Terms promise to share it).
 
 ## Content
 
