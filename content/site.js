@@ -28,7 +28,9 @@ window.HH_SITE = {
   "owner": "Gillian Harper",
   "tagline": "Learning to set boundaries is ultimate self care.",
   "about": [
-    "These decks were born as I started the deepest inner healing of my life. Each card was created as I honestly acknowledged the lesson in my own life. My intention is to share my healing journey so it may help you on yours.",
+    "These decks were born as I started the deepest inner healing of my life. Each card was created as I honestly acknowledged the lesson in my own life. My intention is to share my healing journey so it may help you on yours."
+  ],
+  "aboutStory": [
     "October 2025 I was diagnosed with Stage 4 Cancer. The trauma our family, and all families experience when hearing that word, is life changing. Cancer is silent until it screams!",
     "For 15 years I worked in Wellness in Dubai & Koh Samui - teaching Yoga, Reiki, Sound healing, Hosting Retreats and Full Moon ceremonies. Cancer doesn't care how healthy your lifestyle is - your body will turn a boundary you won't say into a symptom you can't ignore!",
     "Boundaries are the clearest expression of Love you hold for yourself. May these decks encourage you to Speak your truth, Protect what matters to you and finally come home to yourself."

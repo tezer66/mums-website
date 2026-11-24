@@ -1398,3 +1398,11 @@ body:not(.is-member) .try-tappable { cursor: pointer; } body:not(.is-member) .tr
 .hp-video-copy .hp-ctas, .hp-share { justify-content: center; justify-items: center; margin-top: 0; }
 /* Start today under the four boxes */
 .hp-paths-cta { justify-self: center; margin-top: clamp(32px, 5vw, 56px); }
+/* Top of the homepage: Gill's opening words, centred */
+.hp-about { grid-template-columns: 1fr !important; justify-items: center; text-align: center; }
+.hp-about-text { display: grid; justify-items: center; max-width: 44rem; }
+.hp-about-text .prose p { font-family: var(--hp-serif, serif); font-size: clamp(1.25rem, 2.4vw, 1.6rem) !important; line-height: 1.45; color: var(--hp-text-on-dark) !important; }
+.hp-about-text .hp-ctas { justify-content: center; }
+/* Bottom section: the rest of Gill's story */
+.hp-story { display: grid; gap: 1rem; margin-bottom: 2rem; }
+.hp-story p { margin: 0 !important; }
