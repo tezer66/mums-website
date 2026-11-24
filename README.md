@@ -23,9 +23,8 @@ Accounts, passwords and the four paid plans are handled by **Memberstack** (app
 
 | Plan | Memberstack plan | Price |
 |---|---|---|
-| All decks, monthly US$9.99 (Cancer Care included, newsletter) | `pln_one-deck-monthly-49m003tz` (renamed in Memberstack) | `prc_one-deck-monthly-7vlg002g` |
-| All decks, yearly US$59 (plus personal messages from Gill) | `pln_one-deck-yearly-pom203ad` (renamed in Memberstack) | `prc_one-deck-yearly-exm303dq` |
-| Earlier All decks US$19.99 / US$99 (archived; existing members keep access) | `pln_all-decks-monthly-o4620cv4`, `pln_all-decks-yearly-ihlh00ah` | |
+| All decks, monthly US$9.99 | `pln_all-decks-monthly-o4620cv4` | `prc_all-decks-monthly-qm1bi03hv` |
+| All decks, yearly US$59 | `pln_all-decks-yearly-ihlh00ah` | `prc_all-decks-yearly-eb1bj038j` |
 
 - **Complimentary access:** the free plan **Complimentary** (`pln_complimentary-zum603w2`) opens all
   decks. Add it to a member in Memberstack (Members, open the member, Plans, Add). It can't be joined from the site.

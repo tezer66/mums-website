@@ -1,8 +1,7 @@
 /*
   Site text and settings for HarperHolistic (from the Companion Booklet).
   memberstack: the app ID and the plans in Memberstack (memberstack.com).
-  all-monthly (US$9.99) and all-yearly (US$59) open every deck, Cancer Care included.
-  The *-old plans are the earlier US$19.99 / US$99 prices, kept so anyone on them keeps access. The free
+  all-monthly (US$9.99) and all-yearly (US$59) open every deck, Cancer Care included. The free
   "Complimentary" plan gives all decks; Gillian adds it to a member by hand in Memberstack.
   Memberstack handles accounts and takes payment through Stripe. These IDs are public;
   never put a secret key in this file, because the whole site is public.
@@ -18,10 +17,8 @@ window.HH_SITE = {
   "memberstack": {
     "appId": "app_cmwpxru3200lz0su3hnmd9nw9",
     "plans": {
-      "all-monthly": { "planId": "pln_one-deck-monthly-49m003tz", "priceId": "prc_one-deck-monthly-7vlg002g" },
-      "all-yearly":  { "planId": "pln_one-deck-yearly-pom203ad", "priceId": "prc_one-deck-yearly-exm303dq" },
-      "all-monthly-old": { "planId": "pln_all-decks-monthly-o4620cv4" },
-      "all-yearly-old":  { "planId": "pln_all-decks-yearly-ihlh00ah" },
+      "all-monthly": { "planId": "pln_all-decks-monthly-o4620cv4", "priceId": "prc_all-decks-monthly-qm1bi03hv" },
+      "all-yearly":  { "planId": "pln_all-decks-yearly-ihlh00ah", "priceId": "prc_all-decks-yearly-eb1bj038j" },
       "all-complimentary": { "planId": "pln_complimentary-zum603w2" }
     }
   },
