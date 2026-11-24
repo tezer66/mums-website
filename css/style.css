@@ -1441,3 +1441,11 @@ body:not(.is-member) .try-tappable { cursor: pointer; } body:not(.is-member) .tr
 @media (min-width: 900px) { .deck-carousel > .deck-slide { grid-template-columns: 1fr 1fr; gap: 72px; } }
 @media (prefers-reduced-motion: reduce) { .deck-carousel { scroll-behavior: auto; } }
 .deck-slide { overflow: hidden; } .deck-slide .hp-row-copy > .hp-eyebrow { display: none; }
+/* Homepage decks: every deck image the same height, whatever the card shape */
+.deck-slide { --deck-h: min(420px, 108vw); }
+.deck-slide img.hp-frame.try-cover { height: var(--deck-h); width: auto; max-width: 100%; object-fit: contain; border-radius: 24px; }
+.deck-slide .hero-deck.try-cover { height: var(--deck-h); width: calc(var(--deck-h) * .8) !important; max-width: 82vw; aspect-ratio: auto; }
+.deck-slide .try-face { width: auto !important; height: calc(var(--deck-h) * .82); }
+.deck-slide .try-face img, .deck-slide .try-face .face-text { height: 100%; width: auto; }
+.try[data-try-deck="cancer-care"] img.hp-frame.try-cover { aspect-ratio: 1080 / 1350; }
+.try[data-try-deck="earth-magick"] img.hp-frame.try-cover { aspect-ratio: 1280 / 1920; }
