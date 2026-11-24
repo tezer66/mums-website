@@ -1177,7 +1177,8 @@ body { font-family: var(--ui); font-size: 1rem; }
   .auth-deck { margin: 0 0 1rem 1.5rem; }
 }
 @media (max-width: 899px) {
-  .auth-split .auth-card { order: -1; }
+  .auth-split .auth-card { order: 0; }   /* phones: what members get comes first, then the form */
+  .auth-split .auth-deck { width: min(170px, 44vw) !important; margin-block: .2rem .4rem !important; }
   .auth-deck { width: min(180px, 46vw); }
 }
 
