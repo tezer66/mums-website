@@ -1392,3 +1392,9 @@ body:not(.is-member) .try-tappable { cursor: pointer; } body:not(.is-member) .tr
 .hp-path-sign { font-family: var(--hp-serif, serif); font-style: italic; font-size: 1.1rem; margin-top: -.2rem; }
 .hp-steps-cta { justify-self: center; margin-top: clamp(28px, 4vw, 44px); }
 .hp-steps-cta { margin-top: 0; }
+/* Video: centred, with its buttons beneath */
+.hp-video { grid-template-columns: 1fr !important; justify-items: center; text-align: center; gap: 28px; }
+.hp-video-copy { display: grid; justify-items: center; gap: 1rem; }
+.hp-video-copy .hp-ctas, .hp-share { justify-content: center; justify-items: center; margin-top: 0; }
+/* Start today under the four boxes */
+.hp-paths-cta { justify-self: center; margin-top: clamp(32px, 5vw, 56px); }
