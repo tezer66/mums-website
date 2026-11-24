@@ -382,42 +382,7 @@
     $('#joinForm').hidden = !join;
     $('#signinForm').hidden = join;
   }
-  /* ---------------- welcome promo code ----------------
-     The site shows the code and the discounted first payment. The real discount
-     is applied at checkout by Stripe, using a promotion code with the same name. */
-  var promoApplied = null;
   function money(n) { return 'US$' + (Math.round(n * 100) / 100).toFixed(2).replace(/\.00$/, ''); }
-  function initPromo() {
-    var P = SITE.promo; if (!P || !P.code) { var bn = $('#promoBanner'); if (bn) bn.hidden = true; return; }
-    $('#promoCodeText').textContent = P.code; $('#promoNoteText').textContent = P.note;
-    $('#promoBanner').hidden = !P.showOnHomepage;
-    if (P.getCodeLink) { $('#promoGet').href = P.getCodeLink; $('#promoGetText').textContent = P.getCodeText || 'Find the code on Instagram'; $('#promoGet').hidden = false; }
-    $('#copyPromo').addEventListener('click', function () {
-      var btn = this, done = function () { btn.textContent = 'Copied'; setTimeout(function () { btn.textContent = 'Copy code'; }, 1800); };
-      try { navigator.clipboard.writeText(P.code).then(done, function () {}); } catch (e) {}
-    });
-    var apply = function (quiet) {
-      var v = ($('#joinPromo').value || '').trim().toUpperCase();
-      var msg = $('#promoMsg');
-      if (!v) { promoApplied = null; msg.textContent = ''; msg.className = 'promo-msg'; showPromoPrices(); return; }
-      if (v === P.code.toUpperCase()) {
-        promoApplied = P.code; msg.textContent = P.code + ': ' + P.note + '. Type ' + P.code + ' again in the promotion code box on the payment page.'; msg.className = 'promo-msg ok';
-      } else {
-        promoApplied = null; if (!quiet) { msg.textContent = 'That code isn’t valid. Check the spelling, or leave it empty.'; msg.className = 'promo-msg bad'; }
-      }
-      showPromoPrices();
-    };
-    $('#applyPromo').addEventListener('click', function () { apply(false); });
-    $('#joinPromo').addEventListener('keydown', function (e) { if (e.key === 'Enter') { e.preventDefault(); apply(false); } });
-    $('#joinPromo').addEventListener('input', function () { if (!this.value.trim()) apply(true); });
-  }
-  function showPromoPrices() {
-    var P = SITE.promo;
-    document.querySelectorAll('.promo-price').forEach(function (el) {
-      el.hidden = !promoApplied;
-      if (promoApplied) el.textContent = money(parseFloat(el.dataset.price) * (100 - P.percent) / 100) + ' ' + el.dataset.per;
-    });
-  }
 
   var PAY_NOTE = '';
   function initAuthForms() {
@@ -432,16 +397,14 @@
         syncYearly();
       });
     });
-    // "Pay full price and give back": 20% of every payment goes to charity. Instead of (not with) a promo code.
+    // Giving back: 20% of every yearly payment goes to charity.
     var G = SITE.giving || {};
     var causeText = G.charity ? G.cause + ' (' + G.charity + ')' : (G.cause || 'cancer research in Australia');
     document.querySelectorAll('[data-give-cause]').forEach(function (el) { el.textContent = causeText; });
-    // Yearly membership only: a promo code, and 20% of every payment goes to charity. Monthly: neither.
+    // Yearly membership: 20% of every payment goes to charity. Monthly: no donation.
     function syncYearly() {
       var yearly = (($('#joinForm').querySelector('input[name="plan"]:checked') || {}).value) === 'all-yearly';
-      $('#promoBlock').hidden = !yearly;
       $('#giveAuto').hidden = !yearly;
-      if (!yearly) { $('#joinPromo').value = ''; promoApplied = null; $('#promoMsg').textContent = ''; showPromoPrices(); }
     }
     document.querySelectorAll('#joinForm input[name="plan"]').forEach(function (r) { r.addEventListener('change', syncYearly); });
     syncYearly();
@@ -456,7 +419,6 @@
     var cc = (SITE.memberstack && SITE.memberstack.plans || {})['cancer-care'] || {};
     document.querySelectorAll('[data-cancer-only]').forEach(function (el) { el.hidden = !cc.priceId; });
     if (cc.price) document.querySelectorAll('[data-cancer-price]').forEach(function (el) { el.textContent = cc.price; });
-    if (cc.price) document.querySelectorAll('#plan-cancer-care ~ span .promo-price').forEach(function (el) { el.dataset.price = cc.price; });
     // Members with Cancer Care Cards only can join all decks from the deck page.
     document.querySelectorAll('[data-upgrade]').forEach(function (b) {
       b.addEventListener('click', function () {
@@ -482,7 +444,6 @@
           store.set('hh:plan-choice:' + u.email, plan);
           Auth.setNewsletter(newsletter);
           Auth.setGiveBack(give);
-          if (promoApplied) store.set('hh:promo:' + u.email, promoApplied);
           $('#joinPayNote').textContent = 'Taking you to secure checkout with Stripe…';
           // Stripe checkout (through Memberstack); afterwards Stripe brings them back to "Tell Gillian about you".
           // Yearly members go on to "Tell Gillian about you" (for her personal notes); monthly members go to their cards.
@@ -1408,7 +1369,6 @@
   $('#year').textContent = new Date().getFullYear();
   initHome();
   initAuthForms();
-  initPromo();
   initProfileForm();
   window.addEventListener('hashchange', route);
   route();                                  // show the page straight away…

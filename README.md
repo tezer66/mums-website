@@ -36,8 +36,6 @@ Accounts, passwords and the four paid plans are handled by **Memberstack** (app
 - **Cancelling:** members email Gillian; cancel their subscription in Stripe (Customers, open the customer,
   cancel subscription at period end). The "Upgrade" buttons open Stripe's customer portal.
 - **Forgot your password?** on the sign-in form: Memberstack emails a code.
-- **RIVER:** a Memberstack discount (20% off the first payment, first-time customers). Members
-  type it on the Stripe payment page; the join form only previews the discounted price.
 - **Member data:** daily cards, journal, chosen deck and the "about you" answers are saved in each
   member's **Member JSON** in Memberstack, so they follow the member to any device. Gillian can
   read them in Memberstack (Members, open a member). To write a personal note, add to their
@@ -50,14 +48,11 @@ be archived in Stripe.
 
 ## Giving back to cancer research
 
-**Yearly membership only:** 20% of every yearly payment (the price paid after any promo code, before payment
-fees) is donated to cancer research in Australia by Gillian herself. The promise is in `terms.html` (section 5).
-**Promo codes (RIVER) also apply to the yearly membership only.** Monthly has neither the donation nor a code.
+**Yearly membership only:** 20% of every yearly payment (the price paid, before payment fees) is donated to cancer research in Australia by Gillian herself. The promise is in `terms.html` (section 5).
+There is no promo code. Monthly has no donation.
 Settings: `"giving"` in `content/site.js` (percent, cause, and the charity's name once chosen).
 
-In Memberstack, set the **RIVER** discount to apply to **All decks, yearly** only (Plans, Discounts, RIVER).
-Yearly members are saved with `"giveBack": true` in their Member JSON and a custom field **give-back** (yes)
-if that field exists (Settings, Custom fields, key `give-back`).
+The old **RIVER** discount (Memberstack, Plans, Discounts) should be archived so it can't be used on Stripe's payment page.
 
 **Every month or quarter:**
 1. In Stripe, add up the yearly payments received in the period (Payments, filter by the yearly product).
