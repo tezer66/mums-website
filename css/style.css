@@ -1472,3 +1472,8 @@ body:not(.is-member) .try-tappable { cursor: pointer; } body:not(.is-member) .tr
   .deck-tabs { margin-top: 12px !important; gap: 6px; }
   .deck-tab { font-size: .78rem; padding: .4rem .75rem; }
 }
+/* Stacked layout (phones and tablets): the deck image and Shuffle come first, the words beneath */
+@media (max-width: 899px) {
+  .deck-slide .hp-row-art { order: -1; }
+  .deck-slide .hp-row-copy { text-align: center; justify-items: center; margin-inline: auto; }
+}
