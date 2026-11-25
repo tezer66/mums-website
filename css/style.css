@@ -1487,3 +1487,14 @@ body:not(.is-member) .try-tappable { cursor: pointer; } body:not(.is-member) .tr
 .table .stage-actions { margin-top: .4rem; gap: 10px; }
 /* After a card is drawn, the card and its message also come first */
 .dashv .dk .dash #reading { order: -3; margin-top: .6rem; }
+/* Phones: tighten the deck, Shuffle, deck buttons and greeting so they fit on the first screen */
+@media (max-width: 600px) {
+  .dashv .dk .dash { padding-top: .6rem; gap: .3rem; }
+  .dashv .dk .dash #table { margin-top: 0; padding-bottom: .4rem; margin-bottom: .2rem; }
+  .dashv .dk .stage { --cw: clamp(120px, 31vw, 160px); height: calc(var(--cw) * var(--arh, 1.25) + 64px); }
+  .dashv .dk .stage-actions .btn { min-height: 44px; padding: .5rem 1.4rem; }
+  .dashv .deck-switch { gap: 6px; margin: .5rem 0 .1rem; }
+  .dashv .deck-switch a { min-height: 34px; padding: .25rem .75rem; font-size: .8rem !important; letter-spacing: 0 !important; text-transform: none; }
+  .dashv .dash-title { font-size: 1.9rem; margin-top: .1rem; line-height: 1.1; }
+  .dashv .dk .dash .draw-head { padding-top: 0; }
+}
