@@ -571,7 +571,7 @@
   // Mommas Earth Magick and Cancer Care Cards have no Inner Work / Inner Play tabs:
   // members shuffle and pull as many cards as they like (nothing is saved).
   var SIMPLE_DECK_TEXT = {
-    'earth-magick': { title: 'Your card', intro: 'Breathe slowly, shuffle the deck and tap the card that calls to you. Sit with it, and say the affirmation out loud.' },
+    'earth-magick': { title: 'Choose your card', intro: 'Breathe slowly, shuffle the deck and tap the card that calls to you. Sit with it, and say the affirmation out loud.' },
     'cancer-care': { title: 'Choose a message', intro: 'Gentle words that help your loved one experiencing cancer.' }
   };
   function isSimpleDeck() { return DECK !== BOUNDARIES; }
