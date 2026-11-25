@@ -1478,3 +1478,10 @@ body:not(.is-member) .try-tappable { cursor: pointer; } body:not(.is-member) .tr
   .deck-slide .hp-row-copy { text-align: center; justify-items: center; margin-inline: auto; }
 }
 .dashv .deck-switch { margin: 0 0 1.4rem; } .dashv .dash-head { margin-top: 0; }
+/* Member deck pages: the deck image (with its Shuffle button) comes first, then the deck buttons and greeting */
+.dashv .dk .dash > .draw { display: contents; }
+.dashv .dk .dash > .deck-switch { order: -2; }
+.dashv .dk .dash > .dash-head, .dashv .dk .dash > .locked-note { order: -1; }
+.dashv .dk .dash #table { order: -3; margin-bottom: .6rem; }
+.dashv .dk .dash .draw-head { padding-top: .4rem; }
+.table .stage-actions { margin-top: .4rem; gap: 10px; }
