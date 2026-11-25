@@ -211,9 +211,10 @@
       setTimeout(function () {
         var face = result.querySelector('.try-face'); face.innerHTML = ''; face.appendChild(renderFace(card));
         face.onclick = function () { openViewer(card); };
-        var aff = (card.booklet && card.booklet.affirmation) || '';
+        var aff = (card.booklet && card.booklet.affirmation) || card.affirmation || '';
         result.querySelector('.try-title').textContent = card.title || '';
-        result.querySelector('.try-msg').textContent = (card.message || '').replace(/\n/g, ' ');
+        // decks with an "I am" affirmation show that instead of repeating the card's own words
+        result.querySelector('.try-msg').textContent = card.affirmation ? '' : (card.message || '').replace(/\n/g, ' ');
         result.querySelector('.try-aff').textContent = aff ? '“' + aff + '”' : '';
         stageEl.hidden = true; stageEl.innerHTML = '';
         result.hidden = false;
@@ -726,7 +727,7 @@
       '<h3 class="be-title">' + esc(card.title) + '</h3></div>' +
       '<section class="be-section be-aff"><h4>' + esc(card.deck.entryHeading || 'Affirmation') + '</h4>' +
       '<p class="be-prompt">' + esc(card.deck.entryPrompt || 'Say it out loud with intention:') + '</p>' +
-      '<p class="be-affirm be-lines">' + esc(card.message) + '</p>' +
+      '<p class="be-affirm be-lines">' + esc(card.affirmation || card.message) + '</p>' +
       (card.deck.copyable ? '<button type="button" class="btn btn-gold btn-sm copy-msg">Copy message</button>' : '') +
       '</section>';
     if (card.words && card.words.length) {
@@ -736,7 +737,7 @@
     $('#bookletEntry').innerHTML = html;
     var cb = $('#bookletEntry .copy-msg');
     if (cb) cb.addEventListener('click', function () {
-      var text = card.message.replace(/\n/g, ' ');
+      var text = (card.affirmation || card.message).replace(/\n/g, ' ');
       var done = function () { cb.textContent = 'Copied'; setTimeout(function () { cb.textContent = 'Copy message'; }, 1800); };
       var fallback = function () { var r = document.createRange(); r.selectNodeContents($('#bookletEntry .be-affirm')); var sel = getSelection(); sel.removeAllRanges(); sel.addRange(r); };
       try { navigator.clipboard.writeText(text).then(done, fallback); } catch (e) { fallback(); }
