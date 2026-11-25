@@ -5,11 +5,8 @@
   plans, and takes payment with Stripe. The app ID and the plan/price IDs live in
   content/site.js ("memberstack").
 
-  Everything a member creates on the site (daily cards, journal, chosen deck,
-  "about you" answers) is kept in their Memberstack "member JSON", so it follows
-  them to any device. Gillian can read it in Memberstack: Members, open a member,
-  Member JSON. She writes personal notes there too, as:
-     "notes": [ { "date": "21 November 2026", "text": "Her message…" } ]
+  Everything a member creates on the site (their daily card and journal) is kept in their
+  Memberstack "member JSON", so it follows them to any device.
 
   app.js only uses the functions returned at the bottom of this file.
 */
@@ -213,7 +210,7 @@ window.HHAuth = (function () {
     }).then(function () {
       return ms.purchasePlansWithCheckout({
         priceId: price,
-        successUrl: base + (opts.success || '#about-you'),
+        successUrl: base + (opts.success || '#home-deck'),
         cancelUrl: base + (opts.cancel || '#join'),
         autoRedirect: true
       });
@@ -260,17 +257,7 @@ window.HHAuth = (function () {
     return p;
   }
 
-  /* "Tell Gillian about you" answers and Gillian's notes, kept in the member JSON. */
-  function getProfile() { return json && json.profile ? json.profile : null; }
-  function saveProfile(email, profile) {
-    profile.updated = new Date().toISOString();
-    if (!json) return Promise.reject(new Error('Please sign in again.'));
-    json.profile = profile;
-    return push().then(function () { return profile; });
-  }
-  function getNotes() { return Promise.resolve(json && Array.isArray(json.notes) ? json.notes : []); }
-
   return { ready: ready, refresh: refresh, signUp: signUp, signIn: signIn, signOut: signOut, current: current,
            checkout: checkout, manageBilling: manageBilling, setNewsletter: setNewsletter, setGiveBack: setGiveBack, sendReset: sendReset, resetPassword: resetPassword,
-           store: store, getProfile: getProfile, saveProfile: saveProfile, getNotes: getNotes };
+           store: store };
 })();

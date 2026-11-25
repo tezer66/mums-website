@@ -28,18 +28,16 @@ Accounts, passwords and the four paid plans are handled by **Memberstack** (app
 
 - **Complimentary access:** the free plan **Complimentary** (`pln_complimentary-zum603w2`) opens all
   decks. Add it to a member in Memberstack (Members, open the member, Plans, Add). It can't be joined from the site.
-- **Joining:** the member picks a plan (and their deck, on a one-deck plan), creates an account,
-  then pays on Stripe's checkout. Stripe brings them back to "Tell Gillian about you".
-  Someone who signs up but doesn't pay sees a "finish joining" form when they come back.
+- **Joining:** the member picks monthly or yearly, creates an account, then pays on Stripe's checkout.
+  Stripe brings them back to their cards. Someone who signs up but doesn't pay sees a "finish joining" form
+  when they come back.
 - **Monthly newsletter:** the join form has a tick-box (on by default). The choice is saved in the member JSON
   (`"newsletter": true`) and in a Memberstack custom field `newsletter` (yes/no) if that field exists.
 - **Cancelling:** members email Gillian; cancel their subscription in Stripe (Customers, open the customer,
   cancel subscription at period end). The "Upgrade" buttons open Stripe's customer portal.
 - **Forgot your password?** on the sign-in form: Memberstack emails a code.
-- **Member data:** daily cards, journal, chosen deck and the "about you" answers are saved in each
-  member's **Member JSON** in Memberstack, so they follow the member to any device. Gillian can
-  read them in Memberstack (Members, open a member). To write a personal note, add to their
-  Member JSON: `"notes": [ { "date": "21 November 2026", "text": "Her message" } ]`.
+- **Member data:** the daily card and journal are saved in each member's **Member JSON** in Memberstack, so
+  they follow the member to any device.
 - **Test Mode:** until the Memberstack plan is upgraded and harperholistic.xyz is added as a live
   domain (Settings, Application domains), payments are Stripe test payments (card 4242 4242 4242 4242).
 
@@ -69,7 +67,7 @@ All of Gillian's words live in plain files, so the code never needs editing:
 | Cancer Care Cards: what to say or text, with a Copy button | `content/cancer-care-deck.js` (artwork in `images/cancer-care/`) |
 | Mommas Earth Magick: cards, their affirmations and Gillian's fuller words | `content/earth-magick-deck.js` (artwork in `images/earth-magick/`) |
 | Momma's Earth Magik: 159 quotes and teachings, kept for the upcoming Earth Magik card deck (not shown on the site yet) | `content/earth-magik.js` |
-| About Gillian, connect details, guidebook introduction, how to use the deck, the "about you" question choices | `content/site.js` |
+| About Gillian, connect details, guidebook introduction, how to use the deck | `content/site.js` |
 | Card artwork | `images/cards/card-05.webp` … `card-44.webp`, then set `image` on that card |
 | Guidebook PDF | `content/booklet/Boundaries_Companion_Booklet.pdf` |
 
@@ -99,17 +97,11 @@ Cards without artwork yet are drawn in the deck's purple-and-gold frame from the
 - **Weekly Reflections.** Seven tiles, one per day, in weeks that start on the day the member drew their first card from that deck (day 1), then a new week every 7 days. Tap any card to reread it.
 - **Full deck.** Members can browse all 44 cards and their guidebook messages.
 - **Card Decks.** Each deck has its own page (`#dashboard` for Boundaries are my Love
-  Language, `#earth-magick` for Mommas Earth Magick), reached from the Card Decks menu or
-  the switcher at the top of the dashboard. Each deck has its own daily card, Weekly
+  Language, `#earth-magick` for Mommas Earth Magick), reached from the switcher at the top of the dashboard. Each deck has its own daily card, Weekly
   Reflections and full-deck grid, and keeps its own card shape. Cancer Care Cards is at `#cancer-care`. To add an Earth Magick card, add its image to
   `images/earth-magick/` and copy an entry in `content/earth-magick-deck.js`.
-- **Tell Gillian about you.** Notes from Gillian are part of the **yearly** plans (and Complimentary). Monthly members see an "Upgrade to yearly" note instead, and go straight to their cards after paying. After joining a yearly plan, members answer a few optional questions
-  (name, birthday, location, where they are in their healing, areas they want support
-  with, what's on their heart, what brings them peace, how to be contacted) so Gillian
-  can write personal messages. Those appear under "Notes from Gillian" on the dashboard.
-- **One-deck plans.** Members choose their deck when joining; it opens on their dashboard after payment and each time they sign in, on any device.
-- **Plans (USD).** One deck monthly US$9.99, all decks monthly US$19.99, one deck yearly US$59,
-  all decks yearly US$99. Shown on the home page and chosen when joining.
+- **Plans (USD).** All decks monthly US$9.99 or all decks yearly US$59. Both include every deck, Cancer Care
+  Cards included. Shown on the home page and chosen when joining.
 
 ## Before going live
 

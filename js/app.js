@@ -446,9 +446,8 @@
           Auth.setNewsletter(newsletter);
           Auth.setGiveBack(give);
           $('#joinPayNote').textContent = 'Taking you to secure checkout with Stripe…';
-          // Stripe checkout (through Memberstack); afterwards Stripe brings them back to "Tell Gillian about you".
-          // Yearly members go on to "Tell Gillian about you" (for her personal notes); monthly members go to their cards.
-          return Auth.checkout(plan, { success: hasNotes(plan) ? '#about-you' : '#home-deck' });   // yearly: Tell Gill about you first
+          // Stripe checkout (through Memberstack); afterwards Stripe brings them back to their cards.
+          return Auth.checkout(plan, { success: '#home-deck' });
         })
         .catch(function (err) {
           btn.disabled = false;
@@ -496,78 +495,6 @@
       });
     });
     $('#signOutBtn').addEventListener('click', function () { Auth.signOut().then(function () { go('home'); }); document.body.classList.remove('is-member'); });
-  }
-
-  /* ---------------- "Tell Gillian about you" ---------------- */
-  function chipGroup(holder, name, options, type) {
-    holder.innerHTML = options.map(function (o, i) {
-      var id = name + '-' + i;
-      return '<label class="chip-opt" for="' + id + '"><input type="' + type + '" id="' + id + '" name="' + name + '" value="' + esc(o) + '"><span>' + esc(o) + '</span></label>';
-    }).join('');
-  }
-  function initProfileForm() {
-    var q = SITE.profileQuestions || {};
-    chipGroup($('#pfStage'), 'stage', q.stages || [], 'radio');
-    chipGroup($('#pfAreas'), 'areas', q.areas || [], 'checkbox');
-    chipGroup($('#pfContact'), 'contact', q.contact || [], 'radio');
-    $('#profileForm').addEventListener('submit', function (e) {
-      e.preventDefault();
-      var f = e.target, u = Auth.current();
-      if (!u) return go('join');
-      if (!f.consent.checked) { $('#profileError').textContent = 'Please tick the box so Gillian has your permission to read your answers.'; return; }
-      $('#profileError').textContent = '';
-      var pick = function (n) { var el = f.querySelector('input[name="' + n + '"]:checked'); return el ? el.value : ''; };
-      var profile = {
-        callMe: f.callMe.value.trim(), birthday: f.birthday.value.trim(), location: f.location.value.trim(),
-        stage: pick('stage'),
-        areas: Array.prototype.map.call(f.querySelectorAll('input[name="areas"]:checked'), function (el) { return el.value; }),
-        heart: f.heart.value.trim(), hope: f.hope.value.trim(), peace: f.peace.value.trim(),
-        contact: pick('contact'), consent: true
-      };
-      Auth.saveProfile(u.email, profile).then(function () { go(homeDeck()); });
-    });
-  }
-  function fillProfileForm() {
-    var u = Auth.current(); if (!u) return;
-    var f = $('#profileForm'), p = Auth.getProfile(u.email);
-    var isEdit = !!p;
-    f.querySelector('.eyebrow').textContent = isEdit ? 'Your answers' : 'Welcome to HarperHolistic';
-    f.querySelector('button[type="submit"]').textContent = isEdit ? 'Save changes' : 'Send to Gillian';
-    $('#profileSkip').textContent = isEdit ? 'Back to my cards' : 'Skip for now';
-    p = p || { callMe: u.name };
-    f.callMe.value = p.callMe || ''; f.birthday.value = p.birthday || ''; f.location.value = p.location || '';
-    f.heart.value = p.heart || ''; f.hope.value = p.hope || ''; f.peace.value = p.peace || '';
-    f.consent.checked = !!p.consent;
-    f.querySelectorAll('.chip-opt input').forEach(function (el) {
-      el.checked = el.name === 'areas' ? (p.areas || []).indexOf(el.value) >= 0 : p[el.name] === el.value;
-    });
-    $('#profileError').textContent = '';
-  }
-  // Notes from Gillian are part of the yearly plans (and complimentary access).
-  function hasNotes(plan) { return /yearly|complimentary/.test(plan || ''); }
-  function renderNotes() {
-    var holder = $('#notesList'), u = Auth.current();
-    if (!hasNotes(u.plan)) {
-      $('#profileBtn').hidden = true;
-      holder.innerHTML = '<div class="note-empty note-locked"><p>Personal notes from Gillian are part of the yearly membership. Gillian gets to know you and writes to you herself.</p><button type="button" class="btn btn-gold btn-sm" data-billing>Upgrade to yearly</button></div>';
-      holder.querySelector('[data-billing]').addEventListener('click', function () {
-        var b = this; b.disabled = true;
-        Auth.manageBilling().catch(function (err) { b.disabled = false; alert(err.message); });
-      });
-      return;
-    }
-    var profile = Auth.getProfile(u.email);
-    $('#profileBtn').textContent = profile ? 'Edit your answers' : 'Tell Gillian about you';
-    $('#profileBtn').hidden = !profile;
-    Auth.getNotes(u.email).then(function (notes) {
-      if (notes && notes.length) {
-        holder.innerHTML = notes.map(function (n) {
-          return '<article class="note"><p class="eyebrow">' + esc(n.date || '') + '</p><p>' + esc(n.text) + '</p><p class="note-from">Love, Gill x</p></article>';
-        }).join('');
-      } else {
-        holder.innerHTML = '<div class="note-empty"><p>If you would like to receive personal messages from me, tell me a little about yourself.</p>' + (profile ? '' : '<a href="#about-you" class="btn btn-gold btn-sm">Tell Gill about you</a>') + '</div>';
-      }
-    });
   }
 
   /* ---------------- draws (one card per day, per member) ---------------- */
@@ -625,7 +552,6 @@
       : 'Tap a card to read Gillian’s words for it.';
     $('#guidebookSection').hidden = !DECK.hasGuidebook;
     if (DECK.hasGuidebook) renderBookletSection();
-    renderNotes();
     initJournal();
     renderDeckGrid();
     showToday(false);
@@ -1288,7 +1214,7 @@
   document.addEventListener('visibilitychange', function () { if (!document.hidden) refreshIfNewDay(); });
 
   /* ---------------- routing ---------------- */
-  var VIEWS = ['home', 'join', 'dashboard', 'about-you'];   // deck pages (DECKS) show the dashboard view
+  var VIEWS = ['home', 'join', 'dashboard'];   // deck pages (DECKS) show the dashboard view
   // The deck a member opens to: Cancer Care Cards for that one-off purchase, otherwise Boundaries.
   function homeDeck() {
     var m = Auth.current();
@@ -1302,7 +1228,7 @@
     var v = (location.hash || '#home').slice(1);
     var member = Auth.current();
     // Until we know whether someone is signed in, don't flash the join page on member pages.
-    if (!authKnown && (DECKS[v] || v === 'about-you' || v === 'home-deck')) {
+    if (!authKnown && (DECKS[v] || v === 'home-deck')) {
       document.querySelectorAll('[data-view]').forEach(function (s) { s.hidden = true; });
       return;
     }
@@ -1310,7 +1236,7 @@
     var deck = DECKS[v] || null;
     if (deck) v = 'dashboard';
     if (VIEWS.indexOf(v) < 0) v = 'home';
-    if ((v === 'dashboard' || v === 'about-you') && !member) v = 'join';
+    if (v === 'dashboard' && !member) v = 'join';
     // Signed up but not paid yet (or just back from checkout while Stripe catches up).
     if (member && !member.plan && (v === 'dashboard' || v === 'join')) {
       if (Date.now() - lastRefresh > 5000) { lastRefresh = Date.now(); Auth.refresh().then(route); return; }
@@ -1328,7 +1254,6 @@
     document.querySelectorAll('[data-view]').forEach(function (s) { s.hidden = s.getAttribute('data-view') !== v; });
     if (v !== 'dashboard') document.body.classList.remove('deck-simple', 'deck-earth', 'deck-cancer');   // deck colours only on deck pages
     if (v === 'dashboard') initDashboard(deck || BOUNDARIES);
-    if (v === 'about-you') fillProfileForm();
     showLockedNotice(v === 'dashboard');
     window.scrollTo(0, 0);
   }
@@ -1370,7 +1295,6 @@
   $('#year').textContent = new Date().getFullYear();
   initHome();
   initAuthForms();
-  initProfileForm();
   window.addEventListener('hashchange', route);
   route();                                  // show the page straight away…
   Auth.ready().then(function () { authKnown = true; route(); }); // …then again once sign-in is known

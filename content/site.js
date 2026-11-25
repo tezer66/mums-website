@@ -63,34 +63,5 @@ window.HH_SITE = {
     ],
     "outro": "Keep going! You've got this x"
   },
-  "profileQuestions": {
-    "stages": [
-      "Just beginning",
-      "Finding my voice",
-      "Setting boundaries",
-      "Grieving what was missing",
-      "Rebuilding myself",
-      "Feeling stronger every day"
-    ],
-    "areas": [
-      "Family",
-      "Parents",
-      "Siblings",
-      "Partner or ex-partner",
-      "Friendships",
-      "Work",
-      "Grief and loss",
-      "My health and body",
-      "Speaking my truth",
-      "Self-worth",
-      "Saying no",
-      "Letting go"
-    ],
-    "contact": [
-      "Email",
-      "Here in my dashboard",
-      "Either is lovely"
-    ]
-  },
   "bookletPdf": "content/booklet/Boundaries_Companion_Booklet.pdf"
 };
