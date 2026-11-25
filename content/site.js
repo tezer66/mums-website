@@ -7,6 +7,8 @@
   never put a secret key in this file, because the whole site is public.
   giving: US$5 (amount) from every yearly membership is donated. Put the charity's
   name in "charity" once chosen, e.g. "Cure Cancer"; it is shown beside the promise.
+  analytics: set "provider" to "plausible" once an account for harperholistic.xyz exists at
+  plausible.io; visitor statistics then run with no cookies. Also add a line to privacy.html.
   newsletterPdf: the latest monthly newsletter (a PDF), e.g. "content/newsletter/2026-12.pdf".
   Until it is set, the Monthly Newsletter links say "coming soon".
 */
@@ -20,6 +22,7 @@ window.HH_SITE = {
     }
   },
   "newsletterPdf": "",
+  "analytics": { "provider": "", "domain": "harperholistic.xyz" },
   "giving": { "amount": 5, "cause": "cancer research", "charity": "" },
   "brand": "HarperHolistic",
   "owner": "Gillian Harper",

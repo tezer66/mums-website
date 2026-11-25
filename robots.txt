@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /content/newsletter/
+
+Sitemap: https://www.harperholistic.xyz/sitemap.xml

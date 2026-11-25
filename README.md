@@ -57,6 +57,24 @@ The old **RIVER** discount (Memberstack, Plans, Discounts) should be archived so
 2. Donate US$5 for each yearly payment received (for example 12 payments = US$60), and keep the receipt.
 3. Post the total donated on Instagram or the website (the Terms promise to share it).
 
+## Newsletter
+
+Issues live in `content/newsletter/`: an email version (`issue-01-full-moon-boundary-ritual.html`, paste it into
+the email tool; it uses `{$unsubscribe}` for MailerLite) and a PDF. To link a PDF from the site, set
+`"newsletterPdf"` in `content/site.js`. Images load from `www.harperholistic.xyz/content/newsletter/img/`.
+
+## Visitor statistics and tracked links
+
+Statistics are off until a Plausible account exists for harperholistic.xyz: set `"analytics": { "provider":
+"plausible", ... }` in `content/site.js` and add a line to `privacy.html`. Give each post its own link, e.g.
+`https://www.harperholistic.xyz/?utm_source=instagram&utm_medium=reel&utm_campaign=launch`, and Plausible shows which
+posts bring visitors.
+
+## Speed and search
+
+The homepage uses light thumbnails in `images/thumbs/` (full-size cards open only when a card is drawn), and the video
+downloads only when it is about to be seen. `robots.txt`, `sitemap.xml` and `404.html` are in the root.
+
 ## Content
 
 All of Gillian's words live in plain files, so the code never needs editing:

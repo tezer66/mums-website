@@ -176,7 +176,7 @@
         var b = document.createElement('button');
         b.type = 'button'; b.className = 'try-card'; b.tabIndex = -1; b.disabled = true;
         b.setAttribute('aria-label', 'Choose card ' + (i + 1) + ' of ' + FANN);
-        b.innerHTML = '<img src="' + deck.back + '" alt="" draggable="false">';
+        b.innerHTML = '<img src="' + deck.back.replace('images/', 'images/thumbs/') + '" alt="" draggable="false">';
         b.style.setProperty('--i', i);
         stageEl.appendChild(b);
       }
@@ -308,6 +308,18 @@
     if ($('#aboutStory')) $('#aboutStory').innerHTML = paras(SITE.aboutStory || []);
     // Homepage video: plays silently on a loop; the button turns sound on and off.
     var vid = $('#hpVideo'), snd = $('#hpSound');
+    // The video file (3 MB) is fetched only when it is about to come into view, so the page loads fast on phones.
+    if (vid && vid.dataset.src) {
+      var loadVideo = function () {
+        if (vid.getAttribute('src')) return;
+        vid.src = vid.dataset.src; vid.load();
+        if (!reduceMotion) { var pr = vid.play(); if (pr && pr.catch) pr.catch(function () {}); }
+      };
+      if ('IntersectionObserver' in window) {
+        var vo = new IntersectionObserver(function (es) { if (es[0].isIntersecting) { loadVideo(); vo.disconnect(); } }, { rootMargin: '500px' });
+        vo.observe(vid);
+      } else loadVideo();
+    }
     if (vid && snd) {
       if (reduceMotion) { vid.removeAttribute('autoplay'); vid.pause(); vid.controls = true; }
       snd.addEventListener('click', function () {
@@ -1249,6 +1261,9 @@
       var mine = homeDeck(), want = deck ? deck.route : 'dashboard';
       if (want !== mine) { lockedNotice = want; location.replace('#' + mine); return; }
     }
+    document.title = v === 'home' ? 'HarperHolistic · Healing Inspiration Cards by Gillian Harper'
+      : v === 'join' ? (member ? 'Finish joining' : 'Join or sign in') + ' · HarperHolistic'
+      : ((deck || BOUNDARIES).name) + ' · HarperHolistic';
     document.body.classList.toggle('is-member', !!member);
     document.body.classList.toggle('needs-pay', !!(member && !member.plan));
     if (v === 'join') showJoinMode(member);
@@ -1296,6 +1311,14 @@
   $('#year').textContent = new Date().getFullYear();
   initHome();
   initAuthForms();
+  // Optional visitor statistics (privacy-friendly Plausible): switched on by "analytics" in content/site.js.
+  (function () {
+    var A = SITE.analytics || {};
+    if (A.provider !== 'plausible' || !A.domain) return;
+    var sc = document.createElement('script');
+    sc.defer = true; sc.setAttribute('data-domain', A.domain); sc.src = 'https://plausible.io/js/script.hash.outbound-links.js';
+    document.head.appendChild(sc);
+  })();
   window.addEventListener('hashchange', route);
   route();                                  // show the page straight away…
   Auth.ready().then(function () { authKnown = true; route(); }); // …then again once sign-in is known
