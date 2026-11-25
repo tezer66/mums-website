@@ -1477,3 +1477,4 @@ body:not(.is-member) .try-tappable { cursor: pointer; } body:not(.is-member) .tr
   .deck-slide .hp-row-art { order: -1; }
   .deck-slide .hp-row-copy { text-align: center; justify-items: center; margin-inline: auto; }
 }
+.dashv .deck-switch { margin: 0 0 1.4rem; } .dashv .dash-head { margin-top: 0; }
