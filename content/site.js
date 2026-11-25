@@ -38,7 +38,7 @@ window.HH_SITE = {
   "aboutSignoff": "With Love and Respect — Gill",
   "connect": {
     "instagram": "harper.holistic",
-    "email": "reikihealinggh@gmail.com",
+    "email": "gill@harperholistic.xyz",
     "text": "Let’s connect and continue our healing journey. Follow along on Instagram, or email to book a Distant Reiki Healing session."
   },
   "introduction": [
