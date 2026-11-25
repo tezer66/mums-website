@@ -70,7 +70,9 @@
   function renderFace(card, lazy) {
     if (card.image) {
       var img = new Image();
-      img.src = card.image;
+      // Small pictures (full deck, Weekly Reflections, journal) use a light thumbnail; the full card opens full size.
+      img.src = lazy ? card.image.replace(/^images\//, 'images/sm/') : card.image;
+      if (lazy) img.onerror = function () { img.onerror = null; img.src = card.image; };
       img.alt = cardLabel(card);
       img.className = 'face-img';
       img.decoding = 'async';

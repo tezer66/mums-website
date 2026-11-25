@@ -72,8 +72,13 @@ posts bring visitors.
 
 ## Speed and search
 
-The homepage uses light thumbnails in `images/thumbs/` (full-size cards open only when a card is drawn), and the video
-downloads only when it is about to be seen. `robots.txt`, `sitemap.xml` and `404.html` are in the root.
+- Small card pictures (the full deck, Weekly Reflections, journal) use 320 px thumbnails in `images/sm/`; the full-size
+  card opens only when a card is drawn or enlarged. After adding a card image, make its thumbnail the same way
+  (320 px wide webp in the matching `images/sm/` folder). A missing thumbnail falls back to the full image.
+- The homepage uses 520 px thumbnails in `images/thumbs/`.
+- The video downloads only when it is about to be seen, Memberstack's script loads deferred, and the Google Fonts
+  load without blocking the first paint.
+- `robots.txt`, `sitemap.xml` and `404.html` are in the root.
 
 ## Content
 
