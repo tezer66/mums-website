@@ -1500,3 +1500,5 @@ body:not(.is-member) .try-tappable { cursor: pointer; } body:not(.is-member) .tr
 }
 .connect-row { flex-wrap: wrap; }
 .hp-video-copy .hp-ctas { gap: 10px; }
+/* Deck buttons on the member pages: centred */
+.dashv .deck-switch { justify-content: center; }
