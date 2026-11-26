@@ -599,6 +599,8 @@
     $('#modePlay').setAttribute('aria-selected', String(m === 'play'));
     var t = SIMPLE_DECK_TEXT[DECK.route] || { title: 'Your card', intro: '' };
     $('#drawTitle').textContent = simple ? t.title : m === 'play' ? 'Inner Play' : 'Your card for today';
+    // Boundaries' Inner Work page shows no heading here (kept for screen readers only).
+    $('#drawTitle').classList.toggle('sr', !simple && m === 'work');
     $('#simpleIntro').textContent = simple ? t.intro : '';
     $('#simpleIntro').hidden = !simple;
     $('#playIntro').hidden = simple || m !== 'play';
