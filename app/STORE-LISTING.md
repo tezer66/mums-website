@@ -110,7 +110,7 @@ same demo email and password, with this instruction: "Sign in on the first scree
 **Content rating questionnaire:** Category "Reference, News or Educational", then answer No to
 everything.
 
-**Target audience:** 18 and over.
+**Target audience:** all ages (tick every age group). Google may then ask a few extra questions for apps that children could use; answer that the app has no ads and does not knowingly collect data from children.
 
 **Data safety:**
 - Does your app collect or share user data? **Yes, it collects data. It shares nothing.**
