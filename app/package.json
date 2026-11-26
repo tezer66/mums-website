@@ -1,0 +1,26 @@
+{
+  "name": "harperholistic-app",
+  "version": "1.0.0",
+  "private": true,
+  "description": "HarperHolistic for iPhone and Android: the live website in a native app shell (Capacitor).",
+  "scripts": {
+    "sync": "cap sync",
+    "assets": "capacitor-assets generate --iconBackgroundColor '#241332' --iconBackgroundColorDark '#241332' --splashBackgroundColor '#241332' --splashBackgroundColorDark '#241332'",
+    "ios": "cap open ios",
+    "android": "cap open android"
+  },
+  "dependencies": {
+    "@capacitor/android": "^7.6.11",
+    "@capacitor/app": "^7.1.2",
+    "@capacitor/cli": "^7.6.11",
+    "@capacitor/core": "^7.6.11",
+    "@capacitor/ios": "^7.6.11",
+    "@capacitor/local-notifications": "^7.0.7",
+    "@capacitor/share": "^7.0.4",
+    "@capacitor/splash-screen": "^7.0.5",
+    "@capacitor/status-bar": "^7.0.6"
+  },
+  "devDependencies": {
+    "@capacitor/assets": "^4.0.0"
+  }
+}

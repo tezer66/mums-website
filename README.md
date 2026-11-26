@@ -126,6 +126,34 @@ Cards without artwork yet are drawn in the deck's purple-and-gold frame from the
 - **Plans (USD).** All decks monthly US$9.99 or all decks yearly US$59. Both include every deck, Cancer Care
   Cards included. Shown on the home page and chosen when joining.
 
+## Phone app (iOS and Android)
+
+The `app/` folder is the HarperHolistic app for iPhone and Android, made with Capacitor. The app opens
+this same website (`https://www.harperholistic.xyz/?app=1`) inside a native shell, so it looks the same
+and members' cards, journal and history are shared between the website and the app. Website changes
+show up in the app straight away, without a new app release.
+
+In the app (`?app=1`):
+- There is no homepage and no buying. Apple and Google require their own in-app payments for digital
+  subscriptions, so people join on the website and only sign in in the app. A signed-in account with
+  no membership sees "No active membership" with no buy link.
+- "Your account" at the bottom of each deck page has a daily reminder (a phone notification at a time
+  they choose) and "Delete my account", which Apple and Google require. Delete is on the website too.
+- With no internet, the app shows a branded "You're offline" page (`app/www/offline.html`).
+
+Building and publishing (needs a Mac for iPhone):
+1. Install Node.js, Xcode (Mac App Store) and Android Studio.
+2. In `app/`: `npm install`, then `npx cap sync`.
+3. iPhone: `npx cap open ios`, choose your Apple team under Signing, then Product → Archive and upload
+   to App Store Connect. Needs an Apple Developer account (US$99 a year).
+4. Android: `npx cap open android`, then Build → Generate Signed App Bundle and upload to Google Play
+   Console. Needs a Google Play developer account (US$25 once).
+5. Icons and splash screens come from `app/assets/`; after changing them run `npm run assets`.
+
+For the store listings you need: screenshots, a short description, the privacy policy link
+(`https://www.harperholistic.xyz/privacy.html`), a support email, and a demo member account (email and
+password with an active membership) so the reviewers can sign in.
+
 ## Before going live
 
 1. Upgrade the Memberstack plan, add `www.harperholistic.xyz` as a live app domain and switch to Live Mode.

@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">HarperHolistic</string>
+    <string name="title_activity_main">HarperHolistic</string>
+    <string name="package_name">xyz.harperholistic.app</string>
+    <string name="custom_url_scheme">xyz.harperholistic.app</string>
+</resources>

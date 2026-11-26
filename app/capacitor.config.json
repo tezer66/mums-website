@@ -1,0 +1,39 @@
+{
+  "appId": "xyz.harperholistic.app",
+  "appName": "HarperHolistic",
+  "webDir": "www",
+  "server": {
+    "url": "https://www.harperholistic.xyz/?app=1",
+    "errorPath": "offline.html",
+    "allowNavigation": [
+      "www.harperholistic.xyz",
+      "harperholistic.xyz",
+      "*.memberstack.com"
+    ]
+  },
+  "backgroundColor": "#241332",
+  "ios": {
+    "contentInset": "never",
+    "backgroundColor": "#241332",
+    "scheme": "HarperHolistic"
+  },
+  "android": {
+    "backgroundColor": "#241332"
+  },
+  "plugins": {
+    "SplashScreen": {
+      "launchShowDuration": 1200,
+      "launchAutoHide": true,
+      "backgroundColor": "#241332",
+      "showSpinner": false
+    },
+    "StatusBar": {
+      "style": "DARK",
+      "backgroundColor": "#241332",
+      "overlaysWebView": false
+    },
+    "LocalNotifications": {
+      "iconColor": "#c9a9e0"
+    }
+  }
+}

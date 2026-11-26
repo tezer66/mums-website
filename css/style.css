@@ -1502,3 +1502,25 @@ body:not(.is-member) .try-tappable { cursor: pointer; } body:not(.is-member) .tr
 .hp-video-copy .hp-ctas { gap: 10px; }
 /* Deck buttons on the member pages: centred */
 .dashv .deck-switch { justify-content: center; }
+
+/* ---------- Your account (bottom of the deck pages) ---------- */
+.account { margin-top: 2.5rem; padding-top: 1.5rem; border-top: 1px solid rgba(201,169,224,.25); display: grid; gap: .6rem; justify-items: start; }
+.account .section-title { margin: 0 0 .3rem; }
+.acct-row { display: grid; gap: .4rem; }
+.remind-time { display: flex; align-items: center; gap: .5rem; color: inherit; }
+.remind-time input { width: auto; margin: 0; padding: .35rem .6rem; }
+.acct-delete { color: #b5485a; padding: 0; margin: .4rem 0 0; justify-self: start; text-align: left; }
+#deletePrompt label { color: #e3d6ec; }
+#deletePrompt input { display: block; width: 100%; max-width: 16rem; margin: .4rem auto .5rem; padding: .7rem .9rem; font: inherit; text-align: center; letter-spacing: .12em; border-radius: 12px; border: 1px solid rgba(201,169,224,.55); background: rgba(255,255,255,.08); color: #f1e7f6; }
+#deletePrompt .form-error { color: #f0b3b3; min-height: 1.2em; }
+.app-only { display: none !important; }
+
+/* ---------- Phone app (iOS / Android): sign in only, no buying ---------- */
+.is-app .app-only { display: grid !important; }
+.is-app .app-only[hidden] { display: none !important; }
+.is-app [data-tab="join"], .is-app #pricing, .is-app .hp-paths-cta, .is-app [data-upgrade], .is-app .locked-actions,
+.is-app #joinPrompt, .is-app #joinTabs, .is-app #joinForm, .is-app .auth-aside { display: none !important; }
+.is-app .auth-split { grid-template-columns: 1fr; }
+.is-app body { padding-bottom: env(safe-area-inset-bottom); -webkit-tap-highlight-color: transparent; }
+.app-nopay { display: grid; gap: .8rem; justify-items: start; margin-bottom: 1rem; }
+.app-nopay[hidden] { display: none; }

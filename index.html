@@ -32,7 +32,7 @@
 <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600;700&amp;family=Sue+Ellen+Francisco&amp;family=Cinzel:wght@400;500;600&amp;family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&amp;family=DM+Sans:wght@400;500;600&amp;display=swap" onload="this.onload=null;this.rel='stylesheet'">
 <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Tiro+Devanagari+Sanskrit&amp;text=%E0%A5%90&amp;display=swap" onload="this.onload=null;this.rel='stylesheet'">
 <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600;700&amp;family=Sue+Ellen+Francisco&amp;family=Cinzel:wght@400;500;600&amp;family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&amp;family=DM+Sans:wght@400;500;600&amp;display=swap"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Tiro+Devanagari+Sanskrit&amp;text=%E0%A5%90&amp;display=swap"></noscript>
-<link rel="stylesheet" href="css/style.css?v=202611260550">
+<link rel="stylesheet" href="css/style.css?v=202611261300">
 <script defer data-memberstack-app="app_cmwpxru3200lz0su3hnmd9nw9" src="https://static.memberstack.com/scripts/v1/memberstack.js" type="text/javascript"></script>
 </head>
 <body>
@@ -245,6 +245,11 @@
       </ul>
     </aside>
     <div class="auth-card">
+      <div class="app-nopay" id="appNoPay" hidden>
+        <p class="hp-eyebrow">No active membership</p>
+        <p class="jp-text">This account doesn’t have an active membership yet, so there are no cards to show here.</p>
+        <button type="button" class="hp-btn hp-btn-line" id="appNoPayOut">Sign out</button>
+      </div>
       <div class="tabs" role="tablist" id="joinTabs">
         <button type="button" role="tab" class="tab" id="tab-join" aria-controls="joinForm" aria-selected="true">Join</button>
         <button type="button" role="tab" class="tab" id="tab-signin" aria-controls="signinForm" aria-selected="false">Sign in</button>
@@ -458,12 +463,38 @@
       </details>
       <a class="btn btn-ghost" id="bookletLink" href="#" target="_blank" rel="noopener">Open the guidebook (PDF)</a>
     </section>
+
+    <section class="account" id="accountSection" aria-labelledby="acctTitle">
+      <h2 class="section-title" id="acctTitle">Your account</h2>
+      <div class="acct-row app-only" id="reminderRow">
+        <label class="keep" for="remindOn"><input type="checkbox" id="remindOn"><span>Remind me each day that my card is ready</span></label>
+        <label class="remind-time" for="remindTime">at <input type="time" id="remindTime" value="08:00"></label>
+        <p class="fine" id="remindMsg" role="status"></p>
+      </div>
+      <p class="fine">Signed in as <span id="acctEmail"></span></p>
+      <button type="button" class="link-btn acct-delete" id="deleteAcctBtn">Delete my account</button>
+    </section>
     </div>
   </div>
 </section>
 
 
 </main>
+
+<div class="join-prompt" id="deletePrompt" role="dialog" aria-modal="true" aria-labelledby="deleteTitle" hidden>
+  <div class="jp-card">
+    <p class="hp-eyebrow" id="deleteTitle">Delete your account?</p>
+    <p class="jp-text">This permanently deletes your account, your journal and your card history, on the website and in the app. It can’t be undone.</p>
+    <label for="deleteConfirm" class="fine">Type DELETE to confirm</label>
+    <input id="deleteConfirm" autocomplete="off" autocapitalize="characters">
+    <p class="form-error" id="deleteError" role="alert"></p>
+    <div class="hp-ctas">
+      <button type="button" class="hp-btn" id="deleteGo">Delete forever</button>
+      <button type="button" class="hp-btn hp-btn-line" id="deleteCancel">Keep my account</button>
+    </div>
+  </div>
+</div>
+
 
 <div class="join-prompt" id="joinPrompt" role="dialog" aria-modal="true" aria-labelledby="joinPromptTitle" hidden>
   <div class="jp-card">
@@ -504,11 +535,11 @@
   <p class="lb-hint">Tap anywhere or swipe down to close</p>
 </div>
 
-<script src="content/site.js?v=202611260550"></script>
-<script src="content/cards.js?v=202611260550"></script>
-<script src="content/earth-magick-deck.js?v=202611260550"></script>
-<script src="content/cancer-care-deck.js?v=202611260550"></script>
-<script src="js/auth.js?v=202611260550"></script>
-<script src="js/app.js?v=202611260550"></script>
+<script src="content/site.js?v=202611261300"></script>
+<script src="content/cards.js?v=202611261300"></script>
+<script src="content/earth-magick-deck.js?v=202611261300"></script>
+<script src="content/cancer-care-deck.js?v=202611261300"></script>
+<script src="js/auth.js?v=202611261300"></script>
+<script src="js/app.js?v=202611261300"></script>
 </body>
 </html>

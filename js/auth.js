@@ -257,7 +257,18 @@ window.HHAuth = (function () {
     return p;
   }
 
-  return { ready: ready, refresh: refresh, signUp: signUp, signIn: signIn, signOut: signOut, current: current,
+  // Permanently delete the signed-in member (required by Apple and Google for apps with accounts).
+  function deleteAccount() {
+    return ready().then(function () {
+      need();
+      return ms.deleteMember();
+    }).then(function () {
+      member = null; json = null; local.remove(SHORT_FLAG);
+      return ms.logout ? ms.logout().catch(function () {}) : null;
+    }).catch(function (err) { throw new Error(nicer(err, 'We could not delete your account. Please email Gill and she will do it for you.')); });
+  }
+
+  return { deleteAccount: deleteAccount, ready: ready, refresh: refresh, signUp: signUp, signIn: signIn, signOut: signOut, current: current,
            checkout: checkout, manageBilling: manageBilling, setNewsletter: setNewsletter, setGiveBack: setGiveBack, sendReset: sendReset, resetPassword: resetPassword,
            store: store };
 })();

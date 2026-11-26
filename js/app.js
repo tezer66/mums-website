@@ -2,6 +2,20 @@
 (function () {
   'use strict';
 
+  /* Phone app (iOS / Android): the app opens this same site with ?app=1. In the app there is no
+     buying (Apple and Google rules): people join on the website and simply sign in here. */
+  var IS_APP = (function () {
+    var on = /[?&]app=1\b/.test(location.search) || !!(window.Capacitor && window.Capacitor.isNativePlatform && window.Capacitor.isNativePlatform());
+    try { if (on) sessionStorage.setItem('hh:app', '1'); else on = sessionStorage.getItem('hh:app') === '1'; } catch (e) {}
+    return on;
+  })();
+  if (IS_APP) document.documentElement.classList.add('is-app');
+  function nativePlugin(name) {
+    var C = window.Capacitor;
+    if (!C) return null;
+    return (C.Plugins && C.Plugins[name]) || (C.registerPlugin ? C.registerPlugin(name) : null);
+  }
+
   /* Card decks. Each deck page is the same dashboard, filled from its own deck file.
      The key is the page's address: #dashboard and #earth-magick. */
   var BOUNDARIES = window.HH_DECK;
@@ -1247,6 +1261,7 @@
       document.querySelectorAll('[data-view]').forEach(function (s) { s.hidden = true; });
       return;
     }
+    if (IS_APP && !DECKS[v] && v !== 'join' && v !== 'home-deck') v = 'home-deck';   // no homepage in the app
     if (v === 'home-deck') { if (member) { location.replace('#' + homeDeck()); return; } v = 'join'; }
     var deck = DECKS[v] || null;
     if (deck) v = 'dashboard';
@@ -1267,8 +1282,13 @@
       : v === 'join' ? (member ? 'Finish joining' : 'Join or sign in') + ' · HarperHolistic'
       : ((deck || BOUNDARIES).name) + ' · HarperHolistic';
     document.body.classList.toggle('is-member', !!member);
+    $('#acctEmail').textContent = member ? member.email : '';
     document.body.classList.toggle('needs-pay', !!(member && !member.plan));
     if (v === 'join') showJoinMode(member);
+    if (IS_APP) {
+      if (v === 'join' && !(member && !member.plan)) setTab('signin');
+      $('#appNoPay').hidden = !(v === 'join' && member && !member.plan);
+    }
     document.querySelectorAll('[data-view]').forEach(function (s) { s.hidden = s.getAttribute('data-view') !== v; });
     if (v !== 'dashboard') document.body.classList.remove('deck-simple', 'deck-earth', 'deck-cancer');   // deck colours only on deck pages
     if (v === 'dashboard') initDashboard(deck || BOUNDARIES);
@@ -1290,6 +1310,7 @@
   // The join page doubles as "finish joining" for members who have not paid yet.
   function showJoinMode(member) {
     var pending = !!(member && !member.plan);
+    if (IS_APP) { $('#joinTabs').hidden = true; $('#signinForm').hidden = pending; $('#joinForm').hidden = true; return; }
     document.querySelectorAll('#joinForm .acct-field').forEach(function (el) { el.hidden = pending; });
     $('#joinPending').hidden = !pending;
     if (pending) {
@@ -1310,7 +1331,53 @@
     document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && menu.open) { menu.open = false; menu.querySelector('summary').focus(); } });
   })();
 
+  /* ---------------- your account: delete, daily reminder (app) ---------------- */
+  (function initAccount() {
+    var dlg = $('#deletePrompt');
+    function close() { dlg.hidden = true; $('#deleteConfirm').value = ''; $('#deleteError').textContent = ''; }
+    $('#deleteAcctBtn').addEventListener('click', function () { dlg.hidden = false; $('#deleteConfirm').focus(); });
+    $('#deleteCancel').addEventListener('click', close);
+    $('#deleteGo').addEventListener('click', function () {
+      if ($('#deleteConfirm').value.trim().toUpperCase() !== 'DELETE') { $('#deleteError').textContent = 'Type DELETE to confirm.'; return; }
+      var b = this; b.disabled = true;
+      Auth.deleteAccount().then(function () {
+        cancelReminder(); close(); b.disabled = false;
+        document.body.classList.remove('is-member');
+        go(IS_APP ? 'join' : 'home');
+      }, function (err) { b.disabled = false; $('#deleteError').textContent = err.message; });
+    });
+    $('#appNoPayOut').addEventListener('click', function () { Auth.signOut().then(function () { go('join'); }); });
+
+    var LN = IS_APP ? nativePlugin('LocalNotifications') : null;
+    if (!LN) { $('#reminderRow').hidden = true; return; }
+    var on = $('#remindOn'), time = $('#remindTime'), msg = $('#remindMsg');
+    on.checked = store.get('hh:remind') === '1';
+    time.value = store.get('hh:remind-time') || '08:00';
+    function schedule() {
+      var hm = (time.value || '08:00').split(':');
+      return LN.cancel({ notifications: [{ id: 1 }] }).catch(function () {}).then(function () {
+        return LN.schedule({ notifications: [{ id: 1, title: 'Your card is ready', body: 'Take a slow breath and choose today’s card.',
+          schedule: { on: { hour: +hm[0], minute: +hm[1] }, allowWhileIdle: true } }] });
+      });
+    }
+    function save() {
+      store.set('hh:remind-time', time.value);
+      if (!on.checked) { store.set('hh:remind', '0'); cancelReminder(); msg.textContent = ''; return; }
+      LN.requestPermissions().then(function (r) {
+        if (r && r.display !== 'granted') throw new Error('Notifications are turned off for HarperHolistic. Turn them on in your phone’s Settings.');
+        return schedule();
+      }).then(function () {
+        store.set('hh:remind', '1'); msg.textContent = 'Reminder set for ' + time.value + ' each day.';
+      }).catch(function (err) { on.checked = false; store.set('hh:remind', '0'); msg.textContent = err.message || 'We could not set the reminder.'; });
+    }
+    on.addEventListener('change', save);
+    time.addEventListener('change', function () { if (on.checked) save(); else store.set('hh:remind-time', time.value); });
+    cancelReminder = function () { LN.cancel({ notifications: [{ id: 1 }] }).catch(function () {}); store.set('hh:remind', '0'); on.checked = false; };
+  })();
+  function cancelReminder() {}
+
   $('#year').textContent = new Date().getFullYear();
+  if (IS_APP) $('#signinKeep').checked = true;   // phones stay signed in, like other apps
   initHome();
   initAuthForms();
   // Optional visitor statistics (privacy-friendly Plausible): switched on by "analytics" in content/site.js.
