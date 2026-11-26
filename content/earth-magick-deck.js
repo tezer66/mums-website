@@ -517,9 +517,11 @@ window.HH_EARTH_DECK = {
       "message": "The first thing we do when we enter this world, & the last thing we do when we leave it.\nDo what comes naturally.",
       "image": "images/earth-magick/card-44.webp",
       "words": [
-        "This ancient Sanskrit symbol is a\nbeautiful reminder to do what comes naturally."
+        "Grief doesn’t stay still. It rises in the chest, tightens the throat, and softens again, carried on the breath.",
+        "You don’t have to understand it, fix it or hurry it. Breathe in, and let yourself feel. Breathe out, and let a little of it move through you.",
+        "Your breath was with you on your very first day, and it will be with you on your last. In between, it is always here to carry what feels too heavy to hold."
       ],
-      "affirmation": "I am letting my grief move through my breath.\nI breathe in, I breathe out, & I let it go."
+      "affirmation": "I am letting my grief move through my breath.\nI breathe in what I need, I breathe out what I am ready to release, & I do what comes naturally."
     }
   ]
 };
