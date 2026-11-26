@@ -648,7 +648,7 @@
       // The three steps stay under "Your card for today"; only the shuffle button goes.
       $('#drawIntro').hidden = false;
       $('#shuffleBtn').hidden = true;
-      $('#drawHint').textContent = 'This is the card you chose today. Sit with it, and say the affirmation out loud.';
+      $('#drawHint').textContent = '';
       showReading(card, cardDay(), scroll);
     } else {
       $('#reading').hidden = true;
@@ -910,15 +910,11 @@
     var key = dayKey(selected.date), isToday = key === dayKey(cardDay());
     var shown = jEntries().filter(function (e) { return dayKey(cardDay(new Date(e.created))) === key && (!e.card || e.card.deck === BOUNDARIES.id); })
       .sort(function (a, b) { return a.created < b.created ? -1 : 1; });
+    // Nothing written that day: no box at all.
+    if (!shown.length) { $('#journalList').innerHTML = ''; panel.hidden = true; return; }
     panel.hidden = false;
     $('#dayJournalTitle').textContent = shown.length > 1 ? 'Your journal entries' : 'Your journal entry';
     var holder = $('#journalList');
-    if (!shown.length) {
-      holder.innerHTML = '<p class="muted dj-empty">' + (isToday
-        ? 'You haven’t written about today’s card yet. Tap “Daily journal entry” to begin.'
-        : 'You didn’t write a journal entry on this day.') + '</p>';
-      return;
-    }
     holder.innerHTML = '';
     shown.forEach(function (e) {
       var card = e.card ? findCard(e.card.deck, e.card.n) : null;
@@ -1180,7 +1176,7 @@
         busy = false;
         $('#table').hidden = true;
         if (play) { $('#drawHint').textContent = ''; $('#drawIntro').hidden = true; showPlayReading(card, true); return; }
-        $('#drawHint').textContent = 'This is the card you chose today. Sit with it, and say the affirmation out loud.';
+        $('#drawHint').textContent = '';
         showReading(card, today, true);
       });
   }
