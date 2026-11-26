@@ -589,7 +589,7 @@
   // members shuffle and pull as many cards as they like (nothing is saved).
   var SIMPLE_DECK_TEXT = {
     'earth-magick': { title: 'Choose your card', intro: 'Breathe slowly, shuffle the deck and tap the card that calls to you. Sit with it, and say the affirmation out loud.' },
-    'cancer-care': { title: 'Choose a message', intro: 'Gentle words that help your loved one experiencing cancer.' }
+    'cancer-care': { title: 'Choose a message & text to your loved one experiencing cancer.', intro: 'Gentle words to brighten their day.' }
   };
   function isSimpleDeck() { return DECK !== BOUNDARIES; }
   function applyModeUI() {
