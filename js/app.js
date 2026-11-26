@@ -380,6 +380,8 @@
     var ig = $('#igLink');
     $('#igText').textContent = 'Instagram @' + c.instagram;
     ig.href = 'https://www.instagram.com/' + encodeURIComponent(c.instagram) + '/';
+    var tt = $('#ttLink');
+    if (tt && c.tiktok) { $('#ttText').textContent = 'TikTok @' + c.tiktok; tt.href = 'https://www.tiktok.com/@' + encodeURIComponent(c.tiktok); } else if (tt) tt.hidden = true;
     $('#emailText').textContent = c.email || '';
     $('#copyEmail').addEventListener('click', function () {
       var btn = this;

@@ -1498,3 +1498,5 @@ body:not(.is-member) .try-tappable { cursor: pointer; } body:not(.is-member) .tr
   .dashv .dash-title { font-size: 1.9rem; margin-top: .1rem; line-height: 1.1; }
   .dashv .dk .dash .draw-head { padding-top: 0; }
 }
+.connect-row { flex-wrap: wrap; }
+.hp-video-copy .hp-ctas { gap: 10px; }

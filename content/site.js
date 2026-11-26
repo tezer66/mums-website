@@ -38,8 +38,9 @@ window.HH_SITE = {
   "aboutSignoff": "With Love and Respect — Gill",
   "connect": {
     "instagram": "harper.holistic",
+    "tiktok": "harper.holistic",
     "email": "gill@harperholistic.xyz",
-    "text": "Let’s connect and continue our healing journey. Follow along on Instagram, or email to book a Distant Reiki Healing session."
+    "text": "Let’s connect and continue our healing journey. Follow along on Instagram or TikTok, or email to book a Distant Reiki Healing session."
   },
   "introduction": [
     "Welcome to Boundaries are my Love Language.",
