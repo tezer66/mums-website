@@ -32,7 +32,7 @@
 <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600;700&amp;family=Sue+Ellen+Francisco&amp;family=Cinzel:wght@400;500;600&amp;family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&amp;family=DM+Sans:wght@400;500;600&amp;display=swap" onload="this.onload=null;this.rel='stylesheet'">
 <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Tiro+Devanagari+Sanskrit&amp;text=%E0%A5%90&amp;display=swap" onload="this.onload=null;this.rel='stylesheet'">
 <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600;700&amp;family=Sue+Ellen+Francisco&amp;family=Cinzel:wght@400;500;600&amp;family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&amp;family=DM+Sans:wght@400;500;600&amp;display=swap"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Tiro+Devanagari+Sanskrit&amp;text=%E0%A5%90&amp;display=swap"></noscript>
-<link rel="stylesheet" href="css/style.css?v=202611261300">
+<link rel="stylesheet" href="css/style.css?v=202611261420">
 <script defer data-memberstack-app="app_cmwpxru3200lz0su3hnmd9nw9" src="https://static.memberstack.com/scripts/v1/memberstack.js" type="text/javascript"></script>
 </head>
 <body>
@@ -225,6 +225,22 @@
 </section>
 
 <!-- ============ JOIN / SIGN IN ============ -->
+<section data-view="welcome" class="view app-welcome" hidden>
+  <div class="aw">
+    <img class="aw-emblem" src="images/emblem.svg" alt="" width="132" height="132">
+    <p class="aw-brand">Harper<b>·</b><em>Holistic</em></p>
+    <p class="aw-tag">Healing Inspiration Cards<br>by Gillian Harper</p>
+    <div class="aw-fan" aria-hidden="true">
+      <img src="images/thumbs/earth-magick/back.webp" alt="">
+      <img src="images/thumbs/cards/back.webp" alt="">
+      <img src="images/thumbs/cancer-care/back.webp" alt="">
+    </div>
+    <p class="aw-line">A card a day for gentle inner work.</p>
+    <a href="#join" class="hp-btn aw-go" data-tab="signin">Sign in</a>
+    <p class="aw-legal"><a href="terms.html">Terms</a> · <a href="privacy.html">Privacy</a></p>
+  </div>
+</section>
+
 <section data-view="join" class="view authv" hidden>
   <div class="hp-band hp-deep dk auth-band">
   <div class="wrap auth-split">
@@ -473,6 +489,8 @@
       </div>
       <p class="fine">Signed in as <span id="acctEmail"></span></p>
       <button type="button" class="link-btn acct-delete" id="deleteAcctBtn">Delete my account</button>
+      <button type="button" class="hp-btn hp-btn-line hp-btn-sm app-only-block" id="appSignOut">Sign out</button>
+      <p class="fine app-only-block"><a href="terms.html">Terms</a> · <a href="privacy.html">Privacy</a> · <a href="mailto:gill@harperholistic.xyz">Email Gill</a></p>
     </section>
     </div>
   </div>
@@ -526,6 +544,13 @@
   </div>
 </footer>
 
+<nav class="app-tabs" id="appTabs" aria-label="Your decks">
+  <a href="#dashboard" data-tabfor="dashboard"><span aria-hidden="true">♡</span>Boundaries</a>
+  <a href="#cancer-care" data-tabfor="cancer-care"><span aria-hidden="true">✿</span>Cancer Care</a>
+  <a href="#earth-magick" data-tabfor="earth-magick"><span aria-hidden="true">☾</span>Earth Magick</a>
+  <a href="#account" data-tabfor="account"><span aria-hidden="true">◎</span>Account</a>
+</nav>
+
 <div id="journalPrint" class="journal-print" aria-hidden="true"></div>
 
 <!-- Full-screen card viewer -->
@@ -535,11 +560,11 @@
   <p class="lb-hint">Tap anywhere or swipe down to close</p>
 </div>
 
-<script src="content/site.js?v=202611261300"></script>
-<script src="content/cards.js?v=202611261300"></script>
-<script src="content/earth-magick-deck.js?v=202611261300"></script>
-<script src="content/cancer-care-deck.js?v=202611261300"></script>
-<script src="js/auth.js?v=202611261300"></script>
-<script src="js/app.js?v=202611261300"></script>
+<script src="content/site.js?v=202611261420"></script>
+<script src="content/cards.js?v=202611261420"></script>
+<script src="content/earth-magick-deck.js?v=202611261420"></script>
+<script src="content/cancer-care-deck.js?v=202611261420"></script>
+<script src="js/auth.js?v=202611261420"></script>
+<script src="js/app.js?v=202611261420"></script>
 </body>
 </html>

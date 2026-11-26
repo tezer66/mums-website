@@ -1243,7 +1243,7 @@
   document.addEventListener('visibilitychange', function () { if (!document.hidden) refreshIfNewDay(); });
 
   /* ---------------- routing ---------------- */
-  var VIEWS = ['home', 'join', 'dashboard'];   // deck pages (DECKS) show the dashboard view
+  var VIEWS = ['home', 'join', 'dashboard', 'welcome'];   // deck pages (DECKS) show the dashboard view
   // The deck a member opens to: Cancer Care Cards for that one-off purchase, otherwise Boundaries.
   function homeDeck() {
     var m = Auth.current();
@@ -1261,7 +1261,10 @@
       document.querySelectorAll('[data-view]').forEach(function (s) { s.hidden = true; });
       return;
     }
-    if (IS_APP && !DECKS[v] && v !== 'join' && v !== 'home-deck') v = 'home-deck';   // no homepage in the app
+    if (IS_APP && v === 'account') { if (member) { scrollToAccount(); return; } v = 'home-deck'; }
+    if (IS_APP && !DECKS[v] && v !== 'join' && v !== 'home-deck' && v !== 'welcome') v = 'home-deck';   // no homepage in the app
+    if (v === 'welcome' && (!IS_APP || member)) v = 'home-deck';
+    if (IS_APP && v === 'home-deck' && !member) v = 'welcome';
     if (v === 'home-deck') { if (member) { location.replace('#' + homeDeck()); return; } v = 'join'; }
     var deck = DECKS[v] || null;
     if (deck) v = 'dashboard';
@@ -1279,6 +1282,7 @@
       if (want !== mine) { lockedNotice = want; location.replace('#' + mine); return; }
     }
     document.title = v === 'home' ? 'HarperHolistic · Healing Inspiration Cards by Gillian Harper'
+      : v === 'welcome' ? 'HarperHolistic'
       : v === 'join' ? (member ? 'Finish joining' : 'Join or sign in') + ' · HarperHolistic'
       : ((deck || BOUNDARIES).name) + ' · HarperHolistic';
     document.body.classList.toggle('is-member', !!member);
@@ -1292,6 +1296,12 @@
     document.querySelectorAll('[data-view]').forEach(function (s) { s.hidden = s.getAttribute('data-view') !== v; });
     if (v !== 'dashboard') document.body.classList.remove('deck-simple', 'deck-earth', 'deck-cancer');   // deck colours only on deck pages
     if (v === 'dashboard') initDashboard(deck || BOUNDARIES);
+    if (IS_APP) {
+      var cur = v === 'dashboard' ? (deck ? deck.route : 'dashboard') : '';
+      if (cur) window.__lastDeck = cur;
+      document.querySelectorAll('#appTabs a').forEach(function (a) { a.classList.toggle('on', a.getAttribute('data-tabfor') === cur); });
+      document.body.classList.toggle('app-tabbed', v === 'dashboard');
+    }
     showLockedNotice(v === 'dashboard');
     window.scrollTo(0, 0);
   }
@@ -1343,10 +1353,11 @@
       Auth.deleteAccount().then(function () {
         cancelReminder(); close(); b.disabled = false;
         document.body.classList.remove('is-member');
-        go(IS_APP ? 'join' : 'home');
+        go('home');
       }, function (err) { b.disabled = false; $('#deleteError').textContent = err.message; });
     });
-    $('#appNoPayOut').addEventListener('click', function () { Auth.signOut().then(function () { go('join'); }); });
+    $('#appSignOut').addEventListener('click', function () { Auth.signOut().then(function () { go('home'); }); document.body.classList.remove('is-member'); });
+    $('#appNoPayOut').addEventListener('click', function () { Auth.signOut().then(function () { go('home'); }); });
 
     var LN = IS_APP ? nativePlugin('LocalNotifications') : null;
     if (!LN) { $('#reminderRow').hidden = true; return; }
@@ -1375,6 +1386,14 @@
     cancelReminder = function () { LN.cancel({ notifications: [{ id: 1 }] }).catch(function () {}); store.set('hh:remind', '0'); on.checked = false; };
   })();
   function cancelReminder() {}
+  // App tab bar "Account": jump to "Your account" on the deck page being shown.
+  function scrollToAccount() {
+    var back = window.__lastDeck || 'dashboard';
+    history.replaceState(null, '', '#' + back);
+    if (document.querySelector('[data-view="dashboard"]').hidden) route();
+    setTimeout(function () { var el = $('#accountSection'); if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' }); }, 60);
+    document.querySelectorAll('#appTabs a').forEach(function (a) { a.classList.toggle('on', a.getAttribute('data-tabfor') === 'account'); });
+  }
 
   $('#year').textContent = new Date().getFullYear();
   if (IS_APP) $('#signinKeep').checked = true;   // phones stay signed in, like other apps
