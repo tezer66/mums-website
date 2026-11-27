@@ -1531,6 +1531,11 @@
     var d = +(SITE.trialDays || 0);
     if (!d || IS_APP) return;
     document.querySelectorAll('[data-trial]').forEach(function (el) { el.textContent = 'First ' + d + ' days free'; el.hidden = false; });
+    document.querySelectorAll('[data-trial-badge]').forEach(function (el) { el.textContent = '✦ First ' + d + ' days free · cancel anytime ✦'; el.hidden = false; });
+    document.querySelectorAll('[data-trial-inline]').forEach(function (el) { el.textContent = d + ' days free'; el.hidden = false; });
+    $('#joinTrialPill').textContent = d + ' DAYS FREE';
+    $('#joinTrialText').textContent = 'Choose your daily card on all three decks and write in your journal, free for ' + d + ' days. You won’t be charged until day ' + (d + 1) + ', and you can cancel any time before then.';
+    $('#joinTrial').hidden = false;
     $('#joinGo').textContent = 'Start my ' + d + '-day free trial';
     $('#joinPayNote').textContent = 'Next, Stripe asks for your card. You won’t be charged for ' + d + ' days, and you can cancel any time before then. Card details never touch this website.';
   })();

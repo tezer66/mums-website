@@ -1589,3 +1589,17 @@ html.shield .is-member .face-img, html.shield .is-member .face-text { filter: bl
 @media print {
   .face-img, .face-text, .reading-card, .lb-card, .dcard, .deck-sections { visibility: hidden !important; }
 }
+
+/* ---------- 7 days free: badges and the join banner ---------- */
+.trial-badge { margin: .7rem 0 0; font-weight: 600; font-size: .95rem; letter-spacing: .03em; color: #e9c97e; }
+.hp-band:not(.hp-dark):not(.hp-deep) .trial-badge, .jp-card .trial-badge { color: var(--gold-deep, #9c7330); }
+.hp-paths-cta + .trial-badge { text-align: center; }
+.join-trial { display: grid; justify-items: center; gap: .5rem; text-align: center; margin: 0 0 1.2rem; padding: 1.1rem 1rem 1rem;
+  border-radius: 16px; background: linear-gradient(135deg, #fbf1d9, #f3e0b4); border: 1px solid #d6b062; color: #3f1659; }
+.join-trial[hidden] { display: none; }
+.jt-pill { display: inline-block; padding: .45rem 1.2rem; border-radius: 999px; background: #3f1659; color: #f3d98f;
+  font-family: 'Cinzel', Georgia, serif; font-size: 1.35rem; letter-spacing: .12em; box-shadow: 0 6px 16px rgba(63,22,89,.25); }
+.join-trial p { margin: 0; font-size: .98rem; line-height: 1.45; }
+.plan-free { display: inline-block; margin-left: .2rem; padding: .05rem .5rem; border-radius: 999px; background: #d6b062; color: #2c1240;
+  font-style: normal; font-weight: 700; font-size: .78rem; letter-spacing: .02em; }
+.auth-badge { margin: -.4rem 0 .2rem; font-size: 1.05rem; }
