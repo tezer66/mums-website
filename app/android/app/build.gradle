@@ -16,8 +16,24 @@ android {
             ignoreAssetsPattern '!.svn:!.git:!.ds_store:!*.scc:.*:!CVS:!thumbs.db:!picasa.ini:!*~'
         }
     }
+    // Release signing: the upload key lives only on Gill's computer. android/keystore.properties
+    // (never committed) says where it is: storeFile, storePassword, keyAlias, keyPassword.
+    def ksProps = new Properties()
+    def ksFile = rootProject.file('keystore.properties')
+    if (ksFile.exists()) { ksFile.withInputStream { ksProps.load(it) } }
+    signingConfigs {
+        if (ksFile.exists()) {
+            release {
+                storeFile file(ksProps['storeFile'])
+                storePassword ksProps['storePassword']
+                keyAlias ksProps['keyAlias']
+                keyPassword ksProps['keyPassword']
+            }
+        }
+    }
     buildTypes {
         release {
+            if (ksFile.exists()) { signingConfig signingConfigs.release }
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
