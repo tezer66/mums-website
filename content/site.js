@@ -16,14 +16,14 @@ window.HH_SITE = {
   "memberstack": {
     "appId": "app_cmwpxru3200lz0su3hnmd9nw9",
     "plans": {
-      "all-monthly": { "planId": "pln_all-decks-monthly-o4620cv4", "priceId": "prc_all-decks-monthly-qm1bi03hv" },
-      "all-yearly":  { "planId": "pln_all-decks-yearly-ihlh00ah", "priceId": "prc_all-decks-yearly-eb1bj038j" },
+      "all-monthly": { "planId": "pln_all-decks-monthly-o4620cv4", "priceId": "prc_all-decks-monthly-7-day-trial-1412f0muc" },
+      "all-yearly":  { "planId": "pln_all-decks-yearly-ihlh00ah", "priceId": "prc_all-decks-yearly-7-day-trial-8o12g0mhy" },
       "all-complimentary": { "planId": "pln_complimentary-zum603w2" }
     }
   },
   "newsletterPdf": "",
   "analytics": { "provider": "", "domain": "harperholistic.xyz" },
-  "trialDays": 0,
+  "trialDays": 7,
   "giving": { "amount": 5, "cause": "cancer research", "charity": "" },
   "brand": "HarperHolistic",
   "owner": "Gillian Harper",
