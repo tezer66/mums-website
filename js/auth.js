@@ -158,6 +158,22 @@ window.HHAuth = (function () {
     return found;
   }
 
+  /* 7-day free trial: the member has a plan whose Stripe subscription is still in its trial.
+     Paid plans (ACTIVE) and the complimentary plan always win over a trial. Returns the trial's
+     end as a Date (from Stripe's next billing date), true if the date is unknown, or null. */
+  function trialOf(m) {
+    var conns = (m && m.planConnections) || [], end = null, paid = false;
+    conns.forEach(function (pc) {
+      if (pc.status === 'ACTIVE' || pc.status === 'PAST_DUE') paid = true;
+      if (pc.status !== 'TRIALING') return;
+      var p = pc.payment || {}, t = p.nextBillingDate || p.trialEnd || pc.trialEnd;
+      if (typeof t === 'string') t = Date.parse(t);
+      if (typeof t === 'number' && t > 0) end = new Date(t < 1e12 ? t * 1000 : t);
+      else if (!end) end = true;
+    });
+    return paid ? null : end;
+  }
+
   /* ---------- the functions app.js uses ---------- */
   function signUp(name, email, password, plan, keep) {
     name = String(name || '').trim(); email = String(email || '').trim().toLowerCase();
@@ -195,7 +211,9 @@ window.HHAuth = (function () {
     if (!member) return null;
     var cf = member.customFields || {};
     var e = emailOf();
-    return { name: cf['first-name'] || e.split('@')[0], email: e, plan: planOf(member), id: member.id };
+    var trial = trialOf(member);
+    return { name: cf['first-name'] || e.split('@')[0], email: e, plan: planOf(member), id: member.id,
+      trial: !!trial, trialEnds: trial instanceof Date ? trial : null };
   }
 
   // Send the member to Stripe checkout (through Memberstack) for a plan.

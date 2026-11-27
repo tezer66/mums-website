@@ -62,7 +62,53 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         if let activity = connectionOptions.userActivities.first {
             _ = ApplicationDelegateProxy.shared.application(UIApplication.shared, continue: activity, restorationHandler: { _ in })
         }
+        // Card protection (Apple doesn't let apps block screenshots): blur the screen while it is
+        // recorded or mirrored, and in the app switcher; after a screenshot, point to "Share this card".
+        NotificationCenter.default.addObserver(self, selector: #selector(captureChanged), name: UIScreen.capturedDidChangeNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(tookScreenshot), name: UIApplication.userDidTakeScreenshotNotification, object: nil)
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else { return }
+            if #available(iOS 17.0, *) {
+                self.window?.registerForTraitChanges([UITraitSceneCaptureState.self]) { (_: UIWindow, _: UITraitCollection) in self.updateShield() }
+            }
+            self.updateShield()
+        }
     }
+
+    // MARK: card protection
+    private var shield: UIVisualEffectView?
+    private var inBackground = false
+
+    private func isCaptured() -> Bool {
+        guard let ws = window?.windowScene else { return false }
+        if #available(iOS 17.0, *) { return ws.traitCollection.sceneCaptureState == .active }
+        return ws.screen.isCaptured
+    }
+
+    private func updateShield() {
+        guard let window = window else { return }
+        let on = inBackground || isCaptured()
+        if on && shield == nil {
+            let v = UIVisualEffectView(effect: UIBlurEffect(style: .systemThickMaterialDark))
+            v.frame = window.bounds
+            v.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+            window.addSubview(v)
+            shield = v
+        } else if !on, let v = shield {
+            v.removeFromSuperview()
+            shield = nil
+        }
+    }
+
+    @objc private func captureChanged() { updateShield() }
+
+    @objc private func tookScreenshot() {
+        let web = (window?.rootViewController as? CAPBridgeViewController)?.webView
+        web?.evaluateJavaScript("window.dispatchEvent(new Event('hh-screenshot'))", completionHandler: nil)
+    }
+
+    func sceneWillResignActive(_ scene: UIScene) { inBackground = true; updateShield() }
+    func sceneDidBecomeActive(_ scene: UIScene) { inBackground = false; updateShield() }
 
     func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
         for context in URLContexts {

@@ -14,6 +14,7 @@
     "@capacitor/app": "^7.1.2",
     "@capacitor/cli": "^7.6.11",
     "@capacitor/core": "^7.6.11",
+    "@capacitor/filesystem": "^7.1.9",
     "@capacitor/ios": "^7.6.11",
     "@capacitor/local-notifications": "^7.0.7",
     "@capacitor/share": "^7.0.4",

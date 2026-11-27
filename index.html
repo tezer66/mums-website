@@ -32,7 +32,7 @@
 <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600;700&amp;family=Sue+Ellen+Francisco&amp;family=Cinzel:wght@400;500;600&amp;family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&amp;family=DM+Sans:wght@400;500;600&amp;display=swap" onload="this.onload=null;this.rel='stylesheet'">
 <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Tiro+Devanagari+Sanskrit&amp;text=%E0%A5%90&amp;display=swap" onload="this.onload=null;this.rel='stylesheet'">
 <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600;700&amp;family=Sue+Ellen+Francisco&amp;family=Cinzel:wght@400;500;600&amp;family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&amp;family=DM+Sans:wght@400;500;600&amp;display=swap"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Tiro+Devanagari+Sanskrit&amp;text=%E0%A5%90&amp;display=swap"></noscript>
-<link rel="stylesheet" href="css/style.css?v=202611261420">
+<link rel="stylesheet" href="css/style.css?v=202611271400">
 <script defer data-memberstack-app="app_cmwpxru3200lz0su3hnmd9nw9" src="https://static.memberstack.com/scripts/v1/memberstack.js" type="text/javascript"></script>
 </head>
 <body>
@@ -161,6 +161,7 @@
           <p class="plan-name">All decks</p>
           <p class="plan-price"><span class="cur">US$</span>9.99<span class="per">/ month</span></p>
           <p class="plan-note plan-titles">Boundaries are my Love Language<br>Cancer Care Cards<br>Momma’s Earth Magick</p>
+          <p class="plan-trial" data-trial hidden></p>
           <a href="#join" class="hp-btn hp-btn-line" data-tab="join" data-plan="all-monthly">Choose</a>
         </div>
         <div class="plan plan-best">
@@ -169,6 +170,7 @@
           <p class="plan-price"><span class="cur">US$</span>59<span class="per">/ year</span></p>
           <p class="plan-note plan-titles">Boundaries are my Love Language<br>Cancer Care Cards<br>Momma’s Earth Magick</p>
           <p class="plan-note plan-give">US$<span data-give-amount>5</span> from every yearly membership goes to <span data-give-cause>cancer research</span>.</p>
+          <p class="plan-trial" data-trial hidden></p>
           <a href="#join" class="hp-btn" data-tab="join" data-plan="all-yearly">Choose</a>
         </div>
       </div>
@@ -298,7 +300,7 @@
         <label class="keep acct-field" for="joinKeep"><input type="checkbox" id="joinKeep" name="keep"><span>Keep me signed in on this device</span></label>
         <p class="form-error" id="joinError" role="alert"></p>
         <p class="fine">By joining you agree to the <a href="terms.html" target="_blank" rel="noopener">Terms of Service</a> and <a href="privacy.html" target="_blank" rel="noopener">Privacy Policy</a>.</p>
-        <button class="btn btn-gold btn-block" type="submit">Continue to secure payment</button>
+        <button class="btn btn-gold btn-block" type="submit" id="joinGo">Continue to secure payment</button>
         <p class="fine pay-note" id="joinPayNote" role="status">Next, you’ll pay securely with Stripe. Card details never touch this website.</p>
       </form>
 
@@ -338,6 +340,11 @@
       <a href="#cancer-care">Cancer Care Cards</a>
       <a href="#earth-magick">Mommas Earth Magick</a>
     </nav>
+
+    <div class="trial-note" id="trialNote" role="status" hidden>
+      <p class="hp-eyebrow">Your 7-day free trial</p>
+      <p id="trialText"></p>
+    </div>
 
     <div class="dash-head">
       <h1 class="dash-title sr" id="dashGreeting">Greetings beautiful soul!</h1>
@@ -387,6 +394,8 @@
           <div class="reading-card-col">
             <button type="button" class="reading-card" id="readingCard" aria-label="Enlarge card"></button>
             <p class="tap-hint">Tap the card to enlarge</p>
+            <button type="button" class="btn btn-gold btn-sm share-card" id="shareCard"><span aria-hidden="true">↗</span> Share this card</button>
+            <p class="fine share-msg" id="shareMsg" role="status"></p>
             <div class="day-pulls" id="dayPulls" hidden></div>
           </div>
           <article class="booklet-entry" id="bookletEntry"></article>
@@ -458,6 +467,12 @@
   </div>
   <div class="hp-band hp-light hp-light-2 lt-band">
     <div class="wrap dash">
+    <section class="trial-lock" id="trialLock" aria-labelledby="trialLockTitle" hidden>
+      <p class="tl-icon" aria-hidden="true">☾</p>
+      <h2 class="section-title" id="trialLockTitle">The full deck</h2>
+      <p id="trialLockText"></p>
+    </section>
+
     <section class="library work-only" aria-labelledby="libTitle">
       <div class="lib-head">
         <h2 class="section-title" id="libTitle">The full deck</h2>
@@ -560,11 +575,11 @@
   <p class="lb-hint">Tap anywhere or swipe down to close</p>
 </div>
 
-<script src="content/site.js?v=202611261420"></script>
-<script src="content/cards.js?v=202611261420"></script>
-<script src="content/earth-magick-deck.js?v=202611261420"></script>
-<script src="content/cancer-care-deck.js?v=202611261420"></script>
-<script src="js/auth.js?v=202611261420"></script>
-<script src="js/app.js?v=202611261420"></script>
+<script src="content/site.js?v=202611271400"></script>
+<script src="content/cards.js?v=202611271400"></script>
+<script src="content/earth-magick-deck.js?v=202611271400"></script>
+<script src="content/cancer-care-deck.js?v=202611271400"></script>
+<script src="js/auth.js?v=202611271400"></script>
+<script src="js/app.js?v=202611271400"></script>
 </body>
 </html>

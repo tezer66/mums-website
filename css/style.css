@@ -1564,3 +1564,28 @@ body:not(.is-member) .try-tappable { cursor: pointer; } body:not(.is-member) .tr
 .is-app .site-header .nav, .is-app .brand-sub { display: none !important; }
 .is-app .site-header .header-row { justify-content: center; padding-top: .55rem; padding-bottom: .55rem; }
 .is-app #appSignOut { justify-self: start; margin-top: .4rem; }
+
+/* ---------- 7-day free trial ---------- */
+.plan-trial { margin: .2rem 0 .8rem; font-weight: 600; color: var(--gold-deep, #b68a3c); letter-spacing: .02em; }
+.trial-note { margin: 1rem auto 0; max-width: 40rem; padding: 1rem 1.2rem; border-radius: 16px; text-align: center;
+  background: rgba(214,176,98,.12); border: 1px solid rgba(214,176,98,.45); }
+.trial-note .hp-eyebrow { margin: 0 0 .3rem; }
+.trial-note p:last-child { margin: 0; }
+.trial-lock { margin: 2.2rem 0 0; padding: 1.6rem 1.2rem; border-radius: 18px; text-align: center;
+  border: 1px dashed rgba(201,169,224,.55); background: rgba(201,169,224,.08); }
+.trial-lock .tl-icon { font-size: 2rem; margin: 0; color: var(--gold-deep, #b68a3c); }
+.trial-lock .section-title { margin: .2rem 0 .5rem; }
+.trial-lock p:last-child { margin: 0 auto; max-width: 34rem; }
+.is-trial .library, .is-trial #guidebookSection, .is-trial #modePlay, .is-trial #playAgainBtn { display: none !important; }
+.is-trial .mode-tabs { grid-template-columns: 1fr; }
+
+/* ---------- share this card ---------- */
+.share-card { margin: .7rem auto 0; display: flex; gap: .45rem; align-items: center; }
+.share-msg { text-align: center; min-height: 1.2em; margin: .4rem 0 0; }
+
+/* ---------- keeping the artwork in the membership ---------- */
+.face-img, .reading-card img, .lb-card img, .dcard img { -webkit-user-select: none; user-select: none; -webkit-touch-callout: none; }
+html.shield .is-member .face-img, html.shield .is-member .face-text { filter: blur(22px) brightness(.8); transition: none; }
+@media print {
+  .face-img, .face-text, .reading-card, .lb-card, .dcard, .deck-sections { visibility: hidden !important; }
+}

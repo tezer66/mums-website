@@ -570,6 +570,7 @@
     document.body.classList.toggle('deck-simple', DECK !== BOUNDARIES);
     document.body.classList.toggle('deck-earth', DECK.route === 'earth-magick');
     document.body.classList.toggle('deck-cancer', DECK.route === 'cancer-care');
+    if (user.trial) boundariesMode = 'work';   // Inner Play opens when the paid membership starts
     mode = isSimpleDeck() ? 'play' : boundariesMode;
     applyModeUI();
     var today = new Date();
@@ -583,9 +584,35 @@
       : 'Tap a card to read Gillian’s words for it.';
     $('#guidebookSection').hidden = !DECK.hasGuidebook;
     if (DECK.hasGuidebook) renderBookletSection();
+    applyTrial();
     initJournal();
     renderDeckGrid();
     showToday(false);
+  }
+
+  /* 7-day free trial: the daily card (one per deck per day) and the journal are open; the full deck,
+     the guidebook and Inner Play (unlimited shuffles) unlock when the paid membership begins. */
+  function trialEndText(u) {
+    return u && u.trialEnds ? u.trialEnds.toLocaleDateString(undefined, { weekday: 'long', day: 'numeric', month: 'long' }) : '';
+  }
+  function applyTrial() {
+    var on = !!(user && user.trial), end = trialEndText(user);
+    document.body.classList.toggle('is-trial', on);
+    $('#trialNote').hidden = !on;
+    $('#trialLock').hidden = !on;
+    if (!on) return;
+    $('#trialText').textContent = 'Your daily card and journal are open now. The full decks, the guidebook and Inner Play unlock when your membership begins' +
+      (end ? ' on ' + end + '.' : ' at the end of your trial.') + ' You can cancel any time before then.';
+    $('#trialLockText').textContent = 'All ' + DECK.cards.length + ' cards of ' + DECK.name + ' open up' + (end ? ' on ' + end : ' when your trial ends') +
+      '. Until then, choose your card each day and see where it takes you.';
+  }
+  // Trial on Mommas Earth Magick and Cancer Care Cards: one card a day per deck (saved to the account).
+  function trialPullKey() { return 'hh:trialpull:' + DECK.id + ':' + user.email; }
+  function trialPullToday() {
+    if (!user || !user.trial || !isSimpleDeck()) return null;
+    var p = store.getJSON(trialPullKey(), null);
+    if (!p || p.day !== dayKey(cardDay())) return null;
+    return DECK.cards.filter(function (c) { return c.n === p.n; })[0] || null;
   }
 
   // One card per card day: the first card chosen is the day's card.
@@ -636,6 +663,8 @@
   }
   function showPlayReading(card, scroll) {
     selected = null;
+    shownCard = card; $('#shareMsg').textContent = '';
+    if (user && user.trial && isSimpleDeck()) store.setJSON(trialPullKey(), { day: dayKey(cardDay()), n: card.n });
     $('#readingLabel').textContent = (isSimpleDeck() ? '' : 'Inner Play · ') + 'Card ' + card.n;
     $('#backToday').hidden = true;
     $('#againBox').hidden = true;
@@ -646,7 +675,7 @@
     holder.setAttribute('aria-label', 'Enlarge ' + cardLabel(card));
     holder.onclick = function () { openViewer(card); };
     renderBookletEntry(card);
-    PLAY_BTN.hidden = false;
+    PLAY_BTN.hidden = !!(user && user.trial);
     $('#dayJournal').hidden = true;
     $('#bookletEntry').appendChild(PLAY_BTN);
     var r = $('#reading');
@@ -657,7 +686,12 @@
 
   function showToday(scroll) {
     PLAY_BTN.hidden = true;
-    if (mode === 'play') { renderHistory(); showPlay(scroll); return; }
+    if (mode === 'play') {
+      renderHistory();
+      var tp = trialPullToday();
+      if (tp) { $('#table').hidden = true; showPlayReading(tp, scroll); return; }
+      showPlay(scroll); return;
+    }
     var card = todaysCard();
     if (card) {
       $('#table').hidden = true;
@@ -680,6 +714,7 @@
 
   function showReading(card, date, scroll) {
     PLAY_BTN.hidden = true;
+    shownCard = card; $('#shareMsg').textContent = '';
     var isToday = date && dayKey(date) === dayKey(cardDay());
     selected = { card: card, date: date };
 
@@ -1341,6 +1376,102 @@
     document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && menu.open) { menu.open = false; menu.querySelector('summary').focus(); } });
   })();
 
+  /* ---------------- sharing a card (instead of screenshots) ----------------
+     Makes a branded picture of the card (artwork + "@harper.holistic · harperholistic.xyz") and opens the
+     phone's share sheet, so members can post it to Instagram, TikTok, Facebook or send it to a friend. */
+  var shownCard = null;
+  function loadImg(src) {
+    return new Promise(function (ok, fail) { var i = new Image(); i.onload = function () { ok(i); }; i.onerror = fail; i.src = src; });
+  }
+  function shareImage(card) {
+    return loadImg(card.image).then(function (img) {
+      var W = 1080, pad = 60, cw = W - pad * 2, ch = Math.round(cw * img.naturalHeight / img.naturalWidth);
+      var H = pad + ch + 250, c = document.createElement('canvas'); c.width = W; c.height = H;
+      var x = c.getContext('2d');
+      var g = x.createRadialGradient(W / 2, H * 0.35, 50, W / 2, H * 0.4, H * 0.8);
+      g.addColorStop(0, '#3b2153'); g.addColorStop(1, '#170d20'); x.fillStyle = g; x.fillRect(0, 0, W, H);
+      x.save(); x.shadowColor = 'rgba(0,0,0,.55)'; x.shadowBlur = 40; x.shadowOffsetY = 16;
+      x.drawImage(img, pad, pad, cw, ch); x.restore();
+      x.textAlign = 'center';
+      x.fillStyle = '#f1e7f6'; x.font = '500 46px "Cormorant Garamond", Georgia, serif';
+      x.fillText('Healing Inspiration Cards by Gillian Harper', W / 2, pad + ch + 105);
+      x.fillStyle = '#e9c97e'; x.font = '600 38px "DM Sans", Arial, sans-serif';
+      x.fillText('@harper.holistic  ·  harperholistic.xyz', W / 2, pad + ch + 175);
+      return new Promise(function (ok) { c.toBlob(ok, 'image/jpeg', 0.9); });
+    });
+  }
+  function blobToBase64(b) {
+    return new Promise(function (ok) { var r = new FileReader(); r.onload = function () { ok(String(r.result).split(',')[1]); }; r.readAsDataURL(b); });
+  }
+  function countShare() {
+    if (!user) return;
+    var k = 'hh:shares:' + user.email, n = parseInt(store.get(k) || '0', 10) || 0;
+    store.set(k, String(n + 1));
+  }
+  $('#shareCard').addEventListener('click', function () {
+    var card = shownCard, btn = this, msg = $('#shareMsg');
+    if (!card || !card.image) return;
+    var name = 'harperholistic-' + (card.deck.id || 'card') + '-' + card.n + '.jpg';
+    var text = card.title + ' ✨ Healing Inspiration Cards by Gillian Harper @harper.holistic harperholistic.xyz';
+    btn.disabled = true; msg.textContent = 'Getting your card ready…';
+    shareImage(card).then(function (blob) {
+      var FS = IS_APP ? nativePlugin('Filesystem') : null, SH = IS_APP ? nativePlugin('Share') : null;
+      if (FS && SH) {                                   // phone app: save to the app's cache, then the share sheet
+        return blobToBase64(blob).then(function (data) {
+          return FS.writeFile({ path: name, data: data, directory: 'CACHE' });
+        }).then(function (w) {
+          return SH.share({ title: 'HarperHolistic', text: text, files: [w.uri] });
+        });
+      }
+      var file = null;
+      try { file = new File([blob], name, { type: 'image/jpeg' }); } catch (e) {}
+      if (file && navigator.canShare && navigator.canShare({ files: [file] })) {
+        return navigator.share({ files: [file], title: 'HarperHolistic', text: text });
+      }
+      var a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = name;   // computers: save the picture
+      document.body.appendChild(a); a.click(); a.remove();
+      msg.textContent = 'Picture saved. Post it and tag @harper.holistic ♡';
+      return 'saved';
+    }).then(function (r) {
+      countShare();
+      if (r !== 'saved') msg.textContent = 'Thank you for sharing ♡ Tag @harper.holistic so Gill can see it.';
+    }).catch(function (err) {
+      msg.textContent = err && (err.name === 'AbortError' || /cancel/i.test(err.message || '')) ? '' : 'Sharing didn’t work this time. Please try again.';
+    }).then(function () { btn.disabled = false; });
+  });
+
+  /* ---------------- keeping the artwork in the membership ----------------
+     Websites can't fully stop screenshots, so: no "save image" on the cards, the cards blur while the page
+     isn't in front (app switcher, many snipping tools), on the Print Screen key and when printing. In the
+     app, Android blocks screenshots completely and iPhone blurs the cards while the screen is recorded. */
+  (function protectCards() {
+    document.addEventListener('contextmenu', function (e) {
+      if (e.target.closest && e.target.closest('.face-img, .reading-card, .lb-card, .dcard, .deck-sections')) e.preventDefault();
+    });
+    document.addEventListener('dragstart', function (e) { if (e.target.classList && e.target.classList.contains('face-img')) e.preventDefault(); });
+    var root = document.documentElement, t = null;
+    function shield(on, ms) {
+      clearTimeout(t); root.classList.toggle('shield', on);
+      if (on && ms) t = setTimeout(function () { root.classList.remove('shield'); }, ms);
+    }
+    document.addEventListener('visibilitychange', function () { shield(document.visibilityState === 'hidden'); });
+    window.addEventListener('blur', function () { if (document.body.classList.contains('is-member')) shield(true); });
+    window.addEventListener('focus', function () { shield(false); });
+    document.addEventListener('keyup', function (e) {
+      if (e.key === 'PrintScreen') { shield(true, 2500); try { navigator.clipboard.writeText(''); } catch (er) {} }
+    });
+    // iPhone app: iOS tells us after a screenshot was taken; point to the share button.
+    window.addEventListener('hh-screenshot', function () {
+      if (!document.body.classList.contains('is-member')) return;
+      var m = $('#shareMsg');
+      if (m && !$('#reading').hidden) m.textContent = 'The cards are for members only. Tap “Share this card” to share it with the HarperHolistic frame ♡';
+    });
+    document.addEventListener('keydown', function (e) {
+      // Mac screenshot shortcuts (Cmd+Shift+3/4/5) and Windows Snipping Tool (Win+Shift+S)
+      if (e.shiftKey && (e.metaKey || e.key === 'Meta') && /^[345sS]$/.test(e.key)) shield(true, 3000);
+    });
+  })();
+
   /* ---------------- your account: delete, daily reminder (app) ---------------- */
   (function initAccount() {
     var dlg = $('#deletePrompt');
@@ -1396,6 +1527,13 @@
   }
 
   $('#year').textContent = new Date().getFullYear();
+  (function trialCopy() {
+    var d = +(SITE.trialDays || 0);
+    if (!d || IS_APP) return;
+    document.querySelectorAll('[data-trial]').forEach(function (el) { el.textContent = 'First ' + d + ' days free'; el.hidden = false; });
+    $('#joinGo').textContent = 'Start my ' + d + '-day free trial';
+    $('#joinPayNote').textContent = 'Next, Stripe asks for your card. You won’t be charged for ' + d + ' days, and you can cancel any time before then. Card details never touch this website.';
+  })();
   if (IS_APP) $('#signinKeep').checked = true;   // phones stay signed in, like other apps
   initHome();
   initAuthForms();
