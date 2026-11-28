@@ -285,7 +285,7 @@
       current = i;
       tabs.forEach(function (t, j) { t.setAttribute('aria-selected', String(j === i)); });
       dots.forEach(function (d, j) { d.classList.toggle('is-on', j === i); });
-      slides.forEach(function (s, j) { s.setAttribute('aria-hidden', String(j !== i)); });
+      slides.forEach(function (s, j) { s.setAttribute('aria-hidden', String(j !== i)); s.inert = j !== i; });
       THEMES.forEach(function (c) { if (c) band.classList.remove(c); });
       if (THEMES[i]) band.classList.add(THEMES[i]);
     }
@@ -309,9 +309,9 @@
   function initHome() {
     initTry();
     initDeckCarousel();
-    var row = $('#showcase') || document.createElement('div');
-    row.innerHTML = '';
-    BOUNDARIES.cards.filter(function (c) { return c.image; }).slice(0, 4).forEach(function (card) {
+    var row = $('#showcase');
+    if (row) row.innerHTML = '';
+    if (row) BOUNDARIES.cards.filter(function (c) { return c.image; }).slice(0, 4).forEach(function (card) {
       var b = document.createElement('button');
       b.type = 'button';
       b.className = 'thumb-btn';

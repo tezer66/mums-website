@@ -1707,3 +1707,10 @@ html[class*="sky-"]:not(.sky-night) #hp-decks [role="tab"]:not([aria-selected="t
   html.sky-dawn #hp-decks { --sun-r: 120px; --sun-x: 72%; --sun-y: calc(100% - 52px); --glow-y: calc(100% - 30px); --glow-h: 14%; }
   html.sky-dusk #hp-decks { --sun-r: 135px; --sun-x: 30%; --sun-y: calc(100% - 48px); --glow-y: calc(100% - 26px); --glow-h: 15%; }
 }
+
+/* ---------- readability and tap targets ---------- */
+.hp .hp-plans .plan:first-child .plan-price .cur, .hp .hp-plans .plan:first-child .plan-price .per { color: #6f5a7c; }
+.hp .hp-plans .plan:first-child .plan-trial { color: #85601a; }
+.site-header .nav-link { display: inline-flex; align-items: center; min-height: 44px; padding-inline: .4rem; }
+.hp-copy a { display: inline-block; padding: .55rem .2rem; margin: -.55rem 0; }
+.hp .hp-plans .plan:nth-child(2) .plan-price .cur, .hp .hp-plans .plan:nth-child(2) .plan-price .per { color: #c9b6d8; }
