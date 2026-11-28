@@ -66,3 +66,16 @@
 
 /* app: keep the member pages simple */
 .is-app #hp-decks .band-art, .is-app .gx { display: none; }
+
+/* phones: the whole card artwork shows at the top of the band, the deck sits just below it */
+@media (max-width: 760px) {
+  #hp-decks .deck-slide { padding-top: 432px; }
+  #hp-decks .band-art div { top: 18px; left: 16px; right: 16px; bottom: auto; height: 410px;
+    background-size: contain; background-repeat: no-repeat; background-position: 50% 0;
+    -webkit-mask-image: none; mask-image: none; filter: drop-shadow(0 18px 30px rgba(0,0,0,.45)); }
+  #hp-decks .band-art div.on, #hp-decks.pv-revealed .band-art .chosen { opacity: 1; }
+}
+@media (max-width: 760px) {
+  #hp-decks.pv-revealed .try-face { display: none; }
+  #hp-decks.pv-revealed .band-art .chosen { animation: pv-pop .9s cubic-bezier(.2,.9,.3,1.3) both; }
+}
