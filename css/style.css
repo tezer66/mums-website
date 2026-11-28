@@ -1746,3 +1746,14 @@ body.is-member .hero-cta { display: none; }
   .dashv .dk .stage { --cw: clamp(200px, 62vw, 260px); height: calc(var(--cw) * var(--arh, 1.25) + 110px); }
   .dashv .dk .dash .dayaff { margin-top: 5rem; }
 }
+
+/* Phones: the Boundaries artwork is painted in deep night tones, which look too dark on a small screen,
+   so lift its brightness a little (the lighter Cancer Care and Earth Magick cards are left as they are),
+   and give the cards a soft lilac glow so they stand out from the dark background. */
+@media (max-width: 760px) {
+  img[src*="/cards/card-"], img[src*="/cards/back"] { filter: brightness(1.16) contrast(1.06) saturate(1.08); }
+  html.shield .is-member img[src*="/cards/"] { filter: blur(22px) brightness(.8); }
+  .hero-deck .hd, .try-card img, .reading-card img, .try-face img { box-shadow: 0 0 34px rgba(201,169,224,.28); }
+  .dcard .face { box-shadow: 0 1px 0 rgba(120,80,150,.25), 0 10px 26px -16px rgba(0,0,0,.5); }
+  .dashv .dk .table { background: radial-gradient(75% 65% at 50% 45%, rgba(170,110,215,.28), rgba(130,70,170,0) 75%); }
+}
