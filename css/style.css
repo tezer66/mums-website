@@ -1603,3 +1603,76 @@ html.shield .is-member .face-img, html.shield .is-member .face-text { filter: bl
 .plan-free { display: inline-block; margin-left: .2rem; padding: .05rem .5rem; border-radius: 999px; background: #d6b062; color: #2c1240;
   font-style: normal; font-weight: 700; font-size: .78rem; letter-spacing: .02em; }
 .auth-badge { margin: -.4rem 0 .2rem; font-size: 1.05rem; }
+
+/* ---------- Time-of-day sky on the homepage's top band (#hp-decks) ----------
+   Pure CSS + inline SVG: no image downloads, sharp on every screen. The class on <html>
+   (sky-dawn / sky-day / sky-dusk / sky-night) is set from the visitor's own clock before first paint. */
+
+/* layered hills along the bottom, three tones; colours come from custom properties via separate layers */
+#hp-decks { --hill-far: #8f5d9c; --hill-mid: #6b3f7e; --hill-near: #3e2152; }
+#hp-decks .sky-hills { display: none; }
+html[class*="sky-"]:not(.sky-night) #hp-decks .sky-hills {
+  display: block; position: absolute; left: 0; right: 0; bottom: 0; height: clamp(90px, 14vw, 190px); z-index: -1; pointer-events: none;
+}
+.sky-hills svg { width: 100%; height: 100%; display: block; }
+.sky-hills .h1 { fill: var(--hill-far); }
+.sky-hills .h2 { fill: var(--hill-mid); }
+.sky-hills .h3 { fill: var(--hill-near); }
+
+/* ---- SUNRISE ---- */
+html.sky-dawn #hp-decks {
+  --hill-far: #b77fa8; --hill-mid: #8a5590; --hill-near: #4a2a5e;
+  background:
+    radial-gradient(11vmax 11vmax at 78% 86%, #fff6d8 0 18%, rgba(255,226,160,.95) 26%, rgba(255,190,130,.55) 42%, rgba(255,160,130,0) 70%),
+    radial-gradient(70% 40% at 78% 92%, rgba(255,214,150,.55), transparent 70%),
+    radial-gradient(38% 5% at 22% 40%, rgba(255,214,226,.45), transparent 72%),
+    radial-gradient(30% 4% at 64% 30%, rgba(255,226,236,.35), transparent 72%),
+    radial-gradient(26% 3.5% at 40% 56%, rgba(255,236,220,.35), transparent 72%),
+    linear-gradient(180deg, #2c1a4a 0%, #4e2c6b 22%, #8c4b82 44%, #d1708a 62%, #f29b7f 78%, #ffd29a 92%, #ffe7b8 100%);
+}
+html.sky-dawn #hp-decks::before { opacity: .35; animation: none; mask-image: linear-gradient(180deg, #000 0%, transparent 45%); -webkit-mask-image: linear-gradient(180deg, #000 0%, transparent 45%); }
+html.sky-dawn #hp-decks::after { opacity: .25; }
+
+/* ---- DAY ---- */
+html.sky-day #hp-decks {
+  --hill-far: #9c7bb8; --hill-mid: #7356a0; --hill-near: #47306a;
+  background:
+    radial-gradient(7vmax 7vmax at 82% 16%, #fffbea 0 22%, rgba(255,240,200,.75) 34%, rgba(255,230,190,0) 70%),
+    radial-gradient(45% 28% at 82% 16%, rgba(255,236,200,.35), transparent 70%),
+    radial-gradient(34% 6% at 20% 30%, rgba(255,255,255,.28), transparent 72%),
+    radial-gradient(28% 5% at 58% 48%, rgba(255,255,255,.22), transparent 72%),
+    radial-gradient(24% 4% at 36% 64%, rgba(255,255,255,.18), transparent 72%),
+    linear-gradient(180deg, #2a1f5c 0%, #43357f 28%, #5f4f9e 52%, #8172b8 76%, #a898cf 100%);
+}
+html.sky-day #hp-decks::before { opacity: 0; animation: none; }
+html.sky-day #hp-decks::after { opacity: .2; }
+
+/* ---- SUNSET ---- */
+html.sky-dusk #hp-decks {
+  --hill-far: #7a3d78; --hill-mid: #552a62; --hill-near: #2a1238;
+  background:
+    radial-gradient(13vmax 13vmax at 24% 90%, #ffe7b0 0 16%, rgba(255,186,110,.95) 26%, rgba(250,120,90,.55) 44%, rgba(220,90,110,0) 72%),
+    radial-gradient(80% 45% at 24% 96%, rgba(255,150,90,.55), transparent 70%),
+    radial-gradient(42% 5% at 70% 46%, rgba(255,150,150,.45), transparent 72%),
+    radial-gradient(34% 4% at 36% 60%, rgba(255,170,120,.4), transparent 72%),
+    radial-gradient(28% 3.5% at 80% 62%, rgba(255,190,140,.35), transparent 72%),
+    linear-gradient(180deg, #1c0f33 0%, #3a1c55 22%, #6d2a6e 42%, #b23f72 60%, #e0645f 74%, #f6974f 88%, #ffc46b 100%);
+}
+html.sky-dusk #hp-decks::before { opacity: .6; mask-image: linear-gradient(180deg, #000 0%, transparent 40%); -webkit-mask-image: linear-gradient(180deg, #000 0%, transparent 40%); }
+html.sky-dusk #hp-decks::after { opacity: .35; }
+
+/* ---- NIGHT: the existing starry purple, plus a crescent moon glow ---- */
+html.sky-night #hp-decks {
+  background:
+    radial-gradient(5vmax 5vmax at 84% 14%, rgba(255,240,205,.9) 0 30%, rgba(240,215,160,.25) 45%, transparent 70%),
+    var(--hp-night);
+}
+
+/* keep text and buttons readable on the brighter skies */
+html[class*="sky-"]:not(.sky-night) #hp-decks .hp-row-copy { text-shadow: 0 1px 2px rgba(35,10,50,.55), 0 0 22px rgba(35,10,50,.5); }
+html[class*="sky-"]:not(.sky-night) #hp-decks .hp-row-copy p { color: #fff8f2; }
+html[class*="sky-"]:not(.sky-night) #hp-decks .deck-tabs a:not([aria-selected="true"]),
+html[class*="sky-"]:not(.sky-night) #hp-decks [role="tab"]:not([aria-selected="true"]) {
+  background: rgba(40,15,55,.42); color: #fff8f2; border-color: rgba(255,255,255,.35);
+  -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px);
+}
