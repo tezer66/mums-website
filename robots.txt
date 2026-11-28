@@ -2,5 +2,6 @@ User-agent: *
 Allow: /
 Disallow: /content/newsletter/
 Disallow: /affirmations-preview.html
+Disallow: /design-preview.html
 
 Sitemap: https://www.harperholistic.xyz/sitemap.xml

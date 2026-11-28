@@ -1,0 +1,434 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>Design Preview · HarperHolistic</title>
+<link rel="icon" type="image/png" sizes="32x32" href="icons/icon-32.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500&amp;family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&amp;family=DM+Sans:wght@400;500;600;700&amp;display=swap">
+<link rel="stylesheet" href="css/design-preview.css?v=1">
+<style>
+  html { scroll-behavior: smooth; }
+  body { font-family: "DM Sans", system-ui, sans-serif; }
+  .fade-up { opacity: 0; transform: translateY(28px); transition: opacity .7s ease, transform .7s ease; }
+  .fade-up.in { opacity: 1; transform: none; }
+  .bar { display: inline-block; width: 3px; border-radius: 2px; transform-origin: center; animation: breathe 2.4s ease-in-out infinite; }
+  @keyframes breathe { 0%, 100% { transform: scaleY(.25); } 40%, 60% { transform: scaleY(1); } }
+  .hero-bg { animation: settle 1.6s cubic-bezier(.25,.46,.45,.94) both; }
+  @keyframes settle { from { transform: scale(1.06); opacity: .6; } to { transform: none; opacity: 1; } }
+  .acc-body { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .35s ease, opacity .35s ease; opacity: 0; }
+  .acc-open .acc-body { grid-template-rows: 1fr; opacity: 1; }
+  .acc-body > div { overflow: hidden; }
+  .no-scrollbar::-webkit-scrollbar { display: none; } .no-scrollbar { scrollbar-width: none; }
+  .preview-flag { position: fixed; left: 50%; bottom: max(14px, env(safe-area-inset-bottom)); transform: translateX(-50%); z-index: 1000; }
+  @media (prefers-reduced-motion: reduce) { .fade-up, .hero-bg, .bar { animation: none !important; transition: none !important; opacity: 1 !important; transform: none !important; } }
+</style>
+</head>
+<body class="bg-white text-plum antialiased">
+
+<a href="./" class="block w-full bg-gold text-plum text-center text-xs font-bold tracking-wide px-4 py-2">DESIGN PREVIEW · not the live site · tap to return to the current site</a>
+
+<!-- ============ 1. HERO (Solra Header 01) ============ -->
+<section class="relative w-full min-h-screen overflow-hidden flex flex-col bg-plumdeep" aria-label="Hero">
+  <div class="hero-bg absolute inset-0 z-0">
+    <div class="absolute inset-y-0 right-0 w-full lg:w-[58%] bg-cover" style="background-image:url('images/cards/card-12.webp');background-position:50% 8%" role="img" aria-label="Card artwork: a woman holding a golden mask beside a broken mirror at sunset"></div>
+    <div class="absolute inset-0" style="background:linear-gradient(to right, rgba(22,10,34,.96) 0%, rgba(22,10,34,.86) 38%, rgba(22,10,34,.35) 70%, rgba(22,10,34,.15) 100%)"></div>
+    <div class="absolute inset-0 lg:hidden" style="background:linear-gradient(to top, rgba(22,10,34,.98) 35%, rgba(22,10,34,.7))"></div>
+    <div class="absolute inset-0 hidden lg:block" style="background:linear-gradient(to top, rgba(22,10,34,1) 0%, rgba(22,10,34,.96) 30%, rgba(22,10,34,0) 60%)"></div>
+  </div>
+
+  <div class="relative z-10 w-full max-w-[1440px] mx-auto pt-5 px-6 lg:px-[135px] pb-[60px] flex flex-col min-h-screen">
+    <!-- nav -->
+    <header class="w-full relative z-[100] fade-up in">
+      <nav class="flex py-5 items-center justify-between gap-6" aria-label="Main navigation">
+        <a href="./" class="flex items-center gap-2 no-underline text-white">
+          <img src="images/emblem.svg" alt="" class="w-9 h-9">
+          <span class="font-cinzel text-[19px] tracking-[.12em]">HARPER<span class="text-gold mx-1">·</span><span class="text-lilac">HOLISTIC</span></span>
+        </a>
+        <div class="hidden md:flex px-4 py-2 items-center gap-6 rounded-full border border-white/20 bg-white/10 backdrop-blur-[6px]">
+          <a href="#decks" class="text-white text-[15px] font-semibold hover:opacity-75">The decks</a>
+          <a href="#how" class="text-white text-[15px] hover:opacity-75">How it works</a>
+          <a href="#gill" class="text-white text-[15px] hover:opacity-75">About Gill</a>
+          <a href="#faq" class="text-white text-[15px] hover:opacity-75">Questions</a>
+        </div>
+        <a href="./#join" class="hidden md:flex px-6 py-3 rounded-full bg-white text-plum text-sm font-semibold hover:bg-gold transition">Sign in</a>
+        <button id="burger" class="md:hidden flex flex-col gap-[5px] p-2 bg-white/10 border border-white/20 rounded-[10px]" aria-label="Open menu" aria-expanded="false">
+          <span class="block w-[22px] h-[2px] bg-white rounded"></span><span class="block w-[22px] h-[2px] bg-white rounded"></span><span class="block w-[22px] h-[2px] bg-white rounded"></span>
+        </button>
+      </nav>
+      <div id="mnav" class="md:hidden hidden absolute top-full left-0 right-0 bg-plumdeep/95 backdrop-blur-xl border-b border-white/10 px-6 pb-6 pt-2 flex-col">
+        <a href="#decks" class="py-3 text-gold font-semibold border-b border-white/10">The decks</a>
+        <a href="#how" class="py-3 text-white/85 border-b border-white/10">How it works</a>
+        <a href="#gill" class="py-3 text-white/85 border-b border-white/10">About Gill</a>
+        <a href="#faq" class="py-3 text-white/85 border-b border-white/10">Questions</a>
+        <a href="./#join" class="mt-5 py-3.5 text-center rounded-full bg-gold text-plum font-bold">Start 7 days free</a>
+      </div>
+    </header>
+
+    <!-- hero copy -->
+    <main class="pt-20 md:pt-[110px] flex flex-col items-start gap-8 md:gap-11">
+      <div class="flex flex-col items-start gap-7 w-full max-w-[650px]">
+        <div class="flex items-center gap-[3px] h-[36px] fade-up" aria-hidden="true" id="wave"></div>
+        <div class="flex flex-col items-start gap-6">
+          <div class="inline-flex py-[6px] pr-5 pl-4 items-center gap-3 bg-white/15 backdrop-blur-[7px] rounded-full border border-white/15 fade-up">
+            <span class="text-gold tracking-[.2em]">✦ ✦ ✦</span>
+            <span class="text-cream text-[15px]">7 days free · cancel anytime</span>
+          </div>
+          <h1 class="fade-up text-cream font-serif text-[40px] sm:text-[48px] md:text-[58px] lg:text-[72px] font-semibold leading-[1.05] tracking-[-0.5px] md:tracking-[-1px]">
+            Speak your truth. Protect your peace. <em class="text-gold not-italic font-semibold">Come home</em> to yourself.
+          </h1>
+        </div>
+      </div>
+      <div class="fade-up flex flex-col sm:flex-row items-center gap-3 w-full sm:w-auto">
+        <a href="./#join" class="group flex px-7 py-4 justify-center items-center gap-3 rounded-full bg-gradient-to-br from-[#f3d98f] to-[#d6b062] text-plum text-[15px] font-bold w-full sm:w-auto shadow-[0_10px_30px_rgba(214,176,98,.35)] hover:brightness-105 transition">
+          Start 7 days free <span class="transition-transform group-hover:translate-x-1" aria-hidden="true">→</span>
+        </a>
+        <a href="./#home" class="group flex px-7 py-4 justify-center items-center gap-3 rounded-full border border-white/40 bg-white/10 backdrop-blur-[7px] text-white text-[15px] font-medium w-full sm:w-auto hover:border-gold/60 hover:text-gold transition">
+          Try a free card <span aria-hidden="true">✦</span>
+        </a>
+      </div>
+    </main>
+
+    <!-- bottom-right card -->
+    <aside class="fade-up mt-12 md:mt-[84px] lg:self-end flex flex-col items-start gap-4 pb-10 w-full lg:w-auto" aria-label="About HarperHolistic">
+      <p class="w-full lg:w-[400px] text-[#efe2f7] text-[18px] leading-[26px]">Healing inspiration cards by Gillian Harper. A card a day, a private journal and gentle reflections.</p>
+      <div class="flex p-4 justify-between items-center gap-4 rounded-2xl border border-white/40 bg-white/15 backdrop-blur-[7px] w-full lg:w-[400px]">
+        <div class="flex items-center gap-4">
+          <img src="images/emblem.svg" alt="" class="w-[43px] h-[43px]">
+          <div>
+            <p class="text-[#efe2f7] text-sm font-medium">The healing you deserve</p>
+            <a href="#gill" class="text-gold text-lg font-semibold hover:opacity-80">Meet Gill</a>
+          </div>
+        </div>
+        <button id="playBtn" class="relative w-[100px] sm:w-[120px] h-[72px] sm:h-[86px] rounded-lg overflow-hidden shrink-0 bg-black" aria-label="Play the HarperHolistic video">
+          <img src="media/harperholistic-cards-poster.jpg" alt="" class="w-full h-full object-cover opacity-90">
+          <span class="absolute inset-0 flex items-center justify-center bg-black/25 hover:bg-black/40 transition"><span class="w-8 h-8 rounded-full bg-white/90 flex items-center justify-center text-plum text-xs pl-0.5">▶</span></span>
+        </button>
+      </div>
+    </aside>
+  </div>
+</section>
+
+<!-- ============ 2. THE DECKS (Solra Features 05) ============ -->
+<section id="decks" class="w-full py-20 px-4 sm:px-6 lg:px-8 bg-cream">
+  <div class="max-w-7xl mx-auto">
+    <div class="mb-12 fade-up">
+      <span class="inline-block text-golddeep text-sm font-semibold mb-2 uppercase tracking-[.18em]">✦ Inside the membership</span>
+      <h2 class="text-plum font-serif text-[40px] sm:text-[54px] font-semibold leading-[1.05] tracking-[-0.6px]">Three decks, one gentle daily practice</h2>
+    </div>
+    <div class="flex flex-col md:flex-row items-start gap-8 lg:gap-12">
+      <div class="w-full md:w-1/2 flex flex-col gap-6 order-2 md:order-1">
+        <div class="hidden md:block relative w-full aspect-[4/5] lg:aspect-auto lg:h-[600px] rounded-[30px] overflow-hidden shadow-sm bg-plumdeep">
+          <img id="deckImg" src="images/cards/card-07.webp" alt="" class="w-full h-full object-contain transition-opacity duration-500">
+        </div>
+        <div class="flex flex-col sm:flex-row p-5 items-center justify-between gap-4 w-full rounded-[14px] bg-mist">
+          <div class="flex items-center gap-3"><img src="images/emblem.svg" alt="" class="w-12 h-12"><div><p class="font-semibold">Gillian Harper</p><p class="text-sm opacity-75">Reiki practitioner &amp; creator</p></div></div>
+          <p class="font-serif italic text-[19px] leading-snug max-w-[290px] text-center sm:text-left">“Your voice does not belong to those who told you to stay silent.”</p>
+        </div>
+      </div>
+      <div class="w-full md:w-1/2 flex flex-col gap-3 order-1 md:order-2" id="deckList"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 3. HOW IT WORKS (Solra Why us 05) ============ -->
+<section id="how" class="w-full bg-mist flex justify-center overflow-hidden">
+  <div class="w-full max-w-[1440px] px-6 sm:px-12 lg:px-[135px] py-16 lg:py-[110px] flex flex-col gap-12 lg:gap-[72px]">
+    <div class="flex flex-col lg:flex-row items-start lg:items-end justify-between gap-6 fade-up">
+      <h2 class="text-plum text-[40px] sm:text-[48px] font-serif font-semibold leading-[1.1] max-w-[440px]">How your daily<br>practice works</h2>
+      <p class="opacity-80 text-[18px] leading-[26px] lg:w-[472px]">Five quiet minutes a day: choose a card, sit with its message, write what it stirs up and look back on your week.</p>
+    </div>
+    <div class="fade-up w-full max-w-[1170px] mx-auto p-6 sm:p-8 lg:p-12 rounded-[32px] lg:rounded-[40px] bg-white shadow-sm">
+      <div class="flex w-full overflow-x-auto no-scrollbar mb-8 lg:mb-12">
+        <div class="flex p-2 items-center gap-3 rounded-full bg-mist min-w-max mx-auto" id="howTabs" role="tablist"></div>
+      </div>
+      <div class="flex flex-col lg:flex-row p-4 sm:p-6 lg:p-[24px_24px_24px_48px] items-center gap-8 lg:gap-12 bg-mist rounded-[30px]">
+        <div class="flex flex-col items-start gap-6 flex-1">
+          <div class="w-14 h-14 rounded-full bg-plum text-gold flex items-center justify-center text-2xl" id="howIcon">☾</div>
+          <h3 id="howText" class="text-plum text-[28px] sm:text-[34px] lg:text-[40px] font-serif font-semibold leading-[1.18]"></h3>
+        </div>
+        <div class="w-full lg:w-[420px] h-[360px] sm:h-[440px] rounded-[30px] overflow-hidden bg-plumdeep">
+          <img id="howImg" src="" alt="" class="w-full h-full object-contain transition-opacity duration-500">
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 4. MEMBER WORDS (Solra Testimonials 05) — examples only ============ -->
+<section class="w-full bg-white py-20 md:py-[110px] px-6 lg:px-[135px]">
+  <div class="max-w-[1170px] mx-auto flex flex-col gap-10">
+    <div class="flex flex-col md:flex-row justify-between items-center md:items-end gap-6 fade-up">
+      <div class="text-center md:text-left">
+        <span class="inline-block rounded-full bg-plum text-gold text-[11px] font-bold tracking-[.12em] px-3 py-1 mb-3">EXAMPLE WORDING · real members’ words go here</span>
+        <h2 class="text-plum font-serif text-[36px] md:text-[52px] font-semibold leading-tight">Kind words from members</h2>
+        <p class="opacity-70 text-lg">How a card a day is helping people come home to themselves.</p>
+      </div>
+    </div>
+    <div class="fade-up w-full p-8 md:p-12 rounded-[30px] bg-mist min-h-[240px] flex items-center">
+      <p id="quote" class="text-plum font-serif italic text-[26px] md:text-[34px] font-semibold leading-[1.3] transition-opacity duration-300"></p>
+    </div>
+    <div class="flex items-center justify-start md:justify-center gap-4 overflow-x-auto no-scrollbar pb-2" id="quoteBtns"></div>
+  </div>
+</section>
+
+<!-- ============ 5. MEET GILL (Solra Team 01) ============ -->
+<section id="gill" class="w-full bg-plumdeep text-cream py-20 md:py-[110px] px-6 lg:px-[135px]">
+  <div class="max-w-[1170px] mx-auto">
+    <div class="text-center mb-12 fade-up">
+      <h2 class="font-serif text-[38px] md:text-[54px] font-semibold leading-[1.05]">Guided by experience,<br><em class="text-gold">created with love</em></h2>
+      <p class="opacity-80 text-lg mt-4 max-w-[640px] mx-auto">15 years in wellness in Dubai &amp; Koh Samui: yoga, reiki, sound healing, retreats and full moon ceremonies. Every card began as a lesson Gill lived herself.</p>
+    </div>
+    <div class="hidden md:flex items-stretch gap-5 h-[380px] fade-up" id="gillRow"></div>
+    <div class="flex md:hidden overflow-x-auto snap-x snap-mandatory gap-4 pb-4 no-scrollbar" id="gillRowM"></div>
+    <div class="mt-12 bg-white text-plum rounded-[22px] p-8 md:px-12 flex flex-col md:flex-row items-center justify-between gap-6 fade-up">
+      <div class="text-center md:text-left">
+        <h4 class="font-serif text-[28px] md:text-[32px] font-semibold">Book a Distant Reiki Healing session</h4>
+        <p class="opacity-80">Email Gill to arrange a time that suits you: gill@harperholistic.xyz</p>
+      </div>
+      <a href="mailto:gill@harperholistic.xyz" class="flex items-center gap-3 bg-plum text-white px-7 py-4 rounded-full font-semibold hover:bg-gold hover:text-plum transition whitespace-nowrap">Email Gill <span aria-hidden="true">→</span></a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 6. PRICING (Solra Pricing 02) ============ -->
+<section id="pricing" class="w-full bg-white py-20 md:py-[110px] px-4 md:px-[135px]">
+  <div class="max-w-[1170px] mx-auto flex flex-col items-center">
+    <div class="text-center mb-14 fade-up">
+      <h2 class="text-plum font-serif text-[40px] md:text-[52px] font-bold leading-[1.1]">Choose your path</h2>
+      <p class="opacity-80 text-lg mt-3">Both plans include all three decks. Your first 7 days are free.</p>
+    </div>
+    <div class="flex flex-col lg:flex-row w-full gap-6 items-stretch mb-12 fade-up">
+      <div class="lg:w-[374px] p-6 rounded-[20px] border border-[#e8dcef] bg-white">
+        <h4 class="font-semibold mb-4">Included in every plan</h4>
+        <ul class="flex flex-col gap-4" id="incl"></ul>
+      </div>
+      <div class="flex-1 flex flex-col gap-4" id="plans"></div>
+    </div>
+    <div class="flex flex-wrap justify-center gap-6 md:gap-12 mb-8 text-plum fade-up">
+      <span class="flex items-center gap-2 font-medium">✕ No lock-in contract</span>
+      <span class="flex items-center gap-2 font-medium">♡ US$5 per yearly membership to cancer research</span>
+      <span class="flex items-center gap-2 font-medium">🔒 Secure checkout with Stripe</span>
+    </div>
+    <a href="./#join" class="fade-up rounded-full bg-gradient-to-br from-[#f3d98f] to-[#d6b062] text-plum font-bold px-8 py-4 shadow-lg">Start 7 days free</a>
+  </div>
+</section>
+
+<!-- ============ 7. QUESTIONS (Solra FAQs 01) ============ -->
+<section id="faq" class="flex flex-col items-center w-full bg-cream py-20 md:py-[110px] px-6 md:px-[135px] gap-14">
+  <div class="text-center max-w-[772px] fade-up">
+    <h2 class="font-serif text-[40px] md:text-[52px] font-semibold leading-[1.1] text-plum">Questions &amp; answers</h2>
+    <p class="text-lg opacity-80 mt-3">Everything you’d like to know before your first card.</p>
+  </div>
+  <div class="flex flex-col w-full max-w-[772px] gap-3" id="faqList"></div>
+  <div class="w-full max-w-[1170px] bg-mist rounded-[32px] p-8 md:p-16 flex flex-col items-center gap-5 text-center fade-up">
+    <img src="images/emblem.svg" alt="" class="w-16 h-16">
+    <h4 class="font-serif text-[30px] font-semibold text-plum">Still have questions?</h4>
+    <p class="opacity-80 text-lg">Gill reads every email herself: gill@harperholistic.xyz</p>
+    <a href="mailto:gill@harperholistic.xyz" class="rounded-full bg-plum text-gold font-semibold px-6 py-3 hover:bg-gold hover:text-plum transition">Get in touch →</a>
+  </div>
+</section>
+
+<!-- ============ 8. FOOTER (Solra Footer 01) ============ -->
+<section class="relative w-full overflow-hidden" style="background:radial-gradient(120% 90% at 50% 100%, #f6974f 0%, #e0645f 18%, #b23f72 36%, #6d2a6e 58%, #3a1c55 78%, #1c0f33 100%)">
+  <div class="relative z-10 max-w-[1440px] mx-auto px-6 md:px-10 pt-24 lg:pt-[160px] pb-6 flex flex-col items-center gap-20">
+    <div class="text-center fade-up">
+      <h2 class="font-serif text-[42px] md:text-[56px] font-semibold leading-[1.05] text-white">Your cards are waiting</h2>
+      <p class="text-white/85 text-lg max-w-[620px] mx-auto mt-4 mb-8">Choose your first card tonight. Seven days free, then cancel anytime.</p>
+      <a href="./#join" class="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-br from-[#f3d98f] to-[#d6b062] text-plum rounded-full font-bold shadow-xl">Start 7 days free →</a>
+    </div>
+    <div class="w-full max-w-[1360px] px-6 py-10 md:px-[90px] md:pt-12 rounded-[20px] border border-white/25 bg-white/10 backdrop-blur-[10px] flex flex-col gap-12 fade-up">
+      <div class="flex flex-col lg:flex-row justify-between gap-12">
+        <div class="max-w-[300px]">
+          <div class="flex items-center gap-3 mb-4"><img src="images/emblem.svg" alt="" class="w-10 h-10"><span class="font-cinzel text-white text-xl tracking-[.12em]">HARPER<span class="text-gold mx-1">·</span>HOLISTIC</span></div>
+          <p class="text-white/90">Healing Inspiration Cards by Gillian Harper. For inspiration and reflection, not medical advice.</p>
+        </div>
+        <div class="flex gap-14">
+          <div><h4 class="font-serif text-xl text-white mb-4">Explore</h4><ul class="flex flex-col gap-3 text-white/90"><li><a href="#decks">The decks</a></li><li><a href="#how">How it works</a></li><li><a href="#gill">About Gill</a></li><li><a href="#faq">Questions</a></li></ul></div>
+          <div><h4 class="font-serif text-xl text-white mb-4">Follow</h4><ul class="flex flex-col gap-3 text-white/90"><li><a href="https://www.instagram.com/harper.holistic/" target="_blank" rel="noopener">Instagram</a></li><li><a href="https://www.tiktok.com/@harper.holistic" target="_blank" rel="noopener">TikTok</a></li></ul></div>
+        </div>
+        <div class="max-w-[380px] w-full">
+          <h4 class="font-serif text-xl text-white mb-2">Free Full Moon Boundary Ritual</h4>
+          <p class="text-white/90 mb-4">Leave your email and Gill will send it to you. (Sign-up box shown for the preview only.)</p>
+          <form class="flex items-center gap-2 bg-white/20 rounded-full p-1.5" onsubmit="event.preventDefault()">
+            <label for="nl" class="sr-only">Email</label>
+            <input id="nl" type="email" placeholder="Your email" class="flex-1 px-4 py-2 bg-transparent outline-none text-white placeholder:text-white/70 min-w-0">
+            <button class="px-5 py-2.5 bg-plum text-white rounded-full text-sm font-medium">Send it</button>
+          </form>
+        </div>
+      </div>
+      <div class="h-px bg-white/20"></div>
+      <div class="flex flex-col md:flex-row justify-between gap-4 pb-2 text-[13px] text-white/85">
+        <p>© 2026 Gillian Harper. All card artwork and text belong to the author.</p>
+        <p class="flex gap-5"><a href="privacy.html">Privacy</a><a href="terms.html">Terms</a></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div id="vid" class="hidden fixed inset-0 z-[1001] bg-black/90 items-center justify-center p-4">
+  <div class="relative w-full max-w-[420px] aspect-[9/16] bg-black rounded-2xl overflow-hidden">
+    <button id="vidClose" class="absolute top-3 right-3 z-10 w-10 h-10 rounded-full bg-white/15 text-white text-xl" aria-label="Close video">×</button>
+    <video id="vidEl" src="media/harperholistic-cards.mp4" poster="media/harperholistic-cards-poster.jpg" controls playsinline class="w-full h-full object-contain"></video>
+  </div>
+</div>
+
+<script>
+(function () {
+  // breathing waveform
+  var hs = [10, 20, 28, 24, 34, 36, 30, 32, 22, 16, 9, 5, 9, 13, 6, 4, 8, 5], w = document.getElementById('wave');
+  hs.forEach(function (h, i) { var s = document.createElement('span'); s.className = 'bar'; s.style.height = h + 'px'; s.style.animationDelay = (i * 0.13) + 's'; s.style.background = i < 10 ? 'rgba(233,201,126,.75)' : 'rgba(255,255,255,.3)'; w.appendChild(s); });
+  // mobile menu
+  var bg = document.getElementById('burger'), mn = document.getElementById('mnav');
+  bg.addEventListener('click', function () { var open = mn.classList.toggle('hidden') === false; mn.classList.toggle('flex', open); bg.setAttribute('aria-expanded', String(open)); });
+  // decks accordion (hover/tap swaps the picture)
+  var DECKS = [
+    { t: 'Boundaries are my Love Language', l: 'Truth', d: '44 cards for telling the truth, honouring your needs and reclaiming yourself, with a guidebook, journal and Weekly Reflections.', img: 'images/cards/card-07.webp' },
+    { t: 'Cancer Care Cards', l: 'Comfort', d: '44 gentle messages to text a loved one living with cancer: comforting words to brighten their day.', img: 'images/cancer-care/card-15.webp' },
+    { t: 'Momma’s Earth Magick', l: 'Ritual', d: '44 cards of release, trust, forgiveness and ritual, each with an “I am” affirmation to say out loud.', img: 'images/earth-magick/card-30.webp' },
+    { t: 'Your private journal', l: 'Reflect', d: 'Write what each card stirs up. Saved to your account, private to you, on any device.', img: 'images/cards/card-12.webp' },
+    { t: 'Daily affirmations', l: 'Affirm', d: 'A new affirmation card every morning, to sit with and share.', img: 'images/affirmations/aff-01.webp' }
+  ];
+  var list = document.getElementById('deckList'), img = document.getElementById('deckImg'), act = 0;
+  function drawDecks() {
+    list.innerHTML = '';
+    DECKS.forEach(function (d, i) {
+      var on = i === act, el = document.createElement('button');
+      el.type = 'button';
+      el.className = 'text-left w-full p-4 lg:p-5 rounded-[14px] lg:rounded-[20px] border transition-all duration-300 ' + (on ? 'bg-plum text-white border-transparent acc-open' : 'bg-white text-plum border-[#eadff1] hover:border-gold/50');
+      el.innerHTML = '<div class="flex items-start justify-between gap-4"><div class="flex items-baseline gap-2 flex-wrap"><span class="font-serif text-[24px] lg:text-[30px] font-semibold leading-tight"></span><span class="text-xs font-medium ' + (on ? 'text-gold' : 'opacity-60') + '"></span></div><span class="shrink-0 w-9 h-9 lg:w-[54px] lg:h-[54px] rounded-full border flex items-center justify-center ' + (on ? 'bg-gold border-gold text-plum' : 'border-[#eadff1]') + '">' + (on ? '↗' : '→') + '</span></div><div class="acc-body"><div><p class="text-[15px] lg:text-[18px] leading-relaxed opacity-85 mt-2 mb-3"></p><img class="md:hidden w-full rounded-[18px] mb-1" alt=""></div></div>';
+      el.querySelector('.font-serif').textContent = d.t; el.querySelector('.text-xs').textContent = '(' + d.l + ')'; el.querySelector('p').textContent = d.d;
+      var mi = el.querySelector('img'); if (on) mi.src = d.img; mi.alt = d.t;
+      el.addEventListener('click', function () { act = i; drawDecks(); });
+      el.addEventListener('mouseenter', function () { img.style.opacity = 0; setTimeout(function () { img.src = d.img; img.style.opacity = 1; }, 180); });
+      list.appendChild(el);
+    });
+    img.src = DECKS[act].img;
+  }
+  drawDecks();
+  // how it works tabs
+  var HOW = [
+    { tab: 'Choose your card', icon: '☾', text: 'Each morning, take a slow breath, shuffle the deck and choose the card that calls to you.', img: 'images/cards/card-03.webp' },
+    { tab: 'Sit with it', icon: '✦', text: 'Read Gill’s words for your card and say its affirmation out loud. Let it land.', img: 'images/earth-magick/card-18.webp' },
+    { tab: 'Write', icon: '✎', text: 'Write what the card stirs up in your private journal. A few lines is enough.', img: 'images/cards/card-21.webp' },
+    { tab: 'Look back', icon: '◎', text: 'Your Weekly Reflections show the cards you chose and what you wrote, day by day.', img: 'images/cards/card-43.webp' },
+    { tab: 'Share', icon: '↗', text: 'Share a card with the HarperHolistic frame, for someone who needs it today.', img: 'images/cancer-care/card-09.webp' }
+  ];
+  var tabs = document.getElementById('howTabs'), ht = document.getElementById('howText'), hi = document.getElementById('howImg'), hc = document.getElementById('howIcon'), cur = 0;
+  function drawHow() {
+    tabs.innerHTML = '';
+    HOW.forEach(function (h, i) {
+      var b = document.createElement('button'); b.type = 'button'; b.setAttribute('role', 'tab'); b.setAttribute('aria-selected', String(i === cur));
+      b.className = 'flex px-4 py-3 lg:px-6 lg:py-3.5 items-center gap-2.5 rounded-full transition ' + (i === cur ? 'bg-white shadow-[0_6px_16px_rgba(0,0,0,.06)]' : 'hover:bg-white/60');
+      b.innerHTML = '<span class="w-2 h-2 rounded-full ' + (i === cur ? 'bg-plum' : 'bg-plum/30') + '"></span><span class="text-plum text-[15px] lg:text-[18px] font-semibold whitespace-nowrap"></span>';
+      b.lastChild.textContent = h.tab;
+      b.addEventListener('click', function () { cur = i; drawHow(); }); b.addEventListener('mouseenter', function () { if (cur !== i) { cur = i; drawHow(); } });
+      tabs.appendChild(b);
+    });
+    var h = HOW[cur]; hc.textContent = h.icon; ht.textContent = h.text; hi.style.opacity = 0; setTimeout(function () { hi.src = h.img; hi.alt = h.tab; hi.style.opacity = 1; }, 150);
+  }
+  drawHow();
+  // example member words
+  var Q = [
+    { n: 'Sarah', r: 'Perth · Boundaries deck', q: '“I choose my card every morning before I look at my phone. It’s become the gentlest part of my day.”' },
+    { n: 'Michelle', r: 'Brisbane · Cancer Care Cards', q: '“When my sister was diagnosed I didn’t know what to say. The Cancer Care Cards gave me the words.”' },
+    { n: 'Priya', r: 'London · member', q: '“Looking back on my journal each week, I can see how much lighter I’ve become.”' }
+  ];
+  var qi = 0, qel = document.getElementById('quote'), qb = document.getElementById('quoteBtns'), auto = true;
+  function drawQ() {
+    qel.style.opacity = 0; setTimeout(function () { qel.textContent = Q[qi].q; qel.style.opacity = 1; }, 200);
+    qb.innerHTML = '';
+    Q.forEach(function (x, i) {
+      var b = document.createElement('button'); b.type = 'button'; b.setAttribute('aria-pressed', String(i === qi));
+      b.className = 'flex items-center gap-3 p-3 pr-6 rounded-xl border min-w-[220px] text-left transition ' + (i === qi ? 'border-gold bg-mist' : 'border-[#ece4f1] bg-white hover:border-gold/50');
+      b.innerHTML = '<span class="w-10 h-10 rounded-full bg-plum text-gold flex items-center justify-center font-serif text-lg"></span><span><span class="block text-sm font-bold"></span><span class="block text-xs opacity-60"></span></span><span class="ml-auto text-[10px] font-bold text-[#b5485a] border border-dashed border-[#d7a0aa] rounded-full px-2 py-0.5">EXAMPLE</span>';
+      b.querySelector('.w-10').textContent = x.n[0]; b.querySelector('.text-sm').textContent = x.n; b.querySelector('.text-xs').textContent = x.r;
+      b.addEventListener('click', function () { qi = i; auto = false; drawQ(); });
+      qb.appendChild(b);
+    });
+  }
+  drawQ(); setInterval(function () { if (auto) { qi = (qi + 1) % Q.length; drawQ(); } }, 4200);
+  // meet Gill: expanding card row (decks + rituals)
+  var G = [
+    { t: 'Boundaries', s: '44 cards', img: 'images/cards/card-01.webp' },
+    { t: 'Cancer Care', s: '44 messages', img: 'images/cancer-care/card-01.webp' },
+    { t: 'Earth Magick', s: '44 rituals', img: 'images/earth-magick/card-05.webp' },
+    { t: 'Reiki', s: 'Distant healing', img: 'images/cards/card-31.webp' },
+    { t: 'Affirmations', s: 'Every morning', img: 'images/affirmations/aff-02.webp' }
+  ];
+  var gr = document.getElementById('gillRow'), gm = document.getElementById('gillRowM'), ga = 0;
+  function drawG() {
+    gr.innerHTML = '';
+    G.forEach(function (g, i) {
+      var on = i === ga, d = document.createElement('div');
+      d.className = 'relative overflow-hidden rounded-[20px] cursor-pointer transition-all duration-700 bg-plum';
+      d.style.flex = on ? '3.2 1 0%' : '1 1 0%';
+      d.innerHTML = '<img alt="" class="absolute inset-0 w-full h-full object-cover transition-all duration-700 ' + (on ? 'scale-105' : 'grayscale-[60%] opacity-70') + '"><div class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/10 to-transparent transition-opacity duration-700 ' + (on ? 'opacity-100' : 'opacity-0') + '"></div><div class="absolute bottom-0 left-0 w-full p-6 text-center transition-all duration-700 ' + (on ? 'opacity-100' : 'opacity-0 translate-y-6') + '"><h3 class="text-white text-xl font-semibold"></h3><p class="text-white/70"></p></div>';
+      d.querySelector('img').src = g.img; d.querySelector('h3').textContent = g.t; d.querySelector('p').textContent = g.s;
+      d.addEventListener('mouseenter', function () { if (ga !== i) { ga = i; drawG(); } });
+      gr.appendChild(d);
+    });
+  }
+  drawG();
+  G.forEach(function (g) {
+    var a = document.createElement('div'); a.className = 'shrink-0 w-[260px] h-[340px] relative rounded-[20px] overflow-hidden snap-center bg-plum';
+    a.innerHTML = '<img alt="" class="absolute inset-0 w-full h-full object-cover"><div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div><div class="absolute bottom-0 w-full p-5 text-center"><h3 class="text-white text-xl font-semibold"></h3><p class="text-white/70"></p></div>';
+    a.querySelector('img').src = g.img; a.querySelector('h3').textContent = g.t; a.querySelector('p').textContent = g.s; gm.appendChild(a);
+  });
+  // pricing
+  var INC = ['All three decks (132 cards)', 'Daily card & private journal', 'Weekly Reflections', 'Guidebook & Inner Play', 'Daily affirmation cards', 'Monthly newsletter (optional)'];
+  var inc = document.getElementById('incl');
+  INC.forEach(function (x) { var li = document.createElement('li'); li.className = 'flex items-center justify-between gap-3'; li.innerHTML = '<span></span><span class="text-golddeep">✓</span>'; li.firstChild.textContent = x; inc.appendChild(li); });
+  var PL = [{ id: 0, t: 'Monthly', tag: '7 days free', sub: 'US$9.99', per: 'a month' }, { id: 1, t: 'Yearly', tag: 'Save 51% · 7 days free', sub: 'US$59', per: 'a year' }], pa = 1, pl = document.getElementById('plans');
+  function drawP() {
+    pl.innerHTML = '';
+    PL.forEach(function (p) {
+      var on = p.id === pa, d = document.createElement('button'); d.type = 'button';
+      d.className = 'flex flex-1 items-center justify-between p-6 rounded-[16px] border transition-all duration-300 text-left ' + (on ? 'bg-plum text-white border-transparent scale-[1.01] shadow-[0_10px_24px_rgba(0,0,0,.1)]' : 'bg-white text-plum border-[#e8dcef]');
+      d.innerHTML = '<div class="flex items-center gap-4"><span class="w-6 h-6 rounded-full flex items-center justify-center ' + (on ? 'bg-gold text-plum' : 'border-2 border-plum/20') + '">' + (on ? '✓' : '') + '</span><span><span class="block font-serif text-[24px] font-semibold"></span><span class="inline-block px-2 py-0.5 rounded-full text-xs font-medium ' + (on ? 'bg-white/15 text-gold' : 'bg-mist text-plum') + '"></span></span></div><span class="text-right"><span class="block font-serif text-[34px] font-bold leading-none"></span><span class="text-sm opacity-70"></span></span>';
+      var sp = d.querySelectorAll('span'); d.querySelector('.font-serif').textContent = p.t; d.querySelector('.text-xs').textContent = p.tag; d.querySelector('.text-\\[34px\\]').textContent = p.sub; d.querySelector('.text-sm').textContent = p.per;
+      d.addEventListener('click', function () { pa = p.id; drawP(); }); d.addEventListener('mouseenter', function () { if (pa !== p.id) { pa = p.id; drawP(); } });
+      pl.appendChild(d);
+    });
+  }
+  drawP();
+  // questions
+  var FAQ = [
+    ['What do I get as a member?', 'All three decks, 44 cards each: Boundaries are my Love Language, Cancer Care Cards and Momma’s Earth Magick. A daily card, your private journal, Weekly Reflections, the guidebook and Inner Play.'],
+    ['How does the 7-day free trial work?', 'You add your card when you join, but nothing is charged for 7 days. Cancel before day 8 and you won’t be charged at all.'],
+    ['How do I cancel?', 'Email gill@harperholistic.xyz any time. There’s no lock-in contract, and your decks stay open until the end of the period you’ve paid for.'],
+    ['Monthly or yearly?', 'Both include everything. Yearly saves 51%, and US$5 of every yearly membership goes to cancer research.'],
+    ['Can I use it on my phone?', 'Yes, in any phone, tablet or computer browser, with the same cards and journal everywhere. iPhone and Android apps are on their way.'],
+    ['Are the cards advice?', 'They’re for inspiration, reflection and comfort, not medical or psychological advice.']
+  ];
+  var fl = document.getElementById('faqList'), fo = 1;
+  function drawF() {
+    fl.innerHTML = '';
+    FAQ.forEach(function (f, i) {
+      var on = i === fo, d = document.createElement('div');
+      d.className = 'rounded-[12px] border overflow-hidden transition-all duration-300 ' + (on ? 'bg-plum border-plum shadow-lg acc-open' : 'bg-white border-[#ece4f1] hover:border-plum/25');
+      d.innerHTML = '<button type="button" class="flex w-full items-center justify-between gap-4 p-4 md:p-[18px_18px_18px_24px] text-left" aria-expanded="' + on + '"><span class="font-serif text-[20px] md:text-[24px] font-semibold ' + (on ? 'text-white' : 'text-plum') + '"></span><span class="shrink-0 w-8 h-8 rounded-full flex items-center justify-center ' + (on ? 'bg-gold text-plum' : 'bg-mist text-plum') + '">' + (on ? '×' : '+') + '</span></button><div class="acc-body"><div><p class="px-4 md:px-6 pb-5 text-white/85 leading-relaxed"></p></div></div>';
+      d.querySelector('.font-serif').textContent = f[0]; d.querySelector('p').textContent = f[1];
+      d.querySelector('button').addEventListener('click', function () { fo = on ? -1 : i; drawF(); });
+      fl.appendChild(d);
+    });
+  }
+  drawF();
+  // video
+  var v = document.getElementById('vid'), ve = document.getElementById('vidEl');
+  document.getElementById('playBtn').addEventListener('click', function () { v.classList.remove('hidden'); v.classList.add('flex'); ve.play().catch(function () {}); });
+  function closeV() { ve.pause(); v.classList.add('hidden'); v.classList.remove('flex'); }
+  document.getElementById('vidClose').addEventListener('click', closeV); v.addEventListener('click', function (e) { if (e.target === v) closeV(); });
+  // gentle fade-up on scroll (everything is visible straight away if this can't run)
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }); }, { rootMargin: '0px 0px -60px 0px' });
+    document.querySelectorAll('.fade-up:not(.in)').forEach(function (el) { io.observe(el); });
+    setTimeout(function () { document.querySelectorAll('section:first-of-type .fade-up').forEach(function (el, i) { setTimeout(function () { el.classList.add('in'); }, 120 * i); }); }, 50);
+  } else document.querySelectorAll('.fade-up').forEach(function (el) { el.classList.add('in'); });
+})();
+</script>
+</body>
+</html>
