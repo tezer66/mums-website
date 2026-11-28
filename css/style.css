@@ -1737,3 +1737,6 @@ body.is-member .hero-cta { display: none; }
 .faq summary:focus-visible { outline: 2px solid #b68a3c; outline-offset: 3px; border-radius: 6px; }
 @media (prefers-reduced-motion: reduce) { .faq summary::after { transition: none; } }
 .is-app #faq { display: none !important; }
+
+/* more space between the Join buttons and the 7-days-free line */
+.hp-ctas + .trial-badge, .hp-paths-cta + .trial-badge { margin-top: 1.4rem; }
