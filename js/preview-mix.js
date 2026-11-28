@@ -17,6 +17,36 @@
     function sync() { var k = 0; slides.forEach(function (s, i) { if (s.getAttribute('aria-hidden') !== 'true') k = i; }); art.querySelectorAll('div').forEach(function (d, i) { d.classList.toggle('on', i === k); }); }
     slides.forEach(function (s) { new MutationObserver(sync).observe(s, { attributes: true, attributeFilter: ['aria-hidden'] }); });
     sync();
+    // chosen card: the band takes on that card's artwork, with a golden glow and sparkles
+    var chosen = document.createElement('div'); chosen.className = 'chosen'; art.appendChild(chosen);
+    var glow = document.createElement('div'); glow.className = 'pv-glow'; band.prepend(glow);
+    function burst(face) {
+      var br = band.getBoundingClientRect(), fr = face.getBoundingClientRect();
+      var cx = fr.left + fr.width / 2 - br.left, cy = fr.top + fr.height / 2 - br.top;
+      glow.style.setProperty('--gx', cx + 'px'); glow.style.setProperty('--gy', cy + 'px');
+      band.classList.remove('pv-burst'); void band.offsetWidth; band.classList.add('pv-burst');
+      if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      for (var i = 0; i < 56; i++) {
+        var sp = document.createElement('span'); sp.className = 'pv-spark';
+        var a = Math.random() * Math.PI * 2, r = 120 + Math.random() * Math.max(br.width, br.height) * .55;
+        sp.style.left = cx + 'px'; sp.style.top = cy + 'px';
+        sp.style.setProperty('--tx', Math.cos(a) * r + 'px'); sp.style.setProperty('--ty', Math.sin(a) * r + 'px');
+        sp.style.setProperty('--d', (1.2 + Math.random() * 1.1) + 's'); sp.style.animationDelay = (Math.random() * .25) + 's';
+        var z = 12 + Math.random() * 20; sp.style.width = sp.style.height = z + 'px';
+        band.appendChild(sp); setTimeout(function (n) { n.remove(); }.bind(null, sp), 2800);
+      }
+    }
+    band.querySelectorAll('.try-result').forEach(function (res) {
+      new MutationObserver(function () {
+        if (res.hidden) { band.classList.remove('pv-revealed', 'pv-burst'); return; }
+        var img = res.querySelector('.try-face img'); if (!img) return;
+        chosen.style.backgroundImage = 'url(' + img.src + ')';
+        band.classList.add('pv-revealed');
+        burst(res.querySelector('.try-face'));
+      }).observe(res, { attributes: true, attributeFilter: ['hidden'] });
+    });
+    // moving to another deck clears the chosen card's background
+    slides.forEach(function (s) { new MutationObserver(function () { if (s.getAttribute('aria-hidden') === 'true') band.classList.remove('pv-revealed'); }).observe(s, { attributes: true, attributeFilter: ['aria-hidden'] }); });
     var story = document.getElementById('aboutStory'); if (!story) return;
     var cta = story.closest('.hp-band');
     var sec = document.createElement('div'); sec.className = 'wrap gx';
