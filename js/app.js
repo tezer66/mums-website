@@ -1467,9 +1467,23 @@
     img.sizes = '340px';
     img.alt = 'Today’s affirmation: ' + a.text;
     $('#affirmNext').textContent = 'A new affirmation every morning';
+    // the 3 days before today, newest first
+    var row = $('#affirmRow'); row.textContent = '';
+    for (var k = 1; k <= 3; k++) {
+      var d = cardDay(); d.setDate(d.getDate() - k);
+      var p = affirmationFor(user.id, d);
+      var b = document.createElement('button'); b.type = 'button'; b.className = 'dayaff-thumb';
+      b.setAttribute('aria-label', 'Open the affirmation from ' + d.toLocaleDateString(undefined, { weekday: 'long' }));
+      var t = new Image(); t.src = p.image.replace(/^images\/affirmations\//, 'images/affirmations/sm/'); t.alt = p.text;
+      t.width = 540; t.height = 675; t.loading = 'lazy'; t.draggable = false;
+      var l = document.createElement('span');
+      l.textContent = k === 1 ? 'Yesterday' : d.toLocaleDateString(undefined, { weekday: 'short', day: 'numeric' });
+      b.appendChild(t); b.appendChild(l);
+      b.addEventListener('click', openAffirmation.bind(null, p));
+      row.appendChild(b);
+    }
   }
-  $('#affirmCard').addEventListener('click', function () {
-    var a = shownAffirmation; if (!a) return;
+  function openAffirmation(a) {
     lastFocus = document.activeElement;
     lbCard.innerHTML = ''; lbCard.style.transform = '';
     applyRatio(lb, { ratio: [4, 5] });
@@ -1477,7 +1491,8 @@
     lbCard.appendChild(big);
     lb.hidden = false; document.body.classList.add('lb-open');
     $('#lbClose').focus({ preventScroll: true });
-  });
+  }
+  $('#affirmCard').addEventListener('click', function () { if (shownAffirmation) openAffirmation(shownAffirmation); });
   $('#affirmShare').addEventListener('click', function () {
     var a = shownAffirmation; if (!a) return;
     var jpeg = loadImg(a.image).then(function (img) {            // apps take JPEG more reliably than WebP

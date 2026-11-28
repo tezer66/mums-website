@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&amp;family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&amp;family=DM+Sans:wght@400;500;600&amp;display=swap">
-<link rel="stylesheet" href="css/style.css?v=202611280830">
+<link rel="stylesheet" href="css/style.css?v=202611281545">
 <style>
   .pv-note { background: #fbf1d9; color: #3f1659; text-align: center; padding: .7rem 1rem; font: 500 .92rem/1.45 "DM Sans", sans-serif; border-bottom: 1px solid #d6b062; }
   .pv-controls { display: grid; gap: .8rem; justify-items: center; margin: 0 auto 1.6rem; }
@@ -26,7 +26,7 @@
 </style>
 </head>
 <body class="is-member">
-<p class="pv-note">Preview only. Members don’t see this yet. Once approved, it appears near the top of every member’s Boundaries page.</p>
+<p class="pv-note">Preview only. Members don’t see this yet. Once approved, it appears near the top of every member’s Boundaries page, with their last 3 days underneath.</p>
 
 <header class="site-header">
   <div class="wrap header-row">
@@ -64,6 +64,10 @@
           <button type="button" class="btn btn-ghost btn-sm"><span aria-hidden="true">↗</span> Share</button>
           <span class="dayaff-next">A new affirmation every morning</span>
         </div>
+        <div class="dayaff-past" id="affirmPast" hidden>
+          <p class="dayaff-past-title">Your last 3 days</p>
+          <div class="dayaff-row" id="affirmRow"></div>
+        </div>
       </section>
 
       <div class="pv-stub">
@@ -73,13 +77,6 @@
     </div>
   </section>
 
-  <section class="hp-band hp-light" style="padding-block: 2.5rem;">
-    <div class="wrap">
-      <h2 class="hp-h2" style="margin:0">All affirmation cards</h2>
-      <p>Each member sees a different one on the same day, and works through all of them in turn. Add more any time.</p>
-      <div class="pv-gallery" id="gallery"></div>
-    </div>
-  </section>
 </main>
 
 <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Affirmation, full size" hidden>
@@ -88,7 +85,7 @@
   <p class="lb-hint">Tap anywhere to close</p>
 </div>
 
-<script src="content/affirmations.js?v=202611280830"></script>
+<script src="content/affirmations.js?v=202611281545"></script>
 <script>
 (function () {
   var list = window.HH_AFFIRMATIONS || [], member = 'mem_7Qx2a', plus = 0;
@@ -103,23 +100,31 @@
     img.srcset = img.src + ' 540w, ' + a.image + ' 1080w'; img.sizes = '340px'; img.alt = a.text;
     document.getElementById('affirmTitle').textContent = plus === 0 ? 'Your affirmation for today' : plus === 1 ? 'Tomorrow’s affirmation' : 'The day after';
     img.dataset.full = a.image;
+    // the 3 days before the day being viewed, newest first
+    var row = document.getElementById('affirmRow'); row.textContent = '';
+    for (var k = 1; k <= 3; k++) {
+      var d = cardDay(plus - k), p = pick(member, d), rel = plus - k;
+      var b = document.createElement('button'); b.type = 'button'; b.className = 'dayaff-thumb';
+      b.setAttribute('aria-label', 'Open the affirmation from ' + d.toLocaleDateString(undefined, { weekday: 'long' }));
+      var t = new Image(); t.src = p.image.replace('images/affirmations/', 'images/affirmations/sm/'); t.alt = p.text; t.width = 540; t.height = 675; t.loading = 'lazy';
+      var l = document.createElement('span'); l.textContent = rel === 0 ? 'Today' : rel === -1 ? 'Yesterday' : d.toLocaleDateString(undefined, { weekday: 'short', day: 'numeric' });
+      b.appendChild(t); b.appendChild(l); b.dataset.full = p.image;
+      b.addEventListener('click', function () { openBig(this.dataset.full, this.querySelector('img').alt); });
+      row.appendChild(b);
+    }
+    document.getElementById('affirmPast').hidden = false;
   }
   document.querySelectorAll('[data-m]').forEach(function (b) { b.addEventListener('click', function () {
     member = b.dataset.m; document.querySelectorAll('[data-m]').forEach(function (x) { x.setAttribute('aria-pressed', String(x === b)); }); show(); }); });
   document.querySelectorAll('[data-d]').forEach(function (b) { b.addEventListener('click', function () {
     plus = +b.dataset.d; document.querySelectorAll('[data-d]').forEach(function (x) { x.setAttribute('aria-pressed', String(x === b)); }); show(); }); });
   var lb = document.getElementById('lightbox'), lbCard = document.getElementById('lbCard');
-  document.getElementById('affirmCard').addEventListener('click', function () {
-    lbCard.innerHTML = ''; var big = new Image(); big.src = img.dataset.full; big.alt = img.alt; big.className = 'face-img'; lbCard.appendChild(big);
+  function openBig(src, alt) {
+    lbCard.innerHTML = ''; var big = new Image(); big.src = src; big.alt = alt; big.className = 'face-img'; lbCard.appendChild(big);
     lb.style.setProperty('--ar', '4 / 5'); lb.style.setProperty('--arw', '0.8'); lb.style.setProperty('--arh', '1.25'); lb.hidden = false;
-  });
+  }
+  document.getElementById('affirmCard').addEventListener('click', function () { openBig(img.dataset.full, img.alt); });
   lb.addEventListener('click', function () { lb.hidden = true; });
-  var g = document.getElementById('gallery');
-  list.forEach(function (a) {
-    var f = document.createElement('figure'), i = new Image(), c = document.createElement('figcaption');
-    i.src = a.image.replace('images/affirmations/', 'images/affirmations/sm/'); i.alt = a.text; i.loading = 'lazy'; i.width = 540; i.height = 675;
-    c.textContent = a.text; f.appendChild(i); f.appendChild(c); g.appendChild(f);
-  });
   show();
 })();
 </script>
