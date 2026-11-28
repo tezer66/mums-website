@@ -1,28 +1,31 @@
-/* Preview only (index.html?preview=1): big card art in the top band + Guided by experience row */
+/* Homepage: card artwork behind the top band (changes with the deck and the chosen card) + Guided by experience row */
 
 /* 1. card artwork fills the whole top band, faded into the sky; changes with the deck slide */
 #hp-decks .band-art { position: absolute; inset: 0; z-index: -1; pointer-events: none; overflow: hidden; }
 #hp-decks .band-art div { position: absolute; inset: 0; background-size: cover; background-position: 50% 22%; opacity: 0; transition: opacity 1s ease;
   -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 55%, transparent 92%); mask-image: linear-gradient(to bottom, #000 0%, #000 55%, transparent 92%); }
 #hp-decks .band-art div.on { opacity: var(--art-o, .42); }
-html.pv-b #hp-decks .band-art div { mix-blend-mode: luminosity; }
-html.pv-b #hp-decks .band-art div.on { opacity: .6; }
 @media (max-width: 760px) { #hp-decks .band-art div { background-size: 175% auto; background-position: 50% 0; -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 32%, transparent 58%); mask-image: linear-gradient(to bottom, #000 0%, #000 32%, transparent 58%); } }
-/* 2. Guided by experience row in About Gill */
-.gx { max-width: 1170px; margin: 0 auto; padding-top: 1.5rem; }
-.gx-row { display: flex; gap: 14px; height: 400px; margin: 2rem 0 0; }
-.gx-item { position: relative; flex: 1 1 0; min-width: 70px; border-radius: 20px; overflow: hidden; cursor: pointer; transition: flex .7s cubic-bezier(.4,0,.2,1); background: #2a1240; }
-.gx-item img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 15%; filter: grayscale(.5) brightness(.7); transition: filter .7s, transform .7s; }
-.gx-item::after { content: ""; position: absolute; inset: 0; background: linear-gradient(to top, rgba(10,4,18,.9), transparent 55%); opacity: 0; transition: opacity .7s; }
-.gx-item span { position: absolute; left: 0; right: 0; bottom: 18px; z-index: 1; text-align: center; color: #fff; font: 600 1.15rem "DM Sans", sans-serif; opacity: 0; transform: translateY(14px); transition: .6s; }
-.gx-item span small { display: block; font-weight: 400; font-size: .9rem; opacity: .75; }
-.gx-item.on { flex: 3.2 1 0; } .gx-item.on img { filter: none; transform: scale(1.04); } .gx-item.on::after, .gx-item.on span { opacity: 1; transform: none; }
-@media (max-width: 760px) { .gx-row { height: auto; overflow-x: auto; scroll-snap-type: x mandatory; padding-bottom: 8px; }
-  .gx-item, .gx-item.on { flex: 0 0 72%; height: 380px; scroll-snap-align: center; } .gx-item img { filter: none; } .gx-item::after, .gx-item span { opacity: 1; transform: none; } }
-.mock-tag { display: inline-block; background: #e9c97e; color: #2a1240; font: 700 .7rem "DM Sans", sans-serif; letter-spacing: .1em; padding: .3rem .7rem; border-radius: 999px; }
+/* 2. Guided by experience: whole cards in their 4:5 shape, name and words underneath */
+.gx { max-width: 1170px; margin: 0 auto; padding-top: 1.5rem; padding-bottom: 1rem; }
+.gx-row { display: flex; gap: 14px; margin: 2rem 0 0; align-items: flex-start; }
+.gx-item { flex: 1 1 0; min-width: 60px; cursor: pointer; display: flex; flex-direction: column; gap: 1rem; transition: flex .7s cubic-bezier(.4,0,.2,1); }
+.gx-pic { height: 380px; border-radius: 18px; overflow: hidden; background: #2a1240; box-shadow: 0 18px 40px rgba(0,0,0,.35); }
+.gx-pic img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 30%; filter: grayscale(.45) brightness(.72); transition: filter .7s, transform .7s; }
+.gx-item.on { flex: 0 0 304px; }
+.gx-item.on .gx-pic { box-shadow: 0 0 0 2px rgba(233,201,126,.7), 0 22px 50px rgba(0,0,0,.45); }
+.gx-item.on .gx-pic img { filter: none; }
+.gx-cap { text-align: center; color: #fff; font: 600 1.1rem "DM Sans", sans-serif; line-height: 1.3; min-height: 3.2em; padding: 0 .3rem; opacity: 0; transform: translateY(8px); transition: .5s; }
+.gx-cap small { display: block; margin-top: .25rem; font-weight: 400; font-size: .92rem; color: #e9c97e; }
+.gx-item.on .gx-cap { opacity: 1; transform: none; }
+@media (max-width: 760px) {
+  .gx-row { overflow-x: auto; scroll-snap-type: x mandatory; padding-bottom: 10px; gap: 16px; }
+  .gx-item, .gx-item.on { flex: 0 0 74%; scroll-snap-align: center; }
+  .gx-pic { height: auto; aspect-ratio: 4 / 5; }
+  .gx-pic img { filter: none; }
+  .gx-cap { opacity: 1; transform: none; min-height: 0; }
+}
 
-.pv-bar{position:sticky;top:0;z-index:300;background:#e9c97e;color:#2a1240;text-align:center;font:700 .78rem "DM Sans",sans-serif;letter-spacing:.06em;padding:.5rem 1rem}
-.pv-bar a{color:inherit}
 
 /* ---- text stands out over the artwork ---- */
 #hp-decks .deck-slide .hp-row-copy { isolation: isolate; }
@@ -62,3 +65,6 @@ html.pv-b #hp-decks .band-art div.on { opacity: .6; }
 @keyframes pv-glow { 0% { opacity: 0; transform: scale(.3); } 22% { opacity: 1; transform: scale(1); } 100% { opacity: .28; transform: scale(1.7); } }
 #hp-decks.pv-burst::after { animation: pv-flash 1.4s ease-out; }
 @keyframes pv-flash { 0% { background-color: rgba(255,230,170,0); } 18% { background-color: rgba(255,230,170,.28); } 100% { background-color: rgba(255,230,170,0); } }
+
+/* app: keep the member pages simple */
+.is-app #hp-decks .band-art, .is-app .gx { display: none; }

@@ -1,15 +1,11 @@
-/* Preview only (index.html?preview=1). Adds the big card artwork behind each top slide and the
-   "Guided by experience" card row to About Gill. Nothing here runs on the normal site. */
+/* Homepage: adds the big card artwork behind each top slide and the
+   "Guided by experience" card row to About Gill. */
 (function () {
   var ARTS = ['images/cards/card-12.webp', 'images/cancer-care/card-01.webp', 'images/earth-magick/card-05.webp'];
   var GX = [['images/cards/card-01.webp', 'Boundaries', '44 cards'], ['images/cancer-care/card-15.webp', 'Cancer Care', '44 messages'],
     ['images/earth-magick/card-05.webp', 'Momma’s Earth Magick', '44 rituals'], ['images/cards/card-31.webp', 'Distant Reiki', 'Book a session with Gill'],
     ['images/affirmations/aff-02.webp', 'Affirmations', 'A new one every morning']];
   function run() {
-    var bar = document.createElement('div'); bar.className = 'pv-bar';
-    bar.innerHTML = 'PREVIEW · look ' + (/[?&]look=b\b/.test(location.search) ? 'B' : 'A') + ' · <a href="./?preview=1">look A</a> · <a href="./?preview=1&look=b">look B</a> · <a href="./">current site</a>';
-    document.body.prepend(bar);
-    if (/[?&]look=b\b/.test(location.search)) document.documentElement.classList.add('pv-b');
     var band = document.getElementById('hp-decks'), art = document.createElement('div'); art.className = 'band-art';
     ARTS.forEach(function (src, i) { var d = document.createElement('div'); d.style.backgroundImage = 'url(' + src + ')'; if (i === 0) d.className = 'on'; art.appendChild(d); });
     band.prepend(art);
@@ -55,8 +51,8 @@
     var row = sec.querySelector('.gx-row');
     GX.forEach(function (g, i) {
       var it = document.createElement('div'); it.className = 'gx-item' + (i === 0 ? ' on' : '');
-      it.innerHTML = '<img src="' + g[0] + '" alt="" loading="lazy"><span></span>';
-      var sp = it.querySelector('span'); sp.textContent = g[1]; var sm = document.createElement('small'); sm.textContent = g[2]; sp.appendChild(sm);
+      it.innerHTML = '<div class="gx-pic"><img src="' + g[0] + '" alt="" loading="lazy"></div><p class="gx-cap"></p>';
+      var sp = it.querySelector('.gx-cap'); sp.textContent = g[1]; var sm = document.createElement('small'); sm.textContent = g[2]; sp.appendChild(sm);
       function on() { row.querySelectorAll('.gx-item').forEach(function (x) { x.classList.toggle('on', x === it); }); }
       it.addEventListener('mouseenter', on); it.addEventListener('click', on);
       row.appendChild(it);
