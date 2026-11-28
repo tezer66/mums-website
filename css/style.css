@@ -1740,3 +1740,9 @@ body.is-member .hero-cta { display: none; }
 
 /* more space between the Join buttons and the 7-days-free line */
 .hp-ctas + .trial-badge, .hp-paths-cta + .trial-badge { margin-top: 1.4rem; }
+
+/* Phones: a bigger deck on the member page; the daily affirmation sits below the first screen */
+@media (max-width: 600px) {
+  .dashv .dk .stage { --cw: clamp(200px, 62vw, 260px); height: calc(var(--cw) * var(--arh, 1.25) + 110px); }
+  .dashv .dk .dash .dayaff { margin-top: 5rem; }
+}
