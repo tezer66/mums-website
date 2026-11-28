@@ -1,17 +1,13 @@
 /* Preview only (index.html?preview=1): big card art in the top band + Guided by experience row */
 
-/* 1. big card art behind each slide of the top band */
-#hp-decks .deck-slide { position: relative; }
-.slide-art { position: absolute; z-index: 0; pointer-events: none; background-size: cover; background-position: 50% 10%;
-  top: 0; bottom: 0; right: 0; width: 62%; opacity: .9;
-  -webkit-mask-image: radial-gradient(ellipse 50% 50% at 50% 50%, #000 40%, transparent 100%); mask-image: radial-gradient(ellipse 50% 50% at 50% 50%, #000 40%, transparent 100%); }
-.deck-slide .hp-row-copy, .deck-slide .hp-row-art { position: relative; z-index: 1; }
-.deck-slide .hp-row-art .hero-deck, .deck-slide .hp-row-art .hp-frame { transform: scale(.82); transform-origin: center; }
-@media (max-width: 760px) {
-  .slide-art { left: -16px; right: -16px; width: auto; top: -10px; bottom: auto; height: 300px; opacity: .5;
-    -webkit-mask-image: radial-gradient(ellipse 50% 50% at 50% 50%, #000 35%, transparent 100%); mask-image: radial-gradient(ellipse 50% 50% at 50% 50%, #000 35%, transparent 100%); }
-  .deck-slide .hp-row-art .hero-deck, .deck-slide .hp-row-art .hp-frame { transform: none; }
-}
+/* 1. card artwork fills the whole top band, faded into the sky; changes with the deck slide */
+#hp-decks .band-art { position: absolute; inset: 0; z-index: -1; pointer-events: none; overflow: hidden; }
+#hp-decks .band-art div { position: absolute; inset: 0; background-size: cover; background-position: 50% 22%; opacity: 0; transition: opacity 1s ease;
+  -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 55%, transparent 92%); mask-image: linear-gradient(to bottom, #000 0%, #000 55%, transparent 92%); }
+#hp-decks .band-art div.on { opacity: var(--art-o, .42); }
+html.pv-b #hp-decks .band-art div { mix-blend-mode: luminosity; }
+html.pv-b #hp-decks .band-art div.on { opacity: .6; }
+@media (max-width: 760px) { #hp-decks .band-art div { background-size: 175% auto; background-position: 50% 0; -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 32%, transparent 58%); mask-image: linear-gradient(to bottom, #000 0%, #000 32%, transparent 58%); } }
 /* 2. Guided by experience row in About Gill */
 .gx { max-width: 1170px; margin: 0 auto; padding-top: 1.5rem; }
 .gx-row { display: flex; gap: 14px; height: 400px; margin: 2rem 0 0; }

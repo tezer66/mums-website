@@ -7,11 +7,16 @@
     ['images/affirmations/aff-02.webp', 'Affirmations', 'A new one every morning']];
   function run() {
     var bar = document.createElement('div'); bar.className = 'pv-bar';
-    bar.innerHTML = 'PREVIEW of the new homepage parts · <a href="./">see the current site</a>';
+    bar.innerHTML = 'PREVIEW · look ' + (/[?&]look=b\b/.test(location.search) ? 'B' : 'A') + ' · <a href="./?preview=1">look A</a> · <a href="./?preview=1&look=b">look B</a> · <a href="./">current site</a>';
     document.body.prepend(bar);
-    document.querySelectorAll('#hp-decks .deck-slide').forEach(function (s, i) {
-      if (!ARTS[i]) return; var d = document.createElement('div'); d.className = 'slide-art'; d.style.backgroundImage = 'url(' + ARTS[i] + ')'; s.prepend(d);
-    });
+    if (/[?&]look=b\b/.test(location.search)) document.documentElement.classList.add('pv-b');
+    var band = document.getElementById('hp-decks'), art = document.createElement('div'); art.className = 'band-art';
+    ARTS.forEach(function (src, i) { var d = document.createElement('div'); d.style.backgroundImage = 'url(' + src + ')'; if (i === 0) d.className = 'on'; art.appendChild(d); });
+    band.prepend(art);
+    var slides = band.querySelectorAll('.deck-slide');
+    function sync() { var k = 0; slides.forEach(function (s, i) { if (s.getAttribute('aria-hidden') !== 'true') k = i; }); art.querySelectorAll('div').forEach(function (d, i) { d.classList.toggle('on', i === k); }); }
+    slides.forEach(function (s) { new MutationObserver(sync).observe(s, { attributes: true, attributeFilter: ['aria-hidden'] }); });
+    sync();
     var story = document.getElementById('aboutStory'); if (!story) return;
     var cta = story.closest('.hp-band');
     var sec = document.createElement('div'); sec.className = 'wrap gx';
