@@ -44,7 +44,7 @@ Each day, take a slow breath, shuffle and choose your card. Read its message, si
 
 THREE DECKS
 • Boundaries are my Love Language: 44 cards for telling the truth, honouring your needs and reclaiming yourself.
-• Momma's Earth Magick: 44 cards of release, trust, forgiveness and ritual, each with an "I am" affirmation.
+• Momma’s Earth Magick: 44 cards of release, trust, forgiveness and ritual, each with an "I am" affirmation.
 • Cancer Care Cards: 44 gentle messages to send to a loved one who is living with cancer, to brighten their day.
 
 INNER WORK AND PLAY
@@ -132,7 +132,7 @@ Take these with the demo account:
 1. Boundaries deck: choosing today's card (the shuffled cards)
 2. A chosen card with its message and affirmation
 3. The journal with an entry written
-4. Momma's Earth Magick card with its "I am" affirmation
+4. Momma’s Earth Magick card with its "I am" affirmation
 5. Cancer Care Cards: "Choose a message & text to your loved one"
 6. Weekly Reflections
 

@@ -1,5 +1,5 @@
 /*
-  HarperHolistic: "Mommas Earth Magick" deck
+  HarperHolistic: "Momma’s Earth Magick" deck
   ==========================================
   Add a card by copying one entry and changing it. Each card:
 
@@ -15,7 +15,7 @@
 */
 window.HH_EARTH_DECK = {
   "id": "earth-magick",
-  "name": "Mommas Earth Magick",
+  "name": "Momma’s Earth Magick",
   "back": "images/earth-magick/back.webp",
   "ratio": [
     2,

@@ -1714,3 +1714,26 @@ html[class*="sky-"]:not(.sky-night) #hp-decks [role="tab"]:not([aria-selected="t
 .site-header .nav-link { display: inline-flex; align-items: center; min-height: 44px; padding-inline: .4rem; }
 .hp-copy a { display: inline-block; padding: .55rem .2rem; margin: -.55rem 0; }
 .hp .hp-plans .plan:nth-child(2) .plan-price .cur, .hp .hp-plans .plan:nth-child(2) .plan-price .per { color: #c9b6d8; }
+
+/* "Start 7 days free" in the top section (visitors only) */
+.hero-cta { display: flex; align-items: center; gap: .9rem; flex-wrap: wrap; margin: 1.2rem 0 0; }
+.hero-join { background: linear-gradient(135deg, #f3d98f, #d6b062); color: #2c1240 !important; border-color: transparent; font-weight: 700; box-shadow: 0 8px 22px rgba(214,176,98,.35); }
+.hero-join:hover { filter: brightness(1.05); }
+.hero-join-note { font-size: .9rem; opacity: .85; }
+@media (max-width: 760px) { .hero-cta { justify-content: center; margin-top: .9rem; } }
+body.is-member .hero-cta { display: none; }
+
+/* ---------- Questions & answers (above the prices) ---------- */
+.faq { max-width: 760px; }
+.faq .hp-h2 { margin: .2rem 0 1.4rem; }
+.faq-list { display: grid; gap: .7rem; }
+.faq details { background: rgba(255,255,255,.72); border: 1px solid rgba(123,79,158,.18); border-radius: 14px; padding: 0 1.1rem; }
+.faq summary { cursor: pointer; list-style: none; padding: 1rem 2rem 1rem 0; font-weight: 600; color: #3f1659; position: relative; min-height: 44px; }
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary::after { content: "+"; position: absolute; right: 0; top: 50%; transform: translateY(-50%); font-size: 1.4rem; color: #b68a3c; transition: transform .2s ease; }
+.faq details[open] summary::after { transform: translateY(-50%) rotate(45deg); }
+.faq details p { margin: 0 0 1.1rem; color: #4a3558; line-height: 1.6; }
+.faq details a { color: #6b3f8e; }
+.faq summary:focus-visible { outline: 2px solid #b68a3c; outline-offset: 3px; border-radius: 6px; }
+@media (prefers-reduced-motion: reduce) { .faq summary::after { transition: none; } }
+.is-app #faq { display: none !important; }

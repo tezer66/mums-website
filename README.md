@@ -88,7 +88,7 @@ All of Gillian's words live in plain files, so the code never needs editing:
 |---|---|
 | Boundaries are my Love Language: 44 cards and their guidebook messages | `content/cards.js` |
 | Cancer Care Cards: what to say or text, with a Copy button | `content/cancer-care-deck.js` (artwork in `images/cancer-care/`) |
-| Mommas Earth Magick: cards, their affirmations and Gillian's fuller words | `content/earth-magick-deck.js` (artwork in `images/earth-magick/`) |
+| Momma’s Earth Magick: cards, their affirmations and Gillian's fuller words | `content/earth-magick-deck.js` (artwork in `images/earth-magick/`) |
 | Momma's Earth Magik: 159 quotes and teachings, kept for the upcoming Earth Magik card deck (not shown on the site yet) | `content/earth-magik.js` |
 | About Gillian, connect details, guidebook introduction, how to use the deck | `content/site.js` |
 | Card artwork | `images/cards/card-05.webp` … `card-44.webp`, then set `image` on that card |
@@ -120,7 +120,7 @@ Cards without artwork yet are drawn in the deck's purple-and-gold frame from the
 - **Weekly Reflections.** Seven tiles, one per day, in weeks that start on the day the member drew their first card from that deck (day 1), then a new week every 7 days. Tap any card to reread it.
 - **Full deck.** Members can browse all 44 cards and their guidebook messages.
 - **Card Decks.** Each deck has its own page (`#dashboard` for Boundaries are my Love
-  Language, `#earth-magick` for Mommas Earth Magick), reached from the switcher at the top of the dashboard. Each deck has its own daily card, Weekly
+  Language, `#earth-magick` for Momma’s Earth Magick), reached from the switcher at the top of the dashboard. Each deck has its own daily card, Weekly
   Reflections and full-deck grid, and keeps its own card shape. Cancer Care Cards is at `#cancer-care`. To add an Earth Magick card, add its image to
   `images/earth-magick/` and copy an entry in `content/earth-magick-deck.js`.
 - **Plans (USD).** All decks monthly US$9.99 or all decks yearly US$59. Both include every deck, Cancer Care

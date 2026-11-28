@@ -566,7 +566,7 @@
     if (!user) return;
     if (busy && deck !== DECK) busy = false;
     DECK = deck || BOUNDARIES;
-    // Mommas Earth Magick and Cancer Care Cards: no journal, notes or Weekly Reflections.
+    // Momma’s Earth Magick and Cancer Care Cards: no journal, notes or Weekly Reflections.
     document.body.classList.toggle('deck-simple', DECK !== BOUNDARIES);
     document.body.classList.toggle('deck-earth', DECK.route === 'earth-magick');
     document.body.classList.toggle('deck-cancer', DECK.route === 'cancer-care');
@@ -607,7 +607,7 @@
     $('#trialLockText').textContent = 'All ' + DECK.cards.length + ' cards of ' + DECK.name + ' open up' + (end ? ' on ' + end : ' when your trial ends') +
       '. Until then, choose your card each day and see where it takes you.';
   }
-  // Trial on Mommas Earth Magick and Cancer Care Cards: one card a day per deck (saved to the account).
+  // Trial on Momma’s Earth Magick and Cancer Care Cards: one card a day per deck (saved to the account).
   function trialPullKey() { return 'hh:trialpull:' + DECK.id + ':' + user.email; }
   function trialPullToday() {
     if (!user || !user.trial || !isSimpleDeck()) return null;
@@ -627,7 +627,7 @@
      Inner Play: shuffle and pull as many cards as you like; nothing is saved. */
   var mode = 'work', boundariesMode = 'work';
   var PLAY_BTN = document.getElementById('playAgainBtn');   // moved under the message on each Inner Play card
-  // Mommas Earth Magick and Cancer Care Cards have no Inner Work / Inner Play tabs:
+  // Momma’s Earth Magick and Cancer Care Cards have no Inner Work / Inner Play tabs:
   // members shuffle and pull as many cards as they like (nothing is saved).
   var SIMPLE_DECK_TEXT = {
     'earth-magick': { title: 'Choose your card', intro: 'Breathe slowly, shuffle the deck and tap the card that calls to you. Sit with it, and say the affirmation out loud.' },
@@ -789,7 +789,7 @@
     $('#bookletEntry').innerHTML = html;
   }
 
-  // Mommas Earth Magick: the card's affirmation, then Gillian's fuller words.
+  // Momma’s Earth Magick: the card's affirmation, then Gillian's fuller words.
   function renderWordsEntry(card) {
     var html = '<div class="be-head"><p class="eyebrow">' + (card.section ? esc(card.section) + ', card ' : 'Card ') + card.n + '</p>' +
       '<h3 class="be-title">' + esc(card.title) + '</h3></div>' +
@@ -1344,7 +1344,7 @@
 
   // Shown on a one-deck member's dashboard after they tried to open another deck.
   var lockedNotice = null;
-  var DECK_NAMES = { dashboard: 'Boundaries are my Love Language', 'earth-magick': "Momma's Earth Magick", 'cancer-care': 'Cancer Care Cards' };
+  var DECK_NAMES = { dashboard: 'Boundaries are my Love Language', 'earth-magick': "Momma’s Earth Magick", 'cancer-care': 'Cancer Care Cards' };
   function showLockedNotice(onDash) {
     var el = $('#lockedNote');
     if (!onDash || !lockedNotice) { el.hidden = true; return; }
@@ -1595,6 +1595,8 @@
     if (!d || IS_APP) return;
     document.querySelectorAll('[data-trial]').forEach(function (el) { el.textContent = 'First ' + d + ' days free'; el.hidden = false; });
     document.querySelectorAll('[data-trial-badge]').forEach(function (el) { el.textContent = '✦ First ' + d + ' days free · cancel anytime ✦'; el.hidden = false; });
+    document.querySelectorAll('[data-trial-cta]').forEach(function (el) { el.textContent = 'Start ' + d + ' days free'; });
+    document.querySelectorAll('[data-trial-note]').forEach(function (el) { el.textContent = 'Cancel anytime'; el.hidden = false; });
     document.querySelectorAll('[data-trial-inline]').forEach(function (el) { el.textContent = d + ' days free'; el.hidden = false; });
     $('#joinTrialPill').textContent = d + ' DAYS FREE';
     $('#joinTrialText').textContent = 'Choose your daily card on all three decks and write in your journal, free for ' + d + ' days. You won’t be charged until day ' + (d + 1) + ', and you can cancel any time before then.';

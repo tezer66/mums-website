@@ -99,7 +99,7 @@ window.HHAuth = (function () {
       var t0 = Date.now();
       (function check() {
         if (window.$memberstackDom) return resolve(window.$memberstackDom);
-        if (Date.now() - t0 > 10000) return resolve(null);
+        if (Date.now() - t0 > 30000) return resolve(null);   // visitors load Memberstack a little after the page appears
         setTimeout(check, 50);
       })();
     });
