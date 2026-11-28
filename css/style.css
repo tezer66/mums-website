@@ -1757,3 +1757,7 @@ body.is-member .hero-cta { display: none; }
   .dcard .face { box-shadow: 0 1px 0 rgba(120,80,150,.25), 0 10px 26px -16px rgba(0,0,0,.5); }
   .dashv .dk .table { background: radial-gradient(75% 65% at 50% 45%, rgba(170,110,215,.28), rgba(130,70,170,0) 75%); }
 }
+
+/* the join form trial button matches the gold "Start 7 days free" buttons */
+#joinGo { background: linear-gradient(135deg, #f3d98f, #d6b062) !important; color: #2c1240 !important; border-color: transparent !important; font-weight: 700; box-shadow: 0 8px 22px rgba(214,176,98,.35); }
+#joinGo:hover { filter: brightness(1.05); }
