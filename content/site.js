@@ -24,6 +24,7 @@ window.HH_SITE = {
   "newsletterPdf": "",
   "analytics": { "provider": "", "domain": "harperholistic.xyz" },
   "trialDays": 7,
+  "affirmationsLive": false,
   "giving": { "amount": 5, "cause": "cancer research", "charity": "" },
   "brand": "HarperHolistic",
   "owner": "Gillian Harper",

@@ -585,6 +585,7 @@
     $('#guidebookSection').hidden = !DECK.hasGuidebook;
     if (DECK.hasGuidebook) renderBookletSection();
     applyTrial();
+    renderAffirmation();
     initJournal();
     renderDeckGrid();
     showToday(false);
@@ -1408,13 +1409,9 @@
     var k = 'hh:shares:' + user.email, n = parseInt(store.get(k) || '0', 10) || 0;
     store.set(k, String(n + 1));
   }
-  $('#shareCard').addEventListener('click', function () {
-    var card = shownCard, btn = this, msg = $('#shareMsg');
-    if (!card || !card.image) return;
-    var name = 'harperholistic-' + (card.deck.id || 'card') + '-' + card.n + '.jpg';
-    var text = card.title + ' ✨ Healing Inspiration Cards by Gillian Harper @harper.holistic harperholistic.xyz';
-    btn.disabled = true; msg.textContent = 'Getting your card ready…';
-    shareImage(card).then(function (blob) {
+  function sendPicture(blobPromise, name, text, btn, msg) {
+    btn.disabled = true; msg.textContent = 'Getting it ready…';
+    blobPromise.then(function (blob) {
       var FS = IS_APP ? nativePlugin('Filesystem') : null, SH = IS_APP ? nativePlugin('Share') : null;
       if (FS && SH) {                                   // phone app: save to the app's cache, then the share sheet
         return blobToBase64(blob).then(function (data) {
@@ -1438,6 +1435,57 @@
     }).catch(function (err) {
       msg.textContent = err && (err.name === 'AbortError' || /cancel/i.test(err.message || '')) ? '' : 'Sharing didn’t work this time. Please try again.';
     }).then(function () { btn.disabled = false; });
+  }
+  $('#shareCard').addEventListener('click', function () {
+    var card = shownCard;
+    if (!card || !card.image) return;
+    sendPicture(shareImage(card), 'harperholistic-' + (card.deck.id || 'card') + '-' + card.n + '.jpg',
+      card.title + ' ✨ Healing Inspiration Cards by Gillian Harper @harper.holistic harperholistic.xyz', this, $('#shareMsg'));
+  });
+
+  /* ---------------- daily affirmation card (members' Boundaries page) ----------------
+     Switched on by "affirmationsLive" in content/site.js. Each member gets a different card on the same day
+     (their member id shifts the order) and moves through every card in turn; it changes at 5am like the cards. */
+  function affirmationFor(memberId, date) {
+    var list = window.HH_AFFIRMATIONS || [];
+    if (!list.length) return null;
+    var h = 0, id = String(memberId || '');
+    for (var i = 0; i < id.length; i++) h = (h * 31 + id.charCodeAt(i)) >>> 0;
+    return list[(dayIndex(date) + h) % list.length];
+  }
+  var shownAffirmation = null;
+  function renderAffirmation() {
+    var sec = $('#affirmSection');
+    var on = !!(SITE.affirmationsLive && user && DECK === BOUNDARIES);
+    var a = on ? affirmationFor(user.id, cardDay()) : null;
+    sec.hidden = !a;
+    if (!a) return;
+    shownAffirmation = a;
+    var img = $('#affirmImg');
+    img.src = a.image.replace(/^images\/affirmations\//, 'images/affirmations/sm/');
+    img.srcset = img.src + ' 540w, ' + a.image + ' 1080w';
+    img.sizes = '340px';
+    img.alt = 'Today’s affirmation: ' + a.text;
+    $('#affirmNext').textContent = 'A new affirmation every morning';
+  }
+  $('#affirmCard').addEventListener('click', function () {
+    var a = shownAffirmation; if (!a) return;
+    lastFocus = document.activeElement;
+    lbCard.innerHTML = ''; lbCard.style.transform = '';
+    applyRatio(lb, { ratio: [4, 5] });
+    var big = new Image(); big.src = a.image; big.alt = a.text; big.className = 'face-img'; big.draggable = false;
+    lbCard.appendChild(big);
+    lb.hidden = false; document.body.classList.add('lb-open');
+    $('#lbClose').focus({ preventScroll: true });
+  });
+  $('#affirmShare').addEventListener('click', function () {
+    var a = shownAffirmation; if (!a) return;
+    var jpeg = loadImg(a.image).then(function (img) {            // apps take JPEG more reliably than WebP
+      var c = document.createElement('canvas'); c.width = img.naturalWidth; c.height = img.naturalHeight;
+      c.getContext('2d').drawImage(img, 0, 0);
+      return new Promise(function (ok) { c.toBlob(ok, 'image/jpeg', 0.92); });
+    });
+    sendPicture(jpeg, 'harperholistic-affirmation.jpg', a.text + ' ✨ @harper.holistic harperholistic.xyz', this, $('#affirmNext'));
   });
 
   /* ---------------- keeping the artwork in the membership ----------------

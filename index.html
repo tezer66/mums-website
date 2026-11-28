@@ -34,7 +34,7 @@
 <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600;700&amp;family=Sue+Ellen+Francisco&amp;family=Cinzel:wght@400;500;600&amp;family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&amp;family=DM+Sans:wght@400;500;600&amp;display=swap"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Tiro+Devanagari+Sanskrit&amp;text=%E0%A5%90&amp;display=swap"></noscript>
 <script>/* Homepage sky follows the visitor's own clock: sunrise, day, sunset or night (set before first paint). */
 (function(){var h=new Date().getHours(),s=h>=5&&h<11?'dawn':h>=11&&h<17?'day':h>=17&&h<20?'dusk':'night';document.documentElement.classList.add('sky-'+s);})();</script>
-<link rel="stylesheet" href="css/style.css?v=202611280800">
+<link rel="stylesheet" href="css/style.css?v=202611280830">
 <script defer data-memberstack-app="app_cmwpxru3200lz0su3hnmd9nw9" src="https://static.memberstack.com/scripts/v1/memberstack.js" type="text/javascript"></script>
 </head>
 <body>
@@ -368,6 +368,15 @@
       </div>
     </div>
 
+    <section class="dayaff" id="affirmSection" aria-labelledby="affirmTitle" hidden>
+      <p class="hp-eyebrow" id="affirmTitle">Your affirmation for today</p>
+      <button type="button" class="dayaff-card" id="affirmCard" aria-label="Open today’s affirmation full size"><img id="affirmImg" src="" alt="" width="540" height="675" decoding="async"></button>
+      <div class="dayaff-actions">
+        <button type="button" class="btn btn-ghost btn-sm" id="affirmShare"><span aria-hidden="true">↗</span> Share</button>
+        <span class="dayaff-next" id="affirmNext"></span>
+      </div>
+    </section>
+
     <section class="draw" aria-labelledby="drawTitle">
       <div class="draw-head">
         <div class="mode-tabs" role="tablist" aria-label="Choose how to use the deck">
@@ -586,11 +595,12 @@
   <p class="lb-hint">Tap anywhere or swipe down to close</p>
 </div>
 
-<script src="content/site.js?v=202611280800"></script>
-<script src="content/cards.js?v=202611280800"></script>
-<script src="content/earth-magick-deck.js?v=202611280800"></script>
-<script src="content/cancer-care-deck.js?v=202611280800"></script>
-<script src="js/auth.js?v=202611280800"></script>
-<script src="js/app.js?v=202611280800"></script>
+<script src="content/site.js?v=202611280830"></script>
+<script src="content/cards.js?v=202611280830"></script>
+<script src="content/earth-magick-deck.js?v=202611280830"></script>
+<script src="content/cancer-care-deck.js?v=202611280830"></script>
+<script src="content/affirmations.js?v=202611280830"></script>
+<script src="js/auth.js?v=202611280830"></script>
+<script src="js/app.js?v=202611280830"></script>
 </body>
 </html>

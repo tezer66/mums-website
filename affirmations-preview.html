@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>Affirmations Preview · HarperHolistic</title>
+<link rel="icon" type="image/png" sizes="32x32" href="icons/icon-32.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&amp;family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&amp;family=DM+Sans:wght@400;500;600&amp;display=swap">
+<link rel="stylesheet" href="css/style.css?v=202611280830">
+<style>
+  .pv-note { background: #fbf1d9; color: #3f1659; text-align: center; padding: .7rem 1rem; font: 500 .92rem/1.45 "DM Sans", sans-serif; border-bottom: 1px solid #d6b062; }
+  .pv-controls { display: grid; gap: .8rem; justify-items: center; margin: 0 auto 1.6rem; }
+  .pv-row { display: flex; gap: .5rem; flex-wrap: wrap; justify-content: center; align-items: center; }
+  .pv-row span { font: 600 .75rem "DM Sans", sans-serif; letter-spacing: .14em; text-transform: uppercase; color: var(--hp-lilac, #c9a9e0); margin-right: .2rem; }
+  .pv-chip { font: 500 .88rem "DM Sans", sans-serif; padding: .45rem .9rem; border-radius: 999px; border: 1px solid rgba(201,169,224,.55); background: transparent; color: #f1e7f6; cursor: pointer; }
+  .pv-chip[aria-pressed="true"] { background: #c9a9e0; color: #1b0f26; border-color: #c9a9e0; }
+  .pv-stub { text-align: center; opacity: .8; margin-top: .4rem; }
+  .pv-stub img { width: min(180px, 46vw); border-radius: 10px; box-shadow: 0 14px 30px rgba(0,0,0,.45); }
+  .pv-gallery { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 1rem; margin-top: 1rem; }
+  .pv-gallery img { width: 100%; border-radius: 10px; box-shadow: 0 6px 18px rgba(63,22,89,.18); display: block; }
+  .pv-gallery figure { margin: 0; }
+  .pv-gallery figcaption { font: .82rem/1.35 "DM Sans", sans-serif; color: #6f5c7c; margin-top: .4rem; }
+</style>
+</head>
+<body class="is-member">
+<p class="pv-note">Preview only. Members don’t see this yet. Once approved, it appears near the top of every member’s Boundaries page.</p>
+
+<header class="site-header">
+  <div class="wrap header-row">
+    <a class="brand" href="./" aria-label="Harper Holistic home">
+      <span class="brand-om" aria-hidden="true">ॐ</span>
+      <span class="brand-text"><span class="brand-name">Harper<b class="brand-dot" aria-hidden="true">·</b><em>Holistic</em></span><small class="brand-sub">Healing Inspiration Cards<br>By Gillian Harper</small></span>
+    </a>
+  </div>
+</header>
+
+<main>
+  <section class="hp-band hp-deep dk dk-band" style="padding-block: 2rem 3rem;">
+    <div class="wrap dash dayaff-wrap">
+      <div class="pv-controls">
+        <div class="pv-row" role="group" aria-label="View as"><span>View as</span>
+          <button type="button" class="pv-chip" data-m="mem_7Qx2a" aria-pressed="true">Member A</button>
+          <button type="button" class="pv-chip" data-m="mem_3Kd9p" aria-pressed="false">Member B</button>
+          <button type="button" class="pv-chip" data-m="mem_9Wn4t" aria-pressed="false">Member C</button>
+        </div>
+        <div class="pv-row" role="group" aria-label="Day"><span>Day</span>
+          <button type="button" class="pv-chip" data-d="0" aria-pressed="true">Today</button>
+          <button type="button" class="pv-chip" data-d="1" aria-pressed="false">Tomorrow</button>
+          <button type="button" class="pv-chip" data-d="2" aria-pressed="false">Day after</button>
+        </div>
+      </div>
+
+      <nav class="deck-switch" aria-label="Your card decks">
+        <a aria-current="page">Boundaries are my Love Language</a><a>Cancer Care Cards</a><a>Mommas Earth Magick</a>
+      </nav>
+
+      <section class="dayaff" aria-labelledby="affirmTitle">
+        <p class="hp-eyebrow" id="affirmTitle">Your affirmation for today</p>
+        <button type="button" class="dayaff-card" id="affirmCard" aria-label="Open full size"><img id="affirmImg" src="" alt="" width="540" height="675"></button>
+        <div class="dayaff-actions">
+          <button type="button" class="btn btn-ghost btn-sm"><span aria-hidden="true">↗</span> Share</button>
+          <span class="dayaff-next">A new affirmation every morning</span>
+        </div>
+      </section>
+
+      <div class="pv-stub">
+        <p class="hp-eyebrow">Then, as now: choose today’s card</p>
+        <img src="images/thumbs/cards/back.webp" alt="">
+      </div>
+    </div>
+  </section>
+
+  <section class="hp-band hp-light" style="padding-block: 2.5rem;">
+    <div class="wrap">
+      <h2 class="hp-h2" style="margin:0">All affirmation cards</h2>
+      <p>Each member sees a different one on the same day, and works through all of them in turn. Add more any time.</p>
+      <div class="pv-gallery" id="gallery"></div>
+    </div>
+  </section>
+</main>
+
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Affirmation, full size" hidden>
+  <button type="button" class="lb-close" id="lbClose" aria-label="Close">×</button>
+  <div class="lb-card" id="lbCard"></div>
+  <p class="lb-hint">Tap anywhere to close</p>
+</div>
+
+<script src="content/affirmations.js?v=202611280830"></script>
+<script>
+(function () {
+  var list = window.HH_AFFIRMATIONS || [], member = 'mem_7Qx2a', plus = 0;
+  // same choice as the member pages: card day starts at 5am, member id shifts the order
+  function dayIndex(d) { return Math.floor(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()) / 864e5); }
+  function cardDay(add) { var d = new Date(Date.now() - 5 * 3600e3); d.setHours(12, 0, 0, 0); d.setDate(d.getDate() + add); return d; }
+  function pick(id, date) { var h = 0; for (var i = 0; i < id.length; i++) h = (h * 31 + id.charCodeAt(i)) >>> 0; return list[(dayIndex(date) + h) % list.length]; }
+  var img = document.getElementById('affirmImg');
+  function show() {
+    var a = pick(member, cardDay(plus)); if (!a) return;
+    img.src = a.image.replace('images/affirmations/', 'images/affirmations/sm/');
+    img.srcset = img.src + ' 540w, ' + a.image + ' 1080w'; img.sizes = '340px'; img.alt = a.text;
+    document.getElementById('affirmTitle').textContent = plus === 0 ? 'Your affirmation for today' : plus === 1 ? 'Tomorrow’s affirmation' : 'The day after';
+    img.dataset.full = a.image;
+  }
+  document.querySelectorAll('[data-m]').forEach(function (b) { b.addEventListener('click', function () {
+    member = b.dataset.m; document.querySelectorAll('[data-m]').forEach(function (x) { x.setAttribute('aria-pressed', String(x === b)); }); show(); }); });
+  document.querySelectorAll('[data-d]').forEach(function (b) { b.addEventListener('click', function () {
+    plus = +b.dataset.d; document.querySelectorAll('[data-d]').forEach(function (x) { x.setAttribute('aria-pressed', String(x === b)); }); show(); }); });
+  var lb = document.getElementById('lightbox'), lbCard = document.getElementById('lbCard');
+  document.getElementById('affirmCard').addEventListener('click', function () {
+    lbCard.innerHTML = ''; var big = new Image(); big.src = img.dataset.full; big.alt = img.alt; big.className = 'face-img'; lbCard.appendChild(big);
+    lb.style.setProperty('--ar', '4 / 5'); lb.style.setProperty('--arw', '0.8'); lb.style.setProperty('--arh', '1.25'); lb.hidden = false;
+  });
+  lb.addEventListener('click', function () { lb.hidden = true; });
+  var g = document.getElementById('gallery');
+  list.forEach(function (a) {
+    var f = document.createElement('figure'), i = new Image(), c = document.createElement('figcaption');
+    i.src = a.image.replace('images/affirmations/', 'images/affirmations/sm/'); i.alt = a.text; i.loading = 'lazy'; i.width = 540; i.height = 675;
+    c.textContent = a.text; f.appendChild(i); f.appendChild(c); g.appendChild(f);
+  });
+  show();
+})();
+</script>
+</body>
+</html>
